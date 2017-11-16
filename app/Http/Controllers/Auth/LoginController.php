@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Session;
+use Auth;
+use \App\User;
 
 class LoginController extends Controller
 {
@@ -35,5 +39,33 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function validateLogin($request)
+    {
+        $this->validate($request, [
+            'email' => 'required', 'password' => 'required'
+        ]);
+    }
+
+    protected function credentials(Request $request)
+    {
+        return array_merge($request->only('email', 'password'));
+    }
+
+    public function login(Request $request)
+    {
+
+        $this->validateLogin($request);
+
+        $remember = $request->input('remember');
+        $getAdmininfo = $this->credentials($request);
+
+        $availablecheck = Auth::guard()->attempt($getAdmininfo, $remember);
+
+        if ($availablecheck) {
+            return redirect()->route('home');
+        }
+        return redirect()->back()->withInput($request->only('email','remember'))->with('error', 'These credentials do not match our records.');
     }
 }

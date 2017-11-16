@@ -1,47 +1,23 @@
-@extends('layouts.app')
+@extends('auth.authMaster')
+@section('title')
+Login
+@endsection
+@section('pagelevel_style')
 
+@endsection
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <div class="login-content">
+        <!-- BEGIN FORGOT PASSWORD FORM -->
+        <form class="forget-form" action="javascript:;" method="post">
+            <h3 class="font-green">Forgot Password ?</h3>
+            <p> Enter your e-mail address below to reset your password. </p>
+            <div class="form-group">
+                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
+            <div class="form-actions">
+                <a class="btn grey btn-default" href="{{url('login-page')}}">Back</a>
+                <button type="submit" class="btn blue btn-success uppercase pull-right">Submit</button>
             </div>
-        </div>
+        </form>
+        <!-- END FORGOT PASSWORD FORM -->
     </div>
-</div>
 @endsection

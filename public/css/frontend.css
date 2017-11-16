@@ -1,0 +1,462 @@
+@font-face {font-family: Merriweather;src: url(../fonts/Merriweather.ttf);}
+.backround-div{
+    padding-top: 100px;
+    padding-bottom: 50px;
+    background-image: url(../assets/images/components/background.jpg);
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.label-embed-div{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+.label-custom {
+    font-family: Merriweather;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 16pt;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.ifund-logo{
+    margin-top: 30px;
+    font-family: 'Lato', sans-serif;
+}
+.join-movie {
+    margin-top: 80px;
+    padding: 0;
+    padding-top: 0;
+    padding-bottom: 20px;
+    border: solid 1px #ffffff;
+    border-radius: 5px;
+}
+.bigfirst-label-j {
+    font-size: 40pt;
+}
+.label-custom-join {
+    font-size: 14pt;
+    font-family: Merriweather;
+    margin: 0;
+}
+.menu-container-div {
+    padding-top: 20px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.menu-title-custom {
+    color: #663300;
+    font-family: Merriweather;
+    font-size: 12pt;
+    font-weight: bold;
+    display: inline-block;
+}
+.menu-title-custom::after{
+    content: "";
+    background-image: url(../assets/images/components/goldfade.gif);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1px;
+    width: 70%;
+    left: 15%;
+    position: absolute;
+    top: 60px;;
+}
+.custom-title-button {
+    text-decoration: none;
+    color: #663300;
+}
+.custom-title-button:active,
+.custom-title-button:hover{
+    text-decoration: none;
+    color: #b75d00;
+}
+.custom-title-button:focus {
+    text-decoration: none;
+    color: #663300;
+}
+.menu-labels-embeded-div {
+    margin-top: 20px;
+}
+.menu-labels-custom {
+    color: #663300;
+    font-family: Merriweather;
+    font-size: 12pt;
+    font-weight: 700;
+    margin: 0;
+    padding-top: 3px;
+}
+.each-container-separator {
+    width: 1px;
+    height: 370px;
+    position: absolute;
+    right: -1px;
+    top: 50px;
+    z-index: 1;
+    background-color: #c3a588;
+}
+.menu-title-social-image {
+    width: 100%;
+    max-width: 418px;
+}
+.social-title-image-embeded-div {
+    position: relative;
+    display: inline-block;
+}
+.goto-intro-audio:hover {
+    opacity: 0.7;
+}
+.contents-container-div {
+    padding-top: 20px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.contents-intro-image-embeded-div {
+    display: inline-block;
+    margin-top: 50px;
+}
+.contents-amount-labels-custom {
+    color: #663300;
+    font-family: Merriweather;
+    font-size: 14pt;
+    font-weight: 700;
+    margin: 0;
+    margin-top: 90px;
+    padding-top: 3px;
+}
+.custom-p {
+    margin: 0;
+    padding: 0;
+}
+.underline-terms {
+    height: 1px;
+    width: 70%;
+    margin-top: -15px;
+}
+.site-terms-labels {
+    text-decoration: none;
+    color: #663300;
+}
+.site-terms-labels:hover {
+    text-decoration: none;
+    color: #b75d00;
+}
+.login-contents-container-div {
+    padding-left:20px;
+    padding-right:20px;
+    text-align:center;
+    padding-top:60px;
+    padding-bottom:30px;
+}
+.login-container-div {
+    /*background-image: url(../assets/images/components/login_slate.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 400px;
+    width: 100%;*/
+    position: relative;
+}
+.login-form-container {
+    position: relative;
+    width: 100%;
+    max-width: 425px;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+.login-slate-top-image {
+    width: 103%;
+    position: absolute;
+    left: -8px;
+}
+.login-form {
+    background-color: #000;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 20px;
+}
+.login-form .form-control {
+    background-color: #000!important;
+    border: 0;
+    border-bottom: 1px solid #fff;
+    border-radius: unset;
+    color: #fff;
+    margin-top: 10px;
+}
+.login-form .form-control:focus,
+.login-form .form-control:active {
+    background-color: #000!important;
+    border: 0;
+    border-bottom: 1px solid #0a96e8;
+    border-radius: unset;
+}
+.signup-form-container-div {
+    padding: 10px 30px 15px;
+    background-color: #8e4c0b;
+}
+#signup-form i {
+    color: #8e4c0b;
+}
+.custom-alert-danger {
+    position: absolute;
+    top: 10px;
+}
+.alert-close-custom {
+    position: absolute;
+    right: 10px;
+    top: 21px;
+}
+.control-margintop-thistext {
+    margin-top: 60px;
+}
+.social-button-embeded-div {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.single-button-embeded-div {
+    height: 100%;
+    float: left;
+    width: 14.28%;
+    position: relative;
+}
+.facebook_img {
+    background-image: url(../assets/images/components/facebook_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 50%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 32%;
+    left: 24%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.facebook_img:hover {
+    background-image: url(../assets/images/components/facebook_ov.png);
+    outline-width: 0;
+    width: 60%;
+    height: 60%;
+    top: 29%;
+    left: 21%;
+}
+.google_img {
+    background-image: url(../assets/images/components/google_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 50%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 37%;
+    left: 24%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.google_img:hover {
+    background-image: url(../assets/images/components/google_ov.png);
+    outline-width: 0;
+    width: 60%;
+    height: 60%;
+    top: 33%;
+    left: 20%;
+}
+.linkedin_img {
+    background-image: url(../assets/images/components/linkedin_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 50%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 30%;
+    left: 22%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.linkedin_img:hover {
+    background-image: url(../assets/images/components/linkedin_ov.png);
+    outline-width: 0;
+    width: 60%;
+    height: 60%;
+    top: 25%;
+    left: 17%;
+}
+.youtube_img {
+    background-image: url(../assets/images/components/youtube_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 50%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 18%;
+    left: 22%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.youtube_img:hover {
+    background-image: url(../assets/images/components/youtube_ov.png);
+    outline-width: 0;
+    width: 60%;
+    height: 60%;
+    top: 14%;
+    left: 18%;
+}
+.twiter_img {
+    background-image: url(../assets/images/components/twiter_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 50%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 12%;
+    left: 22%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.twiter_img:hover {
+    background-image: url(../assets/images/components/twiter_ov.png);
+    outline-width: 0;
+    width: 60%;
+    height: 60%;
+    top: 7%;
+    left: 18%;
+}
+.mail_img {
+    background-image: url(../assets/images/components/mail_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 50%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 16%;
+    left: 22%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.mail_img:hover {
+    background-image: url(../assets/images/components/mail_ov.png);
+    outline-width: 0;
+    width: 60%;
+    height: 60%;
+    top: 11%;
+    left: 15%;
+}
+.imdb_img {
+    background-image: url(../assets/images/components/imdb_de.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    width: 68%;
+    height: 50%;
+    background-color: transparent;
+    position: absolute;
+    top: 34%;
+    left: 13%;
+    outline-width: 0;
+    transition: all .1s ease-out;
+}
+.imdb_img:hover {
+    background-image: url(../assets/images/components/imdb_ov.png);
+    outline-width: 0;
+    width: 79%;
+    height: 71%;
+    top: 22%;
+    left: 7%;
+}
+
+.email-button {
+    background:url(../assets/images/components/email_button.png) no-repeat;
+    cursor:pointer;
+    border:none;
+    width: 200px;
+    height: 47px;
+    outline: 0!important;
+    transition: all .1s ease-out;
+}
+.email-button:hover {
+    background:url(../assets/images/components/email_button_up.png) no-repeat;
+    outline: 0!important;
+}
+.email-button:active {
+    background:url(../assets/images/components/email_button_down.png) no-repeat;
+    outline: 0!important;
+}
+.see-video-h3 {
+    text-align:left;
+    font-size:12pt;
+    color:#663300;
+    font-weight:900;
+    font-family:Merriweather;
+    margin-top:5px;
+    margin-bottom:20px;
+    letter-spacing:2px;
+    font-style:italic;
+    padding-left: 20px
+}
+.see-video-h3::after {
+    content: "";
+    background-image: url(../assets/images/components/goldfade.gif);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1px;
+    width: 70%;
+    left: 15%;
+    position: absolute;
+    top: 25px;
+}
+@media(max-width: 1250px) {
+    .control-margintop-thistext {
+        margin-top: 20px;
+    }
+}
+
+@media(max-width: 1300px) {
+    .login-slate-top-image {
+        left: -6px;
+    }
+}
+@media (max-width: 992px) {
+    .each-container-separator {
+        width: 80%;
+        height: 1px;
+        position: absolute;
+        right: 10%;
+        top: 100%;
+        z-index: 1;
+        background-color: #c3a588;
+    }
+    .contents-container-div h3 {
+        text-align: center!important;
+    }
+}
+@media(max-width: 500px){
+    .ifund-logo>span>font {
+        font-size: 30pt;
+    }
+    .label-custom {
+        font-size: 14pt;
+    }
+}
