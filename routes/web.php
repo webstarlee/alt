@@ -16,7 +16,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/gallery', 'HomeController@gallery_show')->name('single_gallery');
 //Auth::routes();
 
 Route::get('/login', function(){
@@ -38,10 +38,7 @@ Route::get('/forget-password', 'Auth\ForgotPasswordController@showLinkRequestFor
 Route::post('/password-email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('/password-reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('/password-reset', 'Auth\ResetPasswordController@reset');
-Route::get('/films', 'UserController@show_film')->name('films');
-Route::get('/submission', 'UserController@show_submission')->name('submission');
-Route::get('/how-this-work', 'UserController@how_this_work')->name('how_this_work');
-Route::get('/distribution', 'UserController@distribution')->name('distribution');
+
 
 Route::prefix('admin')->group(function(){
     Route::get('/', 'AdminController@index')->name('admin.dashboard');

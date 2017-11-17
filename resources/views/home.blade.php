@@ -3,7 +3,26 @@
 Welcome
 @endsection
 @section('content')
-    <div class="homepage-background-div"></div>
+    <div class="homepage-background-div">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="font-white gallery-background-text">Take your short gallery survey</h3>
+                    <h3 class="font-white gallery-background-text">and let us build your</h3>
+                    <h3 class="bold font-white gallery-background-text-bottom">dream home</h3>
+                </div>
+                <div class="col-sm-6">
+                    <div class="goto-other-page">
+                        <a href="#"><h4 class="bold font-white gallery-background-text text-right">Get more specific</h4>
+                        <h3 class="bold font-white gallery-background-text text-right">Live construction estimate</h3>
+                        <div class="goto-other-page-arrow-right-div">
+                            <img src="{{cdn('assets/images/arrow-right.png')}}" alt="">
+                        </div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="user-img-gallery-parent-div">
         <div class="container">
             <div class="row">
@@ -42,7 +61,7 @@ Welcome
                                     <div class="col-sm-6 col-sm-offset-3">
                                         <div class="child_gallery_img_info-div">
                                             <div class="subGallery-single-img-div">
-                                                <a class="subGallery-single-img-a"> <img src="{{cdn('assets/images/gallery/general.jpg')}}" alt=""> </a>
+                                                <a class="subGallery-single-img-a" href="{{route('single_gallery')}}"> <img src="{{cdn('assets/images/gallery/general.jpg')}}" alt=""> </a>
                                             </div>
                                             <div class="child-single-gallery-title-div">
                                                 <p class="child-single-gallery-title bold">Gallery 1 <br />GENERAL STYLE</p>
