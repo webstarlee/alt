@@ -386,7 +386,7 @@
     box-shadow: 0px -4px 6px -1px rgba(0,0,0, 0.5);
     padding-top: 30px;
     padding-bottom: 50px;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .summary-text {
     font-size: 20pt;
@@ -494,10 +494,60 @@
 .stamp-img-div {
     display: inline-block;
     position: relative;
+    cursor: pointer;
 }
 .stamp-img-div>img {
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
+}
+.stamp-img-div>img {
+    width: 100%;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.stmpe-heder-txt {
+    font-size: 15pt;
+}
+.heart-stamp-div {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    padding: 12px;
+    border-radius: 50%;
+    padding-top: 15px;
+    display: inline-block;
+    margin: 0 10px;
+    border: 2px solid #dedede;
+    transition: all .3s ease-out;
+}
+.heart-stamp-div:hover {
+    box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.5);
+    border: 2px solid #fff;
+}
+.heart-stamp-div.active {
+    box-shadow: inset 0px 0px 10px 0 rgba(0, 0, 0, 0.5);
+    border: 2px solid #fff;
+}
+.heart-stamp-div>img {
+    width: 100%;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.select-stamp-type-container {
+    text-align: -webkit-center;
+    padding-top: 10px;
+}
+.top-div-for-stamp {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
 }
 @media(max-width: 1199px) {
     .child-single-gallery-title-div {

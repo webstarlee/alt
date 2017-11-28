@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use \App\UserLike;
+use \App\UserLove;
 use \App\Gallery;
 use \App\Category;
 use \App\GalleryStyle;
@@ -83,5 +84,21 @@ class HomeController extends Controller
         $data_image = Gallery::find($id);
 
         return $data_image;
+    }
+
+    public function save_all_stamps(Request $request)
+    {
+        $current_img_id = $request->imageId;
+
+        foreach ($request->stamp_data as $single_stamp) {
+            $stamp = new UserLove();
+            $stamp->image_id = $current_img_id;
+            $stamp->user_id = Auth::user()->id;
+            $stamp->love_type = $single_stamp['love_type'];
+            $stamp->pos_top = $single_stamp['top'];
+            $stamp->pos_left = $single_stamp['left'];
+            $stamp->save();
+        }
+        return "success";
     }
 }

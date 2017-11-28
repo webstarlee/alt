@@ -49,7 +49,7 @@ Welcome
                                     <?php $image_count += 1; ?>
                                     <div class="buddy" @if ($image_count == 1) style="display: block;" @endif>
                                         <input type="hidden" name="" class="image_id" value="{{$image->id}}">
-                                        <a onclick="view_stamp({{$image->id}})">
+                                        <a class="image-stamp">
                                             <img class="avatar" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}" alt="">
                                         </a>
                                     </div>
@@ -95,17 +95,26 @@ Welcome
             </div>
         </div>
     </div>
-    <div id="image_comment_stamp" class="modal fade" data-backdrop="static" tabindex="-1" data-width="560">
+    <div id="image_comment_stamp" class="modal fade" data-backdrop="static" tabindex="-1" data-width="500">
         <div class="modal-header">
-            <h2 class="modal-title text-center">Comment and Stamp</h2>
-            <h3 class="modal-title text-center">Not working yet</h2>
+            <h2 class="modal-title text-center bold stmpe-heder-txt">Show us what you like</h2>
         </div>
         <div class="modal-body text-center">
+            <input type="hidden" name="stamp_image_id" id="stamp_image_id" value="">
             <div class="stamp-img-div">
+            </div>
+            <div class="select-stamp-type-container">
+                <div class="heart-stamp-div" id="stamp-heart-img">
+                    <img src="{{cdn('assets/images/components/heart.svg')}}" salt="">
+                </div>
+                <div class="heart-stamp-div" id="stamp-breadk-heart-img">
+                    <img src="{{cdn('assets/images/components/broken_heart.svg')}}" alt="">
+                </div>
             </div>
         </div>
         <div class="modal-footer text-center" id="gallery-img-add-close" style="text-align:center;">
-            <button type="button" data-dismiss="modal" class="btn dark">Cancel</button>
+            <button type="button" id="img-stamp-cancel-button" class="btn dark">Cancel</button>
+            <button type="button" id="img-stamp-save-button" disabled class="btn green">Save and Close</button>
         </div>
     </div>
 @endsection
@@ -222,70 +231,203 @@ Welcome
                 var goto_home_url = "{{url('/save-like-status')}}";
                 var set_image_like_url = "{{url('/like-images')}}";
                 var user_id = <?php echo Auth::user()->id; ?> ;
+
+                if (status == 1) {
+                    current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
+                    $('.buddy').find('.status').remove();
+                    current_buddy.append('<div class="status like">Like!</div>');
+                    if (current_buddy.next('.buddy').length > 0) {
+                        current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
+                    }else {
+                        setTimeout(function () {
+                            var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
+                                                    "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
+                                                    "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
+                            $('.gallery-like-container-div').css({'height': '200px!important'});
+                            $('.gallery-like-container-div').html(congratulation_text);
+                        }, 450);
+                    }
+                }
+                else if (status == 0) {
+                    current_buddy.addClass('rotate-right').delay(400).fadeOut(1);
+                    $('.buddy').find('.status').remove();
+                    current_buddy.append('<div class="status dislike">Dislike!</div>');
+                    if (current_buddy.next('.buddy').length > 0) {
+                        current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
+                    }else {
+                        setTimeout(function () {
+                            var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
+                                                    "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
+                                                    "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
+                            $('.gallery-like-container-div').css({'height': '200px!important'});
+                            $('.gallery-like-container-div').html(congratulation_text);
+                        }, 450);
+                    }
+                }
                 axios.post(set_image_like_url, {imageId:image_id, useId:user_id, status:status}).then(function (response) {
-                    if (status == 1) {
-                        current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
-                        $('.buddy').find('.status').remove();
-                        current_buddy.append('<div class="status like">Like!</div>');
-                        if (current_buddy.next('.buddy').length > 0) {
-                            current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
-                        }else {
-                            setTimeout(function () {
-                                var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
-                                                        "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
-                                                        "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
-                                $('.gallery-like-container-div').css({'height': '200px!important'});
-                                $('.gallery-like-container-div').html(congratulation_text);
-                            }, 450);
-                        }
-                    }
-                    else if (status == 0) {
-                        current_buddy.addClass('rotate-right').delay(400).fadeOut(1);
-                        $('.buddy').find('.status').remove();
-                        current_buddy.append('<div class="status dislike">Dislike!</div>');
-                        if (current_buddy.next('.buddy').length > 0) {
-                            current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
-                        }else {
-                            setTimeout(function () {
-                                var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
-                                                        "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
-                                                        "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
-                                $('.gallery-like-container-div').css({'height': '200px!important'});
-                                $('.gallery-like-container-div').html(congratulation_text);
-                            }, 450);
-                        }
-                    }
+                    console.log("success");
                 }).catch(function (error) {
                     console.log(error);
                 });
             }
-        });
 
-        function view_stamp(id) {
-            var base_img_url = "{{url('get-stamp-img')}}";
+            $('a.image-stamp').each(function() {
+                var $this = $(this);
+                var clickdetect = 0;
+                var image_id = $this.parent().find('.image_id').val();
+                $this.mousedown(function(){
+                    clickdetect = 1;
+                    // console.log(clickdetect);
+                }).mousemove(function(){
+                    if (clickdetect > 0) {
+                        clickdetect += 1;
+                    }
+                    // console.log(clickdetect);
+                }).mouseup(function(){
+                    if (clickdetect < 5) {
+                        view_stamp(image_id);
+                        clickdetect = 0;
+                    }
+                })
+            });
 
-            var get_data_url = base_img_url+"/"+id;
+            function view_stamp(id) {
+                var base_img_url = "{{url('get-stamp-img')}}";
 
-            $.ajax({
-                url: get_data_url,
-                type: 'get',
-                success: function(result){
-                    console.log(result);
-                    // $('.stamp-img-div').
-                    var image_url = "{{cdn('assets/images/gallery')}}" ;
-                    image_url = image_url+"/"+result.gallery_img+"_thumbnail.jpg";
+                var get_data_url = base_img_url+"/"+id;
 
-                    var img_html = '<img src="'+image_url+'" class="stamp-img" alt="">';
+                $.ajax({
+                    url: get_data_url,
+                    type: 'get',
+                    success: function(result){
+                        var image_url = "{{cdn('assets/images/gallery')}}" ;
+                        image_url = image_url+"/"+result.gallery_img+"_thumbnail.jpg";
 
-                    // console.log(image_url);
-                    $('.stamp-img-div').html(img_html);
-                    $('#image_comment_stamp').modal('show');
-                },
-                error: function(result){
-                    console.log(error);
+                        var img_html = '<img src="'+image_url+'" class="stamp-img" alt="">';
+
+                        // console.log(image_url);
+                        var exist_img_already_check = $('.stamp-img-div').find('.stamp-img');
+                        $('#stamp_image_id').val(result.id);
+
+                        $('.stamp-img-div').html(img_html);
+                        $('#img-stamp-save-button').prop('disabled', true);
+                        $('#image_comment_stamp').modal('show');
+                    },
+                    error: function(result){
+                        console.log(error);
+                    }
+                });
+            }
+
+            var check_is_click_for_stamp = 0;
+            var current_heart_type = null;
+            var stamp_position_array = [];
+
+            $('.stamp-img-div').mousedown(function(e){
+                if (e.which == 1) {
+                    check_is_click_for_stamp = 1;
+                }
+            }).mousemove(function(e){
+                if (check_is_click_for_stamp > 0 && e.which == 1) {
+                    check_is_click_for_stamp += 1;
+                }
+            }).mouseup(function(e){
+                if(check_is_click_for_stamp < 5 && e.which == 1) {
+                    var $this = $(this);
+                    var current_pos_x = e.offsetX;
+                    var current_pos_y = e.offsetY;
+                    var origin_img_width = $this.width();
+                    var origin_img_height = $this.height();
+
+                    var percent_x = current_pos_x / origin_img_width * 100;
+                    var percent_y = current_pos_y / origin_img_height * 100;
+
+                    var final_left = "calc("+percent_x+"% - 12px)";
+                    var final_top = "calc("+percent_y+"% - 10px)";
+
+                    var heart_img_url = null;
+                    if (current_heart_type != null) {
+                        if (current_heart_type == 1) {
+                            heart_img_url = "{{cdn('assets/images/components/heart.svg')}}";
+                        }
+                        else if (current_heart_type == 0) {
+                            heart_img_url = "{{cdn('assets/images/components/broken_heart.svg')}}";
+                        }
+                    }
+                    else {
+                        alert('please select heart type');
+                    }
+
+                    if (current_heart_type != null && heart_img_url != null) {
+                        var heart_img_html = '<img class="stam-heart" src="'+heart_img_url+'" style="width: 25px;position:absolute;top: '+final_top+';left: '+final_left+'"></i>';
+                        $this.append(heart_img_html);
+
+                        stamp_position_array.push({'love_type': current_heart_type, 'top': percent_y, 'left': percent_x});
+                        if ($('#img-stamp-save-button').prop('disabled') ==  true) {
+                            $('#img-stamp-save-button').prop('disabled', false);
+                        }
+                        console.log(stamp_position_array);
+                    }
                 }
             });
-        }
+
+            $('#stamp-heart-img').on('click', function(){
+                $(this).parent().find('.active').each(function() {
+                    $(this).removeClass('active');
+                });
+                current_heart_type = 1;
+                $(this).addClass('active');
+            });
+
+            $('#stamp-breadk-heart-img').on('click', function(){
+                $(this).parent().find('.active').each(function() {
+                    $(this).removeClass('active');
+                });
+                current_heart_type = 0;
+                $(this).addClass('active');
+            });
+
+            $('#img-stamp-cancel-button').on('click', function() {
+                stamp_position_array = [];
+                $('#stamp-heart-img').parent().find('.active').each(function() {
+                    $(this).removeClass('active');
+                });
+                $('#image_comment_stamp').modal('hide');
+            });
+
+            $('#img-stamp-save-button').on('click', function() {
+                var save_image_stamp_url = "{{url('/save_stamps')}}";
+                // console.log(stamp_position_array);
+                var image_id = $('#stamp_image_id').val();
+                axios.post(save_image_stamp_url, {imageId: image_id,stamp_data: stamp_position_array}).then(function (response) {
+                    // console.log(stamp_position_array);
+                    set_status("like");
+                    stamp_position_array = [];
+                    $('#stamp-heart-img').parent().find('.active').each(function() {
+                        $(this).removeClass('active');
+                    });
+                    $('#image_comment_stamp').modal('hide');
+                    set_like_images(image_id, 2);
+
+                    current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
+                    $('.buddy').find('.status').remove();
+                    current_buddy.append('<div class="status like">Like!</div>');
+                    if (current_buddy.next('.buddy').length > 0) {
+                        current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
+                    }else {
+                        setTimeout(function () {
+                            var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
+                                                    "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
+                                                    "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
+                            $('.gallery-like-container-div').css({'height': '200px!important'});
+                            $('.gallery-like-container-div').html(congratulation_text);
+                        }, 450);
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            });
+        });
 
     </script>
 @endsection

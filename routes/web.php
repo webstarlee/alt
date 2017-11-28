@@ -20,6 +20,7 @@ Route::get('/gallery/{id}', 'HomeController@gallery_show');
 Route::post('/like-images', 'HomeController@like_images');
 Route::get('/save-like-status/{id}', 'HomeController@like_status_save');
 Route::get('/get-stamp-img/{id}', 'HomeController@get_img_for_stamp');
+Route::post('/save_stamps', 'HomeController@save_all_stamps');
 //Auth::routes();
 
 Route::get('/login', function(){
