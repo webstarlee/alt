@@ -159,6 +159,15 @@
                           @endif
                       </a>
                   </li>
+                  <li class="nav-item @if(Route::currentRouteName()=='admin.gallery.view' || Route::currentRouteName()=='admin.gallery.view.single')open active @endif">
+                      <a href="{{ route('admin.gallery.view') }}" class="nav-link nav-toggle">
+                          <i class="icon-users"></i>
+                          <span class="title">Gallery Management</span>
+                          @if(Route::currentRouteName()=='admin.gallery.view' || Route::currentRouteName()=='admin.gallery.view.single')
+                          <span class="selected"></span>
+                          @endif
+                      </a>
+                  </li>
               </ul>
       </div>
       <!-- END SIDEBAR -->
@@ -200,6 +209,7 @@
   <script src="{{cdn('assets/layouts/layout/scripts/demo.min.js')}}" type="text/javascript"></script>
   <script src="{{cdn('assets/layouts/global/scripts/quick-sidebar.min.js')}}" type="text/javascript"></script>
   <script src="{{cdn('js/custom.js')}}" type="text/javascript"></script>
+  @yield('custom_script')
   <script>
         window.onload = function () { setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50); }
   </script>

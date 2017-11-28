@@ -11,8 +11,10 @@
         <link href="{{cdn('assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/uniform/css/uniform.default.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{cdn('assets/global/plugins/animate-css/animate.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+        {{-- <link href="{{cdn('assets/global/plugins/jquery.mobile-1.4.5.min.css')}}" rel="stylesheet" type="text/css" /> --}}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -58,16 +60,18 @@
                 <div class="navbar navbar-default" role="navigation">
                     <div class="container">
                         <div class="navbar-header">
-                                <a href="{{route('home')}}" class="navbar-brand"><img src="{{cdn('assets/images/frontendlogo.png')}}" alt="alt Template" /></a>
+                            <a href="{{route('home')}}" class="navbar-brand">
+                                <img src="{{cdn('assets/images/components/logo_black.svg')}}" class="animated bounceInLeft" alt="alt Template" />
+                            </a>
                         </div>
                         <div class="top-menu">
                             <ul class="nav navbar-nav pull-right">
                                 <li class="dropdown dropdown-user">
                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="padding-left: 5px;padding-bottom: 10px;background-color: #fff;">
                                         @if(file_exists('assets/images/avatar/admin'.'/'.Auth::user()->avatar.'_thumbnail.jpg'))
-                                          <img alt="" class="img-circle" src="{{ cdn('assets/images/avatar/admin').'/'.Auth::user()->avatar.'_thumbnail.jpg'}}" />
+                                          <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar/admin').'/'.Auth::user()->avatar.'_thumbnail.jpg'}}" />
                                         @else
-                                          <img alt="" class="img-circle" src="{{ cdn('assets/images/avatar/nophoto.jpg') }}" />
+                                          <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar/nophoto.jpg') }}" />
                                         @endif
                                         <span class="username username-hide-on-mobile" style="display: inline-block;"> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                                         <i class="fa fa-angle-down"></i>
@@ -103,6 +107,8 @@
         <script src="{{cdn('assets/global/plugins/uniform/jquery.uniform.min.js')}}" type="text/javascript"></script>
         <script src="{{cdn('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
         <script src="{{cdn('assets/global/plugins/sweetalert/sweetalert.min.js')}}" type="text/javascript"></script>
+        <script src="{{cdn('assets/global/plugins/hammer.js')}}" type="text/javascript"></script>
+        <script src="{{cdn('assets/global/plugins/jquery.touchSwipe.min.js')}}" type="text/javascript"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -124,6 +130,7 @@
         <script src="{{cdn('assets/layouts/layout/scripts/demo.min.js')}}" type="text/javascript"></script>
         <script src="{{cdn('js/custom.js')}}" type="text/javascript"></script>
         <script src="{{cdn('js/frontend.js')}}" type="text/javascript"></script>
+        @yield('custom_script')
         <script>
               window.onload = function () { setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50); }
         </script>

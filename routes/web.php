@@ -15,8 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/gallery', 'HomeController@gallery_show')->name('single_gallery');
+Route::get('/home', 'HomeController@view_gallery')->name('home');
+Route::get('/gallery/{id}', 'HomeController@gallery_show');
+Route::post('/like-images', 'HomeController@like_images');
+Route::get('/save-like-status/{id}', 'HomeController@like_status_save');
+Route::get('/get-stamp-img/{id}', 'HomeController@get_img_for_stamp');
 //Auth::routes();
 
 Route::get('/login', function(){
@@ -67,4 +70,14 @@ Route::prefix('admin')->group(function(){
     Route::post('/edit-privacy', 'PageController@update_privacy')->name('admin.update_privacy');
     Route::post('/edit-aboutus', 'PageController@update_aboutus')->name('admin.update_aboutus');
     Route::post('/edit-how-work', 'PageController@update_howitwork')->name('admin.update_howitwork');
+    //gallery
+    Route::get('/gallery-management', 'GalleryController@gallery_view')->name('admin.gallery.view');
+    Route::get('/gallery-single-view/{id}', 'GalleryController@gallery_view_single')->name('admin.gallery.view.single');
+    Route::get('/get-single-category-data/{id}', 'GalleryController@get_single_category');
+    Route::get('/get-single-style-data/{id}', 'GalleryController@get_single_style');
+    Route::post('/gallery-upload-images', 'GalleryController@gallery_upload_images')->name('admin.gallery.add.images');
+    Route::post('/gallery-add-category', 'GalleryController@store_category')->name('admin.gallery.add.category');
+    Route::post('/gallery-edit-category', 'GalleryController@update_category')->name('admin.gallery.edit.category');
+    Route::post('/gallery-add-style', 'GalleryController@store_style')->name('admin.gallery.add.style');
+    Route::post('/gallery-edit-style', 'GalleryController@update_style')->name('admin.gallery.edit.style');
 });

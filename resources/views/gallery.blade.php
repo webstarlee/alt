@@ -2,22 +2,36 @@
 @section('title')
 Welcome
 @endsection
+@section('pagelevel_plugin')
+<link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
+@endsection
 @section('content')
-    <div class="homepage-background-div">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="goto-other-page-left">
-                        <a href="{{route('home')}}"><h4 class="bold font-white gallery-background-text">Save Selection</h4>
-                        <h3 class="bold font-white gallery-background-text">Back Home</h3>
-                        <div class="goto-other-page-arrow-left-div">
-                            <img src="{{cdn('assets/images/arrow-left.png')}}" alt="">
-                        </div></a>
+    <?php $check_exist_image = 0; ?>
+    @foreach ($images as $image)
+        <?php $check_exist_image += 1; ?>
+    @endforeach
+    <div class="homepage-background-div" style="height: 25vh;">
+        <div class="description-container-div">
+        </div>
+        <div class="menu-container-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="menu-button-gotoHome-div animated bounceInRight">
+                            @if ($check_exist_image > 0)
+                                <a href="{{url('save-like-status/'.$current_style->id)}}"><img src="{{cdn('assets/images/components/alt_gotoHome_button.svg')}}" class="menu-estimate" alt=""></a>
+                            @else
+                                <a href="{{url('home')}}"><img src="{{cdn('assets/images/components/alt_gotoHome_button.svg')}}" class="menu-estimate" alt=""></a>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <h3 class="font-white gallery-background-text text-right">Summary</h3>
-                    <h3 class="bold font-white gallery-background-text-bottom text-right">Your Selection</h3>
+                    <div class="col-xs-6">
+                        <div class="description-text-summary-div animated bounceInLeft">
+                            <p class="font-white summary-text text-right" >Summary</p>
+                            <p class="font-white bold your-selection-text text-right">Your Selection</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,68 +40,54 @@ Welcome
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="text-center"><span class="bold">Your Selection</span> General style</h2>
+                    <h2 class="text-center style-text-h2"><span class="bold">{{$current_style->style_title}}</span> {{$current_style->style_name}} </h2>
                     <div class="row">
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/bathroom.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/bedroom.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/gallery_parent1.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/gallery_parent2.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/general.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#">
-                                    <img src="{{cdn('assets/images/gallery/outdoor.jpg')}}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/bathroom.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/bedroom.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/gallery_parent1.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/gallery_parent2.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/general.jpg')}}" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4">
-                            <div class="gallery-single-img-container-div">
-                                <a href="#"><img src="{{cdn('assets/images/gallery/outdoor.jpg')}}" alt=""></a>
+                        <div class="col-sm-12">
+                            <div class="gallery-like-container-div">
+                                <?php $image_count = 0; ?>
+                                @foreach ($images as $image)
+                                    <?php $image_count += 1; ?>
+                                    <div class="buddy" @if ($image_count == 1) style="display: block;" @endif>
+                                        <input type="hidden" name="" class="image_id" value="{{$image->id}}">
+                                        <a onclick="view_stamp({{$image->id}})">
+                                            <img class="avatar" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}" alt="">
+                                        </a>
+                                    </div>
+                                @endforeach
+                                @if ($image_count > 0)
+                                    <div class="gallery-like-group-button-container">
+                                        <div class="gallery-like-button-container">
+                                            <a href="#" id="like-btn">
+                                                <div class="gallery-like-button">
+                                                    <i class="fa fa-heart"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="gallery-info-button-container">
+                                            <a href="#" id="info-btn">
+                                                <div class="gallery-info-button">
+                                                    <i class="fa fa-map-marker"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="gallery-unlike-group-button-container">
+                                        <div class="gallery-unlike-button-container">
+                                            <a href="#" id="unlike-btn">
+                                                <div class="gallery-unlike-button">
+                                                    <i class="fa fa-close"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="gallery-back-button-container">
+                                            <a href="#" id="back-btn">
+                                                <div class="gallery-back-button">
+                                                    <i class="fa fa-rotate-left"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -95,4 +95,197 @@ Welcome
             </div>
         </div>
     </div>
+    <div id="image_comment_stamp" class="modal fade" data-backdrop="static" tabindex="-1" data-width="560">
+        <div class="modal-header">
+            <h2 class="modal-title text-center">Comment and Stamp</h2>
+            <h3 class="modal-title text-center">Not working yet</h2>
+        </div>
+        <div class="modal-body text-center">
+            <div class="stamp-img-div">
+            </div>
+        </div>
+        <div class="modal-footer text-center" id="gallery-img-add-close" style="text-align:center;">
+            <button type="button" data-dismiss="modal" class="btn dark">Cancel</button>
+        </div>
+    </div>
+@endsection
+@section('pagelevel_script')
+<script src="{{ cdn('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ cdn('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+@endsection
+@section('custom_script')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var gallery_style_id = {{$current_style->id}} ;
+            var current_budy_height = $('.buddy').height();
+            $current_window_width = $(window).width();
+            if ($current_window_width > 499) {
+                $('.gallery-like-container-div').css({'height':current_budy_height+30});
+            }
+            else {
+                $('.gallery-like-container-div').css({'height':current_budy_height+10});
+            }
+
+            $(window).on('resize', function(){
+                var current_budy_height = $('.buddy').height();
+                $current_window_width = $(window).width();
+                if (current_budy_height != null) {
+                    if ($current_window_width > 499) {
+                        $('.gallery-like-container-div').css({'height':current_budy_height+30});
+                    }
+                    else {
+                        $('.gallery-like-container-div').css({'height':current_budy_height+10});
+                    }
+                }
+                else{
+                    $('.gallery-like-container-div').css({'height': 200});
+                }
+            });
+
+            var current_buddy = null;
+
+            $('#like-btn').mouseover(function() {
+                set_status("like");
+            });
+            $('#like-btn').on('click',function() {
+                if(set_status("like"))
+                {
+                    var current_img_id = current_buddy.find('.image_id').val();
+                    set_like_images(current_img_id, 1);
+                }
+            });
+            $('#like-btn').mouseout(function() {
+                if(current_buddy.find('.status.like').length > 0) {
+                    current_buddy.find('.status.like').remove();
+                }
+            });
+
+            $('#unlike-btn').mouseover(function() {
+                set_status("unlike");
+            });
+            $('#unlike-btn').on('click',function() {
+                if(set_status("unlike")){
+                    var current_img_id = current_buddy.find('.image_id').val();
+                    set_like_images(current_img_id, 0);
+                }
+            });
+            $('#unlike-btn').mouseout(function() {
+                if(current_buddy.find('.status.dislike').length > 0) {
+                    current_buddy.find('.status.dislike').remove();
+                }
+            });
+
+            function set_status(status) {
+                $(".buddy").each(function() {
+                    var $this = $(this);
+                    if($this.css('display') == 'block') {
+                        current_buddy = $(this);
+                        if (status == "like") {
+                            $(this).append('<div class="status like">Like!</div>');
+                        }
+                        else if (status == "unlike") {
+                            $(this).append('<div class="status dislike">Dislike!</div>');
+                        }
+                    }
+                })
+
+                return true;
+            }
+
+
+
+            $(".buddy").each(function() {
+
+                var swipe = new Hammer(this);
+                // detect swipe and call to a function
+                swipe.on('swiperight swipeleft press', function(e) {
+                    // e.preventDefault();
+                    e.gesture.srcEvent.preventDefault();
+                    if (e.type == 'swipeleft') {
+                        current_buddy = $(this);
+                        var current_img_id = current_buddy.find('.image_id').val();
+                        set_like_images(current_img_id, 0);
+                    // }
+                    } else if (e.type == 'swiperight') {
+                        current_buddy = $(this);
+                        var current_img_id = current_buddy.find('.image_id').val();
+                        set_like_images(current_img_id, 1);
+                    }
+                    else if (e.type == 'press') {
+                        console.log("Hello");
+                    }
+
+                });
+            });
+
+            function set_like_images (image_id, status) {
+                var goto_home_url = "{{url('/save-like-status')}}";
+                var set_image_like_url = "{{url('/like-images')}}";
+                var user_id = <?php echo Auth::user()->id; ?> ;
+                axios.post(set_image_like_url, {imageId:image_id, useId:user_id, status:status}).then(function (response) {
+                    if (status == 1) {
+                        current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
+                        $('.buddy').find('.status').remove();
+                        current_buddy.append('<div class="status like">Like!</div>');
+                        if (current_buddy.next('.buddy').length > 0) {
+                            current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
+                        }else {
+                            setTimeout(function () {
+                                var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
+                                                        "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
+                                                        "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
+                                $('.gallery-like-container-div').css({'height': '200px!important'});
+                                $('.gallery-like-container-div').html(congratulation_text);
+                            }, 450);
+                        }
+                    }
+                    else if (status == 0) {
+                        current_buddy.addClass('rotate-right').delay(400).fadeOut(1);
+                        $('.buddy').find('.status').remove();
+                        current_buddy.append('<div class="status dislike">Dislike!</div>');
+                        if (current_buddy.next('.buddy').length > 0) {
+                            current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
+                        }else {
+                            setTimeout(function () {
+                                var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
+                                                        "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
+                                                        "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
+                                $('.gallery-like-container-div').css({'height': '200px!important'});
+                                $('.gallery-like-container-div').html(congratulation_text);
+                            }, 450);
+                        }
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
+
+        function view_stamp(id) {
+            var base_img_url = "{{url('get-stamp-img')}}";
+
+            var get_data_url = base_img_url+"/"+id;
+
+            $.ajax({
+                url: get_data_url,
+                type: 'get',
+                success: function(result){
+                    console.log(result);
+                    // $('.stamp-img-div').
+                    var image_url = "{{cdn('assets/images/gallery')}}" ;
+                    image_url = image_url+"/"+result.gallery_img+"_thumbnail.jpg";
+
+                    var img_html = '<img src="'+image_url+'" class="stamp-img" alt="">';
+
+                    // console.log(image_url);
+                    $('.stamp-img-div').html(img_html);
+                    $('#image_comment_stamp').modal('show');
+                },
+                error: function(result){
+                    console.log(error);
+                }
+            });
+        }
+
+    </script>
 @endsection

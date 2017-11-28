@@ -75,8 +75,4 @@ $(function () {
       }
     });
   });
-
-  var html = '<button class="btn btn-sm green table-group-action-submit" data-toggle="modal" href="#responsive" style="margin-left:20px;"><i class="fa fa-film"></i> Add</button>';
-
-  $('#sample_2_length').append(html);
 });

@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Share Apps | Promote Mobile Apps - @yield('title')</title>
+        <title>Alt - @yield('title')</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
@@ -16,6 +16,7 @@
         <link href="{{ cdn('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ cdn('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ cdn('assets/global/plugins/uniform/css/uniform.default.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{cdn('assets/global/plugins/animate-css/animate.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ cdn('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -51,7 +52,7 @@
             <div class="row bs-reset">
                 <div class="col-md-6 bs-reset">
                     <div class="login-bg" style="background-image:url(../assets/pages/img/login/bg1.jpg)">
-                        <a href="{{route('welcome')}}"><img class="login-logo" src="../assets/images/logo.png" /></a>
+                        <a href="{{route('welcome')}}"><img class="login-logo animated bounceInLeft" src="../assets/images/components/logo_white.svg" /></a>
                     </div>
                 </div>
                 <div class="col-md-6 login-container bs-reset">

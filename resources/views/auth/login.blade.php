@@ -7,11 +7,11 @@ Login
 @endsection
 @section('content')
     <div class="login-content">
-        <h1>Alt User Login</h1>
+        <h1>User Login</h1>
         <form action="{{ url('login') }}" class="login-form" method="post">
             <div class="alert alert-danger display-hide">
                 <button class="close" data-close="alert"></button>
-                <span>Enter any username and password. </span>
+                <span>Enter Your Email and Password. </span>
             </div>
             @if (session('error'))
                 <div class="alert alert-danger">
@@ -48,17 +48,5 @@ Login
                 </div>
             </div>
         </form>
-        <!-- BEGIN FORGOT PASSWORD FORM -->
-        {{-- <form class="forget-form" action="javascript:;" method="post">
-            <h3 class="font-green">Forgot Password ?</h3>
-            <p> Enter your e-mail address below to reset your password. </p>
-            <div class="form-group">
-                <input class="form-control placeholder-no-fix form-group" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
-            <div class="form-actions">
-                <button type="button" id="back-btn" class="btn grey btn-default">Back</button>
-                <button type="submit" class="btn blue btn-success uppercase pull-right">Submit</button>
-            </div>
-        </form> --}}
-        <!-- END FORGOT PASSWORD FORM -->
     </div>
 @endsection
