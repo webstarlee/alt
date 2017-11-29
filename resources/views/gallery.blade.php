@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-Welcome
+like image
 @endsection
 @section('pagelevel_plugin')
 <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
@@ -28,8 +28,8 @@ Welcome
                     </div>
                     <div class="col-xs-6">
                         <div class="description-text-summary-div animated bounceInLeft">
-                            <p class="font-white summary-text text-right" >Summary</p>
-                            <p class="font-white bold your-selection-text text-right">Your Selection</p>
+                            <p class="font-white summary-text text-right" >{{$current_style->style_title}}</p>
+                            <p class="font-white bold your-selection-text text-right">{{$current_style->style_name}}</p>
                         </div>
                     </div>
                 </div>
@@ -126,25 +126,25 @@ Welcome
     <script type="text/javascript">
         $(document).ready(function(){
             var gallery_style_id = {{$current_style->id}} ;
-            var current_budy_height = $('.buddy').height();
-            $current_window_width = $(window).width();
-            if ($current_window_width > 499) {
-                $('.gallery-like-container-div').css({'height':current_budy_height+30});
+            var current_window_width = $(window).width();
+
+            if (current_window_width > 530) {
+                $('.gallery-like-container-div').css({'height': '530px'});
             }
             else {
-                $('.gallery-like-container-div').css({'height':current_budy_height+10});
+                $('.gallery-like-container-div').css({'height': current_window_width-20});
             }
 
             $(window).on('resize', function(){
                 var current_budy_height = $('.buddy').height();
-                $current_window_width = $(window).width();
+                current_window_width = $(window).width();
                 if (current_budy_height != null) {
-                    if ($current_window_width > 499) {
-                        $('.gallery-like-container-div').css({'height':current_budy_height+30});
-                    }
-                    else {
-                        $('.gallery-like-container-div').css({'height':current_budy_height+10});
-                    }
+                    if (current_window_width > 530) {
+	                $('.gallery-like-container-div').css({'height': '530px'});
+	            }
+	            else {
+	                $('.gallery-like-container-div').css({'height': current_window_width-20});
+	            }
                 }
                 else{
                     $('.gallery-like-container-div').css({'height': 200});
@@ -156,7 +156,8 @@ Welcome
             $('#like-btn').mouseover(function() {
                 set_status("like");
             });
-            $('#like-btn').on('click',function() {
+
+            $('#like-btn').mousedown(function() {
                 if(set_status("like"))
                 {
                     var current_img_id = current_buddy.find('.image_id').val();
@@ -172,7 +173,7 @@ Welcome
             $('#unlike-btn').mouseover(function() {
                 set_status("unlike");
             });
-            $('#unlike-btn').on('click',function() {
+            $('#unlike-btn').mousedown(function() {
                 if(set_status("unlike")){
                     var current_img_id = current_buddy.find('.image_id').val();
                     set_like_images(current_img_id, 0);
@@ -182,6 +183,36 @@ Welcome
                 if(current_buddy.find('.status.dislike').length > 0) {
                     current_buddy.find('.status.dislike').remove();
                 }
+            });
+
+            $('#back-btn').on('click', function() {
+                $(".buddy").each(function() {
+                    var $this = $(this);
+                    if($this.css('display') == 'block') {
+                        current_buddy = $(this);
+                        if (current_buddy.prev('.buddy').length > 0) {
+                            current_buddy.delay(400).fadeOut(400);
+                            current_buddy.prev().removeClass('rotate-left rotate-right').fadeIn(1);
+                            if(current_buddy.prev().find('.status.dislike').length > 0) {
+                                current_buddy.prev().find('.status.dislike').remove();
+                            }
+                            if(current_buddy.prev().find('.status.like').length > 0) {
+                                current_buddy.prev().find('.status.like').remove();
+                            }
+                        }
+                    }
+                })
+            });
+
+            $('#info-btn').on('click', function() {
+                $(".buddy").each(function() {
+                    var $this = $(this);
+                    if($this.css('display') == 'block') {
+                        current_buddy = $(this);
+                        var image_id = $this.find('.image_id').val();
+                        view_stamp(image_id);
+                    }
+                })
             });
 
             function set_status(status) {
@@ -200,8 +231,6 @@ Welcome
 
                 return true;
             }
-
-
 
             $(".buddy").each(function() {
 

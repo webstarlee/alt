@@ -14,7 +14,7 @@ Gallery
     <div class="page-bar">
         <div class="page-toolbar">
             <div class="btn-group pull-right">
-                <a href="{{route('admin.gallery.view')}}"class="btn green btn-sm"> Back to Lists </a>
+                <a href="{{route('admin.gallery.view')}}" class="btn green btn-sm"> Back to Lists </a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@ Gallery
                     <div class="row">
                         <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
                             @foreach ($images as $image)
-                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 text-center">
+                                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 text-center">
                                     <a href="{{cdn('assets/images/gallery/'.$image->gallery_img.'.jpg')}}" data-sub-html="Just Empty">
                                         <img class="img-responsive thumbnail" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
                                     </a>

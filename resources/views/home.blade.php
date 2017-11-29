@@ -116,7 +116,7 @@ Welcome
                                                     <?php
                                                         if($count_style_number ==1){
                                                             if ($style1_passed_count == 2) {
-                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('view-selection/'.$gallery_style->id).'"';
                                                             }
                                                             else {
                                                                 echo 'href="'.url('gallery/'.$gallery_style->id).'"';
@@ -124,7 +124,7 @@ Welcome
                                                         }
                                                         else if($count_style_number == $all_style) {
                                                             if($style1_passed_count == 2) {
-                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('view-selection/'.$gallery_style->id).'"';
                                                             }
                                                             else if($style1_passed_count == 1) {
                                                                 echo 'href="'.url('gallery/'.$gallery_style->id).'"';
@@ -132,7 +132,7 @@ Welcome
                                                         }
                                                         else {
                                                             if($style1_passed_count == 2) {
-                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('view-selection/'.$gallery_style->id).'"';
                                                             }
                                                             else if($style1_passed_count == 1) {
                                                                 echo 'href="'.url('gallery/'.$gallery_style->id).'"';
@@ -207,7 +207,7 @@ Welcome
                                                     <?php
                                                         if($count_style_number1 ==1){
                                                             if ($style1_passed_count1 == 2) {
-                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('view-selection/'.$gallery_style->id).'"';
                                                             }
                                                             else {
                                                                 echo 'href="'.url('gallery/'.$gallery_style->id).'"';
@@ -215,15 +215,15 @@ Welcome
                                                         }
                                                         else if($count_style_number1 == $all_style) {
                                                             if($style1_passed_count1 == 2) {
-                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('view-selection/'.$gallery_style->id).'"';
                                                             }
                                                             else if($style1_passed_count1 == 1) {
-                                                                echo 'href="'.url('gallery'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
                                                             }
                                                         }
                                                         else {
                                                             if($style1_passed_count1 == 2) {
-                                                                echo 'href="'.url('gallery/'.$gallery_style->id).'"';
+                                                                echo 'href="'.url('view-selection/'.$gallery_style->id).'"';
                                                             }
                                                             else if($style1_passed_count1 == 1) {
                                                                 echo 'href="'.url('gallery/'.$gallery_style->id).'"';

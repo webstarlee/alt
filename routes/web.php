@@ -17,16 +17,15 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@view_gallery')->name('home');
 Route::get('/gallery/{id}', 'HomeController@gallery_show');
+Route::get('/view-selection/{id}', 'HomeController@view_selection');
+Route::get('/get-selection_img/{id}', 'HomeController@get_selection_img');
 Route::post('/like-images', 'HomeController@like_images');
 Route::get('/save-like-status/{id}', 'HomeController@like_status_save');
 Route::get('/get-stamp-img/{id}', 'HomeController@get_img_for_stamp');
 Route::post('/save_stamps', 'HomeController@save_all_stamps');
 //Auth::routes();
 
-Route::get('/login', function(){
-    return redirect()->route('login');
-});
-Route::get('/login-page', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 

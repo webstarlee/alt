@@ -39,6 +39,14 @@ class HomeController extends Controller
         return view('gallery', ['images' => $gallery_images, 'current_style' => $current_style]);
     }
 
+    public function view_selection($id)
+    {
+        $current_style = GalleryStyle::find($id);
+        $gallery_images = Gallery::where('style_id' , $id)->get();
+        $like_images = UserLike::where('user_id' , Auth::user()->id)->get();
+        return view('viewSelect', ['images' => $gallery_images, 'current_style' => $current_style, 'like_images' => $like_images]);
+    }
+
     public function view_gallery() {
         $category1 = Category::orderBy('id', 'ASC')->get()->first();
         $category2 = Category::orderBy('id', 'DESC')->get()->first();
@@ -100,5 +108,40 @@ class HomeController extends Controller
             $stamp->save();
         }
         return "success";
+    }
+
+    public function get_selection_img($id)
+    {
+        $data_image = Gallery::find($id);
+
+        $img_status = UserLike::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->get()->first();
+
+        if ($img_status == null) {
+            $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => 'undefine');
+
+            return $final_img_data;
+        }
+
+        if($img_status->like_type < 2) {
+            $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type);
+
+            return $final_img_data;
+        }
+        else {
+            $img_stamps = UserLove::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->get();
+
+            $myArray = array();
+
+            foreach ($img_stamps as $img_stamp)
+            {
+                $myArray[] = array('stamp_status' => $img_stamp->love_type, 'pos_top' => $img_stamp->pos_top, 'pos_left' => $img_stamp->pos_left);
+            }
+
+            $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type, 'stamp_datas' => $myArray);
+
+            return $final_img_data;
+        }
+
+        // return $img_status->like_type;
     }
 }
