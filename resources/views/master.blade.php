@@ -36,6 +36,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{{cdn('assets/images/favicon.png')}}">
         <link href="{{cdn('css/frontend.css')}}" rel="stylesheet" type="text/css" />
         <link rel="icon" type="image/png" sizes="32x32" href="{{cdn('assets/images/favicon.png')}}">
+        @yield('custom_style')
     </head>
     <body>
         <div class="page-loader-wrapper">
@@ -68,8 +69,8 @@
                             <ul class="nav navbar-nav pull-right">
                                 <li class="dropdown dropdown-user">
                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="padding-left: 5px;padding-bottom: 10px;background-color: #fff;">
-                                        @if(file_exists('assets/images/avatar/admin'.'/'.Auth::user()->avatar.'_thumbnail.jpg'))
-                                          <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar/admin').'/'.Auth::user()->avatar.'_thumbnail.jpg'}}" />
+                                        @if(file_exists('assets/images/avatar'.'/'.Auth::user()->avatar.'_thumbnail.jpg'))
+                                          <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar').'/'.Auth::user()->avatar.'_thumbnail.jpg'}}" />
                                         @else
                                           <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar/nophoto.jpg') }}" />
                                         @endif
@@ -78,7 +79,7 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-default">
                                         <li>
-                                            <a href="">
+                                            <a href="{{route('user.profile.view')}}">
                                                 <i class="icon-user"></i> Edit Profile </a>
                                         </li>
                                         <li>

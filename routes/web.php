@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@view_gallery')->name('home');
 Route::get('/gallery/{id}', 'HomeController@gallery_show');
+Route::get('/profile', 'UserController@view_profile')->name('user.profile.view');
 Route::get('/view-selection/{id}', 'HomeController@view_selection');
 Route::get('/get-selection_img/{id}', 'HomeController@get_selection_img');
 Route::post('/like-images', 'HomeController@like_images');
@@ -24,6 +25,13 @@ Route::get('/save-like-status/{id}', 'HomeController@like_status_save');
 Route::get('/get-stamp-img/{id}', 'HomeController@get_img_for_stamp');
 Route::post('/save_stamps', 'HomeController@save_all_stamps');
 //Auth::routes();
+
+Route::prefix('profile')->group(function(){
+    Route::post('/change-basic', 'UserController@change_basic')->name('profile.change.basic');
+    Route::post('/change-email', 'UserController@change_email')->name('profile.change.email');
+    Route::post('/change-avatar', 'UserController@change_avatar')->name('profile.change.avatar');
+    Route::post('/change-password', 'UserController@change_password')->name('profile.change.password');
+});
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
