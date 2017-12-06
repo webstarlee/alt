@@ -33,7 +33,6 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-
         $this->validateLogin($request);
 
         $remember = $request->input('remember');
@@ -42,7 +41,7 @@ class AdminLoginController extends Controller
         $availablecheck = Auth::guard('admin')->attempt($getAdmininfo, $remember);
 
         if ($availablecheck) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.gallery.view');
         }
         return redirect()->back()->withInput($request->only('email','remember'))->with('error', 'These credentials do not match.');
     }

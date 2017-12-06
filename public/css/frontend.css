@@ -70,7 +70,8 @@
     overflow: hidden;
 }
 .homepage-background-div.profile {
-    height: 400px;
+    height: 450px;
+    transition: all .3s ease-out;
 }
 .dropdown-user .dropdown-toggle>img {
     width: 60px;
@@ -94,14 +95,14 @@
     vertical-align: bottom;
 }
 .description-text {
-    font-size: 20pt;
+    font-size: 15pt;
     margin: 0;
     margin-bottom: 10px;
     text-shadow: 0 0 7px rgba(0,0,0,0.5);
 }
 .menu-button-right-div {
-    width: 80%;
-    margin-top: 40px;
+    width: 65%;
+    margin-top: 10px;
 }
 
 @media(max-width: 991px) {
@@ -680,6 +681,78 @@
     width: 100%;
     max-width: 450px;
 }
+.survey-img-container {
+    width: 100%;
+    padding-top: 30px;
+}
+.single-survey-img-contain {
+    width: 150px;
+    height: 150px;
+    margin: 15px auto;
+}
+.single-survey-img {
+    border-radius: 50%;
+    padding: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+.single-survey-img.active {
+    border: 5px solid #32c5d2;
+    padding: 0;
+}
+.single-survey-img:hover {
+    opacity: 0.7;
+}
+.survey-select-number {
+    width: 100%;
+    height: 100%;
+    background-color: #32c5d2;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.survey-number-text {
+    margin: 0;
+    padding-top: 40px;
+    font-size: 25pt;
+}
+.survey-size-text {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 15pt;
+}
+.select-survey-number-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10053;
+    display: none;
+}
+.select-number-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0.6;
+}
+.select-number-contain {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.select-survey-number-text {
+    margin: 0;
+    padding-top: 55px;
+    font-size: 25pt;
+}
+
 @media(max-width: 1199px) {
     .child-single-gallery-title-div {
         right: 30px;
@@ -754,6 +827,9 @@
     .style-text-h2 {
         font-size: 15pt;
         margin: 0;
+    }
+    .homepage-background-div.profile {
+        height: 350px;
     }
 }
 

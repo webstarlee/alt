@@ -34,7 +34,7 @@ Welcome
                 <div class="col-md-12">
                     <div class="page-toolbar">
                         <div class="btn-group pull-right">
-                            <a href="{{url('gallery/'.$current_style->id)}}" class="btn green btn-sm"> RESET YOUR SELECTION </a>
+                            <a href="{{url('reset_selection/'.$current_style->id)}}" id="selection_reset_btn" class="btn green btn-sm"> RESET YOUR SELECTION </a>
                         </div>
                     </div>
                 </div>
@@ -43,28 +43,31 @@ Welcome
                 <div class="col-md-12">
                     <h2 class="text-center style-text-h2"><span class="bold">{{$current_style->style_title}}</span> {{$current_style->style_name}} </h2>
                     <div class="row">
-                        <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
+                        <div id="aniimated-thumbnials" class="list-unstyled clearfix">
                             @foreach ($images as $image)
-                                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 text-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
                                     <div class="selection-image-container">
                                         <?php
                                             $current_image_status = 0;
                                             foreach ($like_images as $like_image) {
                                                 if ($image->id == $like_image->image_id) {
-                                                    if ($like_image->like_type == 1) {
-                                                        $current_image_status = 1;
-                                                    }
-                                                    elseif ($like_image->like_type == 2) {
+                                                    if ($like_image->like_type == 2) {
                                                         $current_image_status = 2;
+                                                    }
+                                                    elseif ($like_image->like_type == 3) {
+                                                        $current_image_status = 3;
+                                                    }
+                                                    elseif ($like_image->like_type == 1) {
+                                                        $current_image_status = 1;
                                                     }
                                                 }
                                             }
                                         ?>
-                                        @if ($current_image_status == 2)
+                                        @if ($current_image_status == 3)
                                             <div class="status selection_love">Love!</div>
-                                        @elseif ($current_image_status == 1)
+                                        @elseif ($current_image_status == 2)
                                             <div class="status selection_like">Like!</div>
-                                        @else
+                                        @elseif ($current_image_status == 1)
                                             <div class="status selection_dislike">Dislike!</div>
                                         @endif
                                         <input type="hidden" name="" id="current_img_id" value="{{$image->id}}">
@@ -112,7 +115,7 @@ Welcome
                         type: 'get',
                         success: function(result){
                             console.log(result);
-                            if (result.like_type < 2 || result.like_type == "undefine") {
+                            if (result.like_type < 3 || result.like_type == "undefine") {
                                 var image_url = "{{cdn('assets/images/gallery')}}" ;
                                 image_url = image_url+"/"+result.img_name+"_thumbnail.jpg";
 
@@ -120,7 +123,7 @@ Welcome
 
                                 $('.selection-view-img-container').html(img_html);
                                 $('#single_img_selection_view').modal('show');
-                            }else if (result.like_type == 2) {
+                            }else if (result.like_type == 3) {
                                 var image_url = "{{cdn('assets/images/gallery')}}" ;
                                 image_url = image_url+"/"+result.img_name+"_thumbnail.jpg";
 
@@ -152,6 +155,28 @@ Welcome
                         }
                     });
                 })
+            });
+
+            $(('#selection_reset_btn')).on('click', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                swal({
+                  title: "Are you sure?",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#0ed2d0",
+                  confirmButtonText: "Yes, Reset!",
+                  cancelButtonText: "No, cancel!",
+                  closeOnConfirm: true,
+                  closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        console.log($this.attr('href'));
+                        window.location = $this.attr('href');
+                    } else {
+
+                    }
+                });
             })
         });
     </script>

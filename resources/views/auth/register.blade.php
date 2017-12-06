@@ -47,7 +47,7 @@ Register
             </div>
             <div class="row">
                 <div class="col-sm-8 text-left" style="margin-bottom:20px;">
-                    <a class="btn grey" href="{{url('login-page')}}">Back to Login Page</a>
+                    <a class="btn grey" href="{{url('login')}}">Back to Login Page</a>
                 </div>
                 <div class="col-sm-4 text-right">
                     <button class="btn blue" type="submit">Proceed</button>

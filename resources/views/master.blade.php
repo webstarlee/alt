@@ -79,6 +79,10 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-default">
                                         <li>
+                                            <a href="{{route('home')}}">
+                                                <i class="icon-home"></i> Home </a>
+                                        </li>
+                                        <li>
                                             <a href="{{route('user.profile.view')}}">
                                                 <i class="icon-user"></i> Edit Profile </a>
                                         </li>

@@ -24,6 +24,8 @@ Route::post('/like-images', 'HomeController@like_images');
 Route::get('/save-like-status/{id}', 'HomeController@like_status_save');
 Route::get('/get-stamp-img/{id}', 'HomeController@get_img_for_stamp');
 Route::post('/save_stamps', 'HomeController@save_all_stamps');
+Route::get('/reset_selection/{id}', 'HomeController@reset_user_selection');
+Route::get('/construnction', 'HomeController@construction')->name('live.construction');
 //Auth::routes();
 
 Route::prefix('profile')->group(function(){
@@ -88,4 +90,21 @@ Route::prefix('admin')->group(function(){
     Route::post('/gallery-edit-category', 'GalleryController@update_category')->name('admin.gallery.edit.category');
     Route::post('/gallery-add-style', 'GalleryController@store_style')->name('admin.gallery.add.style');
     Route::post('/gallery-edit-style', 'GalleryController@update_style')->name('admin.gallery.edit.style');
+    Route::get('/survey', 'SurveyController@view_survey')->name('admin.survey.view');
+    Route::post('/question-add', 'SurveyController@question_add')->name('question.add');
+    Route::post('/question-edit', 'SurveyController@question_edit')->name('question.edit');
+    Route::get('/question-edit/{id}', 'SurveyController@get_single_question')->name('question.get.single');
+    Route::get('/question-delete/{id}', 'SurveyController@delete_question')->name('question.delete');
+    Route::post('/answer-add', 'SurveyController@add_answer')->name('admin.answer.add');
+    Route::get('/answer-edit/{id}', 'SurveyController@get_single_answer')->name('answer.get.single');
+    Route::post('/answer-edit', 'SurveyController@answer_edit')->name('admin.answer.edit');
+    Route::get('/answer-delete/{id}', 'SurveyController@delete_answer')->name('answer.delete');
+    Route::post('/optionb-other-add', 'SurveyController@add_optionb_other')->name('admin.optionb.other.add');
+    Route::get('/optionb-other-edit/{id}', 'SurveyController@get_single_optionb_other')->name('optionb.other.get.single');
+    Route::post('/optionb-other-edit', 'SurveyController@optionb_other_edit')->name('admin.optionb.other.edit');
+    Route::get('/optionb-other-delete/{id}', 'SurveyController@delete_optionb_other')->name('optionb.other.delete');
+    Route::post('/optionb-size-add', 'SurveyController@add_optionb_size')->name('admin.optionb.size.add');
+    Route::get('/optionb-size-edit/{id}', 'SurveyController@get_single_optionb_size')->name('optionb.size.get.single');
+    Route::post('/optionb-size-edit', 'SurveyController@optionb_size_edit')->name('admin.optionb.size.edit');
+    Route::get('/optionb-size-delete/{id}', 'SurveyController@delete_optionb_size')->name('optionb.size.delete');
 });

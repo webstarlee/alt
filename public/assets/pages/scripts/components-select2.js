@@ -15,6 +15,17 @@ var ComponentsSelect2 = function() {
             width: null
         });
 
+        $(".select2-survey").each(function() {
+            var $this = $(this);
+            var placeholder_custom = $this.data('placeholder');
+            // console.log(placeholder_custom);
+
+            $this.select2({
+                placeholder: placeholder_custom,
+                width: null
+            });
+        });
+
         $(".select2-allow-clear").select2({
             allowClear: true,
             placeholder: placeholder,

@@ -17,7 +17,7 @@ Welcome
                     </div>
                     <div class="col-md-6">
                         <div class="menu-button-right-div pull-right animated bounceInLeft">
-                            <a href="#"><img src="{{cdn('assets/images/components/goto_estimate.svg')}}" class="menu-estimate" alt=""></a>
+                            <a href="{{route('live.construction')}}"><img src="{{cdn('assets/images/components/goto_estimate.svg')}}" class="menu-estimate" alt=""></a>
                         </div>
                     </div>
                 </div>

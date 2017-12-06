@@ -98,7 +98,7 @@
 }
 .user-profile-container-div {
     width: 100%;
-    /* position: absolute; */
+    position: absolute; 
     display: inline-block;
     margin-top: -250px;
     margin-bottom: 20px;

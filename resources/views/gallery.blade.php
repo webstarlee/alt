@@ -161,7 +161,7 @@ like image
                 if(set_status("like"))
                 {
                     var current_img_id = current_buddy.find('.image_id').val();
-                    set_like_images(current_img_id, 1);
+                    set_like_images(current_img_id, 2);
                 }
             });
             $('#like-btn').mouseout(function() {
@@ -176,7 +176,7 @@ like image
             $('#unlike-btn').mousedown(function() {
                 if(set_status("unlike")){
                     var current_img_id = current_buddy.find('.image_id').val();
-                    set_like_images(current_img_id, 0);
+                    set_like_images(current_img_id, 1);
                 }
             });
             $('#unlike-btn').mouseout(function() {
@@ -242,12 +242,12 @@ like image
                     if (e.type == 'swipeleft') {
                         current_buddy = $(this);
                         var current_img_id = current_buddy.find('.image_id').val();
-                        set_like_images(current_img_id, 0);
+                        set_like_images(current_img_id, 1);
                     // }
                     } else if (e.type == 'swiperight') {
                         current_buddy = $(this);
                         var current_img_id = current_buddy.find('.image_id').val();
-                        set_like_images(current_img_id, 1);
+                        set_like_images(current_img_id, 2);
                     }
                     else if (e.type == 'press') {
                         console.log("Hello");
@@ -261,7 +261,7 @@ like image
                 var set_image_like_url = "{{url('/like-images')}}";
                 var user_id = <?php echo Auth::user()->id; ?> ;
 
-                if (status == 1) {
+                if (status == 2) {
                     current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
                     $('.buddy').find('.status').remove();
                     current_buddy.append('<div class="status like">Like!</div>');
@@ -277,7 +277,7 @@ like image
                         }, 450);
                     }
                 }
-                else if (status == 0) {
+                else if (status == 1) {
                     current_buddy.addClass('rotate-right').delay(400).fadeOut(1);
                     $('.buddy').find('.status').remove();
                     current_buddy.append('<div class="status dislike">Dislike!</div>');
@@ -436,7 +436,7 @@ like image
                         $(this).removeClass('active');
                     });
                     $('#image_comment_stamp').modal('hide');
-                    set_like_images(image_id, 2);
+                    set_like_images(image_id, 3);
 
                     current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
                     $('.buddy').find('.status').remove();

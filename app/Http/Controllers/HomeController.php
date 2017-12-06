@@ -144,4 +144,22 @@ class HomeController extends Controller
 
         // return $img_status->like_type;
     }
+
+    public function reset_user_selection($id)
+    {
+        // dd($id);
+        if (Auth::user()->id) {
+            $galleries = Gallery::where('style_id', $id)->get();
+            foreach ($galleries as $gallery) {
+                UserLike::where('image_id', $gallery->id)->where('user_id', Auth::user()->id)->delete();
+                UserLove::where('image_id', $gallery->id)->where('user_id', Auth::user()->id)->delete();
+            }
+            return redirect('gallery/'.$id);
+        }
+    }
+
+    public function construction()
+    {
+        return view('estimate');
+    }
 }

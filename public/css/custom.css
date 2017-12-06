@@ -655,3 +655,8 @@
     left: 25px;
     color: #484848;
 }
+@media(max-width: 1199px) {
+    .survey-other-option-toolbar {
+        margin-top: 20px;
+    }
+}

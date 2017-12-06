@@ -54,7 +54,7 @@
   <!-- BEGIN HEADER -->
   <div class="page-header navbar navbar-fixed-top" id="homepage-header-div">
       <!-- BEGIN HEADER INNER -->
-      <div class="page-header-inner ">
+      <div class="page-header-inner">
           <!-- BEGIN LOGO -->
           <div class="page-logo">
               <a href="{{url('/admin')}}" style="margin-left: 5px;">
@@ -115,23 +115,6 @@
                       <!-- END SIDEBAR TOGGLER BUTTON -->
                   </li>
                   <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-                  <li class="sidebar-search-wrapper">
-                      <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-                      <form class="sidebar-search  sidebar-search-bordered" action="page_general_search_3.html" method="POST">
-                          <a href="javascript:;" class="remove">
-                              <i class="icon-close"></i>
-                          </a>
-                          <div class="input-group">
-                              <input type="text" style="color:#969696" class="form-control" placeholder="Search...">
-                              <span class="input-group-btn">
-                                  <a href="javascript:;" class="btn submit">
-                                      <i class="icon-magnifier"></i>
-                                  </a>
-                              </span>
-                          </div>
-                      </form>
-                      <!-- END RESPONSIVE QUICK SEARCH FORM -->
-                  </li>
                   <li class="nav-item start @if(Route::current()->uri=='admin')open active @endif">
                       <a href="{{ route('admin.dashboard') }}" class="nav-link nav-toggle">
                           <i class="icon-home"></i>
@@ -161,9 +144,18 @@
                   </li>
                   <li class="nav-item @if(Route::currentRouteName()=='admin.gallery.view' || Route::currentRouteName()=='admin.gallery.view.single')open active @endif">
                       <a href="{{ route('admin.gallery.view') }}" class="nav-link nav-toggle">
-                          <i class="icon-users"></i>
+                          <i class="icon-picture"></i>
                           <span class="title">Gallery Management</span>
                           @if(Route::currentRouteName()=='admin.gallery.view' || Route::currentRouteName()=='admin.gallery.view.single')
+                          <span class="selected"></span>
+                          @endif
+                      </a>
+                  </li>
+                  <li class="nav-item @if(Route::currentRouteName()=='admin.survey.view' || Route::currentRouteName()=='admin.answer.add')open active @endif">
+                      <a href="{{route('admin.survey.view')}}" class="nav-link nav-toggle">
+                          <i class="icon-picture"></i>
+                          <span class="title">Construnction Estimate</span>
+                          @if(Route::currentRouteName()=='admin.survey.view' || Route::currentRouteName()=='admin.answer.add')
                           <span class="selected"></span>
                           @endif
                       </a>
