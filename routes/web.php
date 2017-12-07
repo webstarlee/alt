@@ -26,6 +26,7 @@ Route::get('/get-stamp-img/{id}', 'HomeController@get_img_for_stamp');
 Route::post('/save_stamps', 'HomeController@save_all_stamps');
 Route::get('/reset_selection/{id}', 'HomeController@reset_user_selection');
 Route::get('/construnction', 'HomeController@construction')->name('live.construction');
+Route::get('/get-single-question/{id}', 'HomeController@get_sizeoption_single');
 //Auth::routes();
 
 Route::prefix('profile')->group(function(){

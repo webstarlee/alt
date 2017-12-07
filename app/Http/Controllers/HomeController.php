@@ -8,6 +8,10 @@ use \App\UserLove;
 use \App\Gallery;
 use \App\Category;
 use \App\GalleryStyle;
+use \App\SurveyAnswer1;
+use \App\SurveyAnswer2;
+use \App\SurveyAnswerSize;
+use \App\SurveyQuestion;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -160,6 +164,13 @@ class HomeController extends Controller
 
     public function construction()
     {
-        return view('estimate');
+        $questions = SurveyQuestion::all();
+        return view('estimate', ['quetions' => $questions]);
+    }
+
+    public function get_sizeoption_single($id)
+    {
+        $option_sizes = SurveyAnswerSize::where('question_id', $id)->orderBy('size', 'ASC')->get();
+        return $option_sizes;
     }
 }

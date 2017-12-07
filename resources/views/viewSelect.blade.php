@@ -7,28 +7,30 @@ Welcome
 <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-    <div class="homepage-background-div" style="height: 25vh;">
-        <div class="description-container-div">
-        </div>
-        <div class="menu-container-div">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="menu-button-gotoHome-div animated bounceInRight">
-                            <a href="{{url('home')}}"><img src="{{cdn('assets/images/components/alt_gotoHome_button.svg')}}" class="menu-estimate" alt=""></a>
+    <div class="survey-background-div">
+        <div class="survey-background-button-container">
+            <div class="description-container-div">
+            </div>
+            <div class="menu-container-div">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="menu-button-gotoHome-div animated bounceInRight">
+                                <a href="{{url('home')}}"><img src="{{cdn('assets/images/components/alt_gotoHome_button.svg')}}" class="menu-estimate" alt=""></a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="description-text-summary-div animated bounceInLeft">
-                            <p class="font-white summary-text text-right" >Summary</p>
-                            <p class="font-white bold your-selection-text text-right">Your Selection</p>
+                        <div class="col-xs-6">
+                            <div class="description-text-summary-div animated bounceInLeft">
+                                <p class="font-white summary-text text-right" >Summary</p>
+                                <p class="font-white bold your-selection-text text-right">Your Selection</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="gallery-img-container-div">
+    <div class="survey-img-container-div">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

@@ -14,6 +14,7 @@
         <link href="{{cdn('assets/global/plugins/animate-css/animate.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{cdn('assets/global/plugins/node-waves/waves.css')}}" rel="stylesheet" />
         {{-- <link href="{{cdn('assets/global/plugins/jquery.mobile-1.4.5.min.css')}}" rel="stylesheet" type="text/css" /> --}}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
         <!-- END GLOBAL MANDATORY STYLES -->
@@ -114,6 +115,7 @@
         <script src="{{cdn('assets/global/plugins/sweetalert/sweetalert.min.js')}}" type="text/javascript"></script>
         <script src="{{cdn('assets/global/plugins/hammer.js')}}" type="text/javascript"></script>
         <script src="{{cdn('assets/global/plugins/jquery.touchSwipe.min.js')}}" type="text/javascript"></script>
+        <script src="{{cdn('assets/global/plugins/node-waves/waves.js')}}"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -138,6 +140,7 @@
         @yield('custom_script')
         <script>
               window.onload = function () { setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50); }
+              Waves.init();
         </script>
     </body>
 </html>

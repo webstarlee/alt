@@ -3,28 +3,30 @@
 Welcome
 @endsection
 @section('content')
-    <div class="homepage-background-div">
-        <div class="description-container-div">
-        </div>
-        <div class="menu-container-div">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="description-text-div animated bounceInRight">
-                            <p class="font-white description-text" >Take our short gallery survey add let us build your</p>
-                            <p class="font-white bold description-text">Dream home</p>
+    <div class="survey-background-div">
+        <div class="survey-background-button-container">
+            <div class="description-container-div">
+            </div>
+            <div class="menu-container-div">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="description-text-div animated bounceInRight">
+                                <p class="font-white description-text" >Take our short gallery survey add let us build your</p>
+                                <p class="font-white bold description-text">Dream home</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="menu-button-right-div pull-right animated bounceInLeft">
-                            <a href="{{route('live.construction')}}"><img src="{{cdn('assets/images/components/goto_estimate.svg')}}" class="menu-estimate" alt=""></a>
+                        <div class="col-md-6">
+                            <div class="menu-button-right-div pull-right animated bounceInLeft">
+                                <a href="{{route('live.construction')}}"><img src="{{cdn('assets/images/components/goto_estimate.svg')}}" class="menu-estimate" alt=""></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="user-img-gallery-parent-div">
+    <div class="survey-img-container-div">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -34,7 +36,7 @@ Welcome
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <div class="parent_gallery_img_info-div">
-                                            <div class="gallery-single-img-div left-img">
+                                            <div class="gallery-single-img-div left-img active">
                                                 <a href="#tab_1_1" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category1->category_img.'_thumbnail.jpg')}}" alt=""> </a>
                                             </div>
                                             <div class="single-gallery-title-div">
@@ -57,7 +59,7 @@ Welcome
                         </div>
                         <div class="tab-content">
 
-                            <div class="tab-pane" id="tab_1_1">
+                            <div class="tab-pane active" id="tab_1_1">
                                 <?php
                                     $style1_passed_count = 0;
                                     // $isexist_passed = 0;
@@ -85,6 +87,37 @@ Welcome
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
                                             <div class="child_gallery_img_info-div">
+                                                @if ($count_style_number ==1)
+                                                    @if ($style1_passed_count == 2)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                        </div>
+                                                    @else
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">Start Here</p>
+                                                        </div>
+                                                    @endif
+                                                @elseif ($count_style_number == $all_style)
+                                                    @if ($style1_passed_count == 2)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                        </div>
+                                                    @elseif ($style1_passed_count == 1)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    @if ($style1_passed_count == 2)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                        </div>
+                                                    @elseif ($style1_passed_count == 1)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                        </div>
+                                                    @endif
+                                                @endif
                                                 <div class="subGallery-single-img-div
                                                 <?php
                                                     if($count_style_number ==1){
@@ -176,6 +209,37 @@ Welcome
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
                                             <div class="child_gallery_img_info-div">
+                                                @if ($count_style_number1 ==1)
+                                                    @if ($style1_passed_count1 == 2)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                        </div>
+                                                    @else
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">Start Here</p>
+                                                        </div>
+                                                    @endif
+                                                @elseif ($count_style_number1 == $all_style1)
+                                                    @if ($style1_passed_count1 == 2)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                        </div>
+                                                    @elseif ($style1_passed_count1 == 1)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                        </div>
+                                                    @endif
+                                                @else
+                                                    @if ($style1_passed_count1 == 2)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                        </div>
+                                                    @elseif ($style1_passed_count1 == 1)
+                                                        <div class="user-selection-view-gallery-div">
+                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                        </div>
+                                                    @endif
+                                                @endif
                                                 <div class="subGallery-single-img-div
                                                 <?php
                                                     if($count_style_number1 ==1){
