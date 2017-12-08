@@ -27,6 +27,10 @@ Route::post('/save_stamps', 'HomeController@save_all_stamps');
 Route::get('/reset_selection/{id}', 'HomeController@reset_user_selection');
 Route::get('/construnction', 'HomeController@construction')->name('live.construction');
 Route::get('/get-single-question/{id}', 'HomeController@get_sizeoption_single');
+Route::post('/save-survey-optiona', 'HomeController@save_survey_optiona')->name('save.survey.optiona');
+Route::post('/save-comment', 'HomeController@save_question_comment')->name('save.question.comment');
+Route::get('/delete-own-comment/{id}', 'HomeController@delete_comment');
+Route::get('/calculator/{number}', 'HomeController@calculator');
 //Auth::routes();
 
 Route::prefix('profile')->group(function(){

@@ -43,6 +43,12 @@ Welcome
                                 <?php
                                     $optionsA = \App\SurveyAnswer1::where('question_id', $quetion->id)->orderBy('size', 'ASC')->get();
                                     $option_count = \App\SurveyAnswer1::where('question_id', $quetion->id)->count();
+                                    $current_option_result_count = \App\UserOptionA::where('question_id', $quetion->id)->where('user_id', Auth::user()->id)->count();
+                                    if ($current_option_result_count > 0) {
+                                        $current_option_result = \App\UserOptionA::where('survey_option1_results.question_id', $quetion->id)->where('user_id', Auth::user()->id)
+                                        ->join('survey_option1', 'survey_option1.id', '=', 'survey_option1_results.option_id')
+                                        ->select('survey_option1_results.*', 'survey_option1.title')->first();
+                                    }
                                     $array_acount = 0;
                                 ?>
                                 <div class="row optiona-question-container">
@@ -56,10 +62,11 @@ Welcome
                                             <div class="col-sm-3 dotted-line-number">
                                                 <div class="single-survey-img-contain">
                                                     <div class="survey-select-number optiona_size_number_item">
-                                                        <input type="hidden" class="current-optiona-size-number-hidden" value="">
-                                                        <input type="hidden" class="current-optiona-image-type-hidden" value="">
-                                                        <h2 class="bold text-center survey-number-text current-optiona-size-number">0</h2>
-                                                        <h3 class="bold text-center survey-size-text current-optiona-image-type"></h3>
+                                                        <input type="hidden" class="current-optiona-size-number-hidden" value="@if($current_option_result_count>0) {{$current_option_result->number}} @endif">
+                                                        <input type="hidden" class="current-optiona-image-type-hidden" value="@if($current_option_result_count>0) {{$current_option_result->option_id}} @endif">
+                                                        <input type="hidden" class="current-question-id-hidden" value="{{$quetion->id}}">
+                                                        <h2 class="bold text-center survey-number-text current-optiona-size-number">@if($current_option_result_count>0) {{$current_option_result->number}} @else 0 @endif</h2>
+                                                        <h3 class="bold text-center survey-size-text current-optiona-image-type">@if($current_option_result_count>0) {{$current_option_result->title}} @endif</h3>
                                                     </div>
                                                     <h3 class="bold text-center survey-circle-title-text">Number</h3>
                                                 </div>
@@ -70,25 +77,35 @@ Welcome
                                                         <?php $array_acount += 1; ?>
                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center @if($array_acount%3 == 0) dotted-line-last @else dotted-line @endif">
                                                             <div class="single-survey-img-contain optiona_img_item ">
-                                                                <img class="img-responsive single-survey-img" src="{{cdn('assets/images/survey/'.$option->img_name.'_thumbnail.jpg')}}">
-                                                                <input type="hidden" name="" class="survey-circle-title-value" value="{{$option->size}}">
+                                                                <img class="img-responsive single-survey-img @if($current_option_result_count >0 && $current_option_result->option_id == $option->id) active @endif" src="{{cdn('assets/images/survey/'.$option->img_name.'_thumbnail.jpg')}}">
+                                                                <input type="hidden" name="" class="survey-circle-title-value" value="{{$option->id}}">
                                                                 <h3 class="bold text-center survey-circle-title-text" data-value="{{$option->title}}">{{$option->title}}</h3>
                                                             </div>
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="margin-top: 20px;">
-                                            <div class="col-sm-8 col-sm-offset-2">
-                                                <div class="row">
-                                                    <div class="col-xs-9">
-                                                        <div class="form-group">
-                                                            <input class="form-control" type="text" name="user-comment-question" placeholder="Comment:"/>
+                                                <div class="comment-container-div">
+                                                    <div class="row">
+                                                        <div class="col-sm-11 col-sm-offset-1 col-xs-12" id="comment_container_{{$quetion->id}}">
+                                                            @foreach ($comments as $comment)
+                                                                @if ($comment->question_id == $quetion->id)
+                                                                    <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
+                                                                        <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
+                                                                        <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="#" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-3">
-                                                        <button type="button" class="btn green">Save</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-8 col-sm-offset-1 col-xs-9">
+                                                            <div class="form-group">
+                                                                <input class="form-control question_comment" type="text" name="question_comment" placeholder="Comment:"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-3">
+                                                            <a class="btn green question-comment-save-btn" style="width: 100%;"><i class="fa fa-floppy-o" style="font-size: 10pt;"></i> <span class="survey-commnet-mobile-hide">Save</span></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,7 +131,7 @@ Welcome
                                                     <div class="survey-select-number optionb_size_text_item" onclick="show_size_form({{$quetion->id}})">
                                                         <input type="hidden" class="current-optionb-size-id" value="">
                                                         <h2 class="bold text-center survey-number-text current-optiona-size-number">Select</h2>
-                                                        <h3 class="bold text-center survey-size-text current-optiona-image-type" style="display: none;"><span>30</span> &#x33a0;</h3>
+                                                        <h3 class="bold text-center survey-size-text current-optiona-image-type" style="display: none;"><span>30</span> &#x33a1;</h3>
                                                     </div>
                                                     <h3 class="bold text-center survey-circle-title-text">Size</h3>
                                                 </div>
@@ -131,18 +148,16 @@ Welcome
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="margin-top: 20px;">
-                                            <div class="col-sm-8 col-sm-offset-2">
-                                                <div class="row">
-                                                    <div class="col-xs-9">
-                                                        <div class="form-group">
-                                                            <input class="form-control" type="text" name="user-comment-question" placeholder="Comment:"/>
+                                                <div class="comment-container-div">
+                                                    <div class="row">
+                                                        <div class="col-sm-8 col-sm-offset-1 col-xs-9">
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="text" name="user-comment-question" placeholder="Comment:"/>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-xs-3">
-                                                        <button type="button" class="btn green">Save</button>
+                                                        <div class="col-sm-3 col-xs-3">
+                                                            <a class="btn green" style="width: 100%;"><i class="fa fa-floppy-o" style="font-size: 10pt;"></i> <span class="survey-commnet-mobile-hide">Save</span></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -235,7 +250,7 @@ Welcome
                             <div class="col-sm-3">
                                 <div class="optiona-size-round-div optiona-current-size-number">
                                     <span class="bold optionb-size-span" id="optionb-current-selected-size-text"></span>
-                                    <span class="bold optionb-number-span" id="optionb-current-selected-size-number" style="display: none;"> <span>15</span> &#x33a0;</span>
+                                    <span class="bold optionb-number-span" id="optionb-current-selected-size-number" style="display: none;"> <span>15</span> &#x33a1;</span>
                                 </div>
                             </div>
                             <div class="col-sm-9">
@@ -316,6 +331,7 @@ Welcome
             $(optionA_nRow).find('.current-optiona-size-number').html(number);
 
             optiona_size_div.fadeOut(400);
+            optiona_status_save();
         }
 
         $('#optiona-size-user-input-show').on('click', function() {
@@ -341,8 +357,25 @@ Welcome
             var optiona_img_title = $this.find('.survey-circle-title-text').data('value');
             $(optionA_nRow).find('.current-optiona-image-type-hidden').val(optiona_img_id);
             $(optionA_nRow).find('.current-optiona-image-type').html(optiona_img_title);
-            // console.log(optiona_img_id);
+            optiona_status_save();
         });
+
+        function optiona_status_save() {
+            var optionaSize = $(optionA_nRow).find('.current-optiona-size-number-hidden').val();
+            var questionId = $(optionA_nRow).find('.current-question-id-hidden').val();
+            var optionaId = $(optionA_nRow).find('.current-optiona-image-type-hidden').val();
+            var optiona_save_url = "{{route('save.survey.optiona')}}";
+
+            if (optionaSize != "" && questionId != "" && optionaId != "") {
+                // console.log("not null");
+                axios.post(optiona_save_url, {option_size:optionaSize, question_id:questionId, option_id:optionaId}).then(function (response) {
+                    // console.log(response);
+                    reset_calculator_status();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
 
 
         var optionB_size_div = $('.optionb-size-number-select-container__div');
@@ -376,14 +409,14 @@ Welcome
                                         +'<a id="optionb-size-select-'+size.id+'" class="optionb-set-number-a">'
                                         +'<div onclick="set_optionb_size('+size.id+')" class="optiona-size-round-div active">'
                                         +'<span class="bold optionb-size-span" data-value="'+size.title+'">'+size.title+'</span>'
-                                        +'<span class="bold optionb-number-span" data-value="'+size.size+'">'+size.size+' &#x33a0;</span>'
+                                        +'<span class="bold optionb-number-span" data-value="'+size.size+'">'+size.size+' &#x33a1;</span>'
                                         +'</div></a></div>';
                         }else {
                             size_html += '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">'
                                         +'<a id="optionb-size-select-'+size.id+'" class="optionb-set-number-a">'
                                         +'<div onclick="set_optionb_size('+size.id+')" class="optiona-size-round-div">'
                                         +'<span class="bold optionb-size-span" data-value="'+size.title+'">'+size.title+'</span>'
-                                        +'<span class="bold optionb-number-span" data-value="'+size.size+'">'+size.size+' &#x33a0;</span>'
+                                        +'<span class="bold optionb-number-span" data-value="'+size.size+'">'+size.size+' &#x33a1;</span>'
                                         +'</div></a></div>';
                         }
                     })
@@ -422,6 +455,67 @@ Welcome
             var $this = $(this);
             // console.log($this);
             $this.find('img.single-survey-img').toggleClass('active');
-        })
+        });
+
+        $('.question-comment-save-btn').on('click', function() {
+            var $this = $(this);
+            optionA_nRow = $this.parents('.optiona-question-container')[0];
+            var questionId = $(optionA_nRow).find('.current-question-id-hidden').val();
+            var userComment = $(optionA_nRow).find('.question_comment').val();
+            var comment_save_url = "{{route('save.question.comment')}}";
+
+            if (userComment != "") {
+                axios.post(comment_save_url, {question_id:questionId, comment:userComment}).then(function (response) {
+                    $(optionA_nRow).find('.question_comment').val("");
+                    var img_url = "{{cdn('assets/images/avatar')}}" ;
+                    img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
+                    var new_comment_html = '<div class="single-user-comment-contain" id="single_user_comment_'+response.data['id']+'">'
+                    +'<img class="comment-user-img tooltips" data-placement="bottom" data-original-title="'+response.data['first_name']+' '+response.data['last_name']+'" src="'+img_url+'">'
+                    +'<span class="single-user-comment-text">'+response.data['comment']+'<a href="#" onclick="delete_own_comment('+response.data['id']+')" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a></span></div>';
+
+                    var comment_contain_div = $(optionA_nRow).find('#comment_container_'+questionId).prepend(new_comment_html);
+
+                    // console.log(new_comment_html);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
+
+        function delete_own_comment(id) {
+            var url = "{{url('delete-own-comment')}}";
+            var final_delete_url = url+"/"+id;
+
+            $.ajax({
+                url: final_delete_url,
+                type: 'get',
+                success: function(result){
+                    $('#single_user_comment_'+id).remove();
+                },
+                error: function(result){
+                    console.log(error);
+                }
+            });
+        }
+
+        function reset_calculator_status() {
+            var current_per_money = $('#survey_money_per_meter').val();
+            var calculator_url = "{{url('calculator')}}";
+            var calculator_final_url = calculator_url+"/"+current_per_money;
+            $.ajax({
+                url: calculator_final_url,
+                type: 'get',
+                success: function(result){
+                    // console.log(result.total_square);
+                    var result_total_money = result.total_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    $('#total_survey_square_size').html(result.total_square);
+                    $('#total_survey_money').html(result_total_money);
+                },
+                error: function(result){
+                    console.log(error);
+                }
+            });
+            // console.log(current_per_money);
+        }
     </script>
 @endsection

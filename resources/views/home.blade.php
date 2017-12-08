@@ -90,31 +90,31 @@ Welcome
                                                 @if ($count_style_number ==1)
                                                     @if ($style1_passed_count == 2)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                            <a href="{{url('view-selection/'.$gallery_style->id)}}" class="child-single-gallery-title bold">View Selection</a>
                                                         </div>
                                                     @else
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">Start Here</p>
+                                                            <a href="{{url('gallery/'.$gallery_style->id)}}" class="child-single-gallery-title bold">Start Here</a>
                                                         </div>
                                                     @endif
                                                 @elseif ($count_style_number == $all_style)
                                                     @if ($style1_passed_count == 2)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                            <a href="{{url('view-selection/'.$gallery_style->id)}}" class="child-single-gallery-title bold">View Selection</a>
                                                         </div>
                                                     @elseif ($style1_passed_count == 1)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                            <a href="{{url('gallery/'.$gallery_style->id)}}" class="child-single-gallery-title bold">Next Gallery</a>
                                                         </div>
                                                     @endif
                                                 @else
                                                     @if ($style1_passed_count == 2)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                            <a href="{{url('view-selection/'.$gallery_style->id)}}" class="child-single-gallery-title bold">View Selection</a>
                                                         </div>
                                                     @elseif ($style1_passed_count == 1)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                            <a href="{{url('gallery/'.$gallery_style->id)}}" class="child-single-gallery-title bold">Next Gallery</a>
                                                         </div>
                                                     @endif
                                                 @endif
@@ -212,31 +212,31 @@ Welcome
                                                 @if ($count_style_number1 ==1)
                                                     @if ($style1_passed_count1 == 2)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                            <a href="{{url('view-selection/'.$gallery_style->id)}}" class="child-single-gallery-title bold">View Selection</a>
                                                         </div>
                                                     @else
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">Start Here</p>
+                                                            <a href="{{url('gallery/'.$gallery_style->id)}}" class="child-single-gallery-title bold">Start Here</a>
                                                         </div>
                                                     @endif
                                                 @elseif ($count_style_number1 == $all_style1)
                                                     @if ($style1_passed_count1 == 2)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                            <a href="{{url('view-selection/'.$gallery_style->id)}}" class="child-single-gallery-title bold">View Selection</a>
                                                         </div>
                                                     @elseif ($style1_passed_count1 == 1)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                            <a href="{{url('gallery/'.$gallery_style->id)}}" class="child-single-gallery-title bold">Next Gallery</a>
                                                         </div>
                                                     @endif
                                                 @else
                                                     @if ($style1_passed_count1 == 2)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">View Selection</p>
+                                                            <a href="{{url('view-selection/'.$gallery_style->id)}}" class="child-single-gallery-title bold">View Selection</a>
                                                         </div>
                                                     @elseif ($style1_passed_count1 == 1)
                                                         <div class="user-selection-view-gallery-div">
-                                                            <p class="child-single-gallery-title bold">Next Gallery</p>
+                                                            <a href="{{url('gallery/'.$gallery_style->id)}}" class="child-single-gallery-title bold">Next Gallery</a>
                                                         </div>
                                                     @endif
                                                 @endif

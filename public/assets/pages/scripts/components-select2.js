@@ -15,6 +15,12 @@ var ComponentsSelect2 = function() {
             width: null
         });
 
+        $(".survey-calculator").select2({
+            placeholder: placeholder,
+            width: null,
+            minimumResultsForSearch: -1
+        });
+
         $(".select2-survey").each(function() {
             var $this = $(this);
             var placeholder_custom = $this.data('placeholder');

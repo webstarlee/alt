@@ -234,11 +234,11 @@
 }
 .dotted-line-vertical::before {
     content: "";
-    height: 50%;
+    height: 195px;
     border-left: 2px dashed #bbbbbb;
     width: 1px;
     position: absolute;
-    top: calc( 25% - 5px);
+    top: 90px;
     left: 0px;
     z-index: -1;
 }
@@ -261,6 +261,31 @@
     right: 5px;
     z-index: -1;
 }
+.comment-container-div {
+    margin-top: 30px;
+}
+.single-user-comment-contain {
+    padding: 10px 0;
+    position: relative;
+}
+.comment-user-img {
+    width: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.single-user-comment-text {
+    margin-left: 10px;
+}
+.delete-comment-btn>i {
+    font-size: 12pt;
+}
+/*.survey-calculator-container__div {
+    position: fixed;
+    top: 0;
+    height: 100px;
+    width: 200px;
+    background-color: #000;
+}*/
 @media(max-width: 767px) {
     .dotted-line::before {
         content: none;
@@ -357,5 +382,8 @@
     }
     .user-input-form {
         padding: 10px;
+    }
+    .survey-commnet-mobile-hide {
+        display: none;
     }
 }

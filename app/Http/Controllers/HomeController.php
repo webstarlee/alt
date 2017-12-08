@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use DateTime;
 use \App\UserLike;
 use \App\UserLove;
 use \App\Gallery;
 use \App\Category;
+use \App\UserOptionA;
 use \App\GalleryStyle;
 use \App\SurveyAnswer1;
 use \App\SurveyAnswer2;
 use \App\SurveyAnswerSize;
 use \App\SurveyQuestion;
+use \App\QuestionComment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -165,12 +168,89 @@ class HomeController extends Controller
     public function construction()
     {
         $questions = SurveyQuestion::all();
-        return view('estimate', ['quetions' => $questions]);
+        // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
+        $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->get();
+        return view('estimate', ['quetions' => $questions, 'comments' => $comment_users]);
     }
 
     public function get_sizeoption_single($id)
     {
         $option_sizes = SurveyAnswerSize::where('question_id', $id)->orderBy('size', 'ASC')->get();
         return $option_sizes;
+    }
+
+    public function save_survey_optiona(Request $request)
+    {
+        $question_id = $request->question_id;
+        $option_number = $request->option_size;
+        $option_id = $request->option_id;
+
+        $user_optiona_count = UserOptionA::where('question_id', $question_id)->where('user_id', Auth::user()->id)->count();
+
+        if ($user_optiona_count > 0) {
+            $user_optiona = UserOptionA::where('question_id', $question_id)->where('user_id', Auth::user()->id)->first();
+            $user_optiona->option_id = $option_id;
+            $user_optiona->number = $option_number;
+            $user_optiona->save();
+            return $user_optiona;
+        }
+        else {
+            $user_optiona_new = new UserOptionA();
+            $user_optiona_new->question_id = $question_id;
+            $user_optiona_new->user_id = Auth::user()->id;
+            $user_optiona_new->option_id = $option_id;
+            $user_optiona_new->number = $option_number;
+            $user_optiona_new->save();
+            return $user_optiona_new;
+        }
+    }
+
+    public function save_question_comment(Request $request)
+    {
+        $dt = new DateTime();
+
+        $comment = new QuestionComment();
+        $comment->question_id = $request->question_id;
+        $comment->user_id = Auth::user()->id;
+        $comment->comment = $request->comment;
+        $comment->publish = $dt->format('Y-m-d H:i:s');
+        $comment->save();
+
+        $comment_user = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->find($comment->id);
+
+        return $comment_user;
+    }
+
+    public function delete_comment($id)
+    {
+        $comment = QuestionComment::find($id);
+        $comment->delete();
+        return "success";
+    }
+
+    public function calculator($money)
+    {
+        $total_result_count = UserOptionA::where('user_id', Auth::user()->id)->count();
+        if ($total_result_count > 0) {
+            $total_results = UserOptionA::where('user_id', Auth::user()->id)
+            ->join('survey_option1', 'survey_option1.id', '=', 'survey_option1_results.option_id')
+            ->select('survey_option1_results.*', 'survey_option1.size')->get();
+            $total_square_size = 0;
+            foreach ($total_results as $total_result) {
+                $number = $total_result->number;
+                $size = $total_result->size;
+
+                $current_size = $number * $size;
+                $total_square_size += $current_size;
+            }
+
+            $total_money = $total_square_size * $money;
+
+            $money_result = array('total_square' => $total_square_size, 'total_money' => $total_money);
+
+            return $money_result;
+        }
+
+        return "error";
     }
 }
