@@ -115,7 +115,7 @@
     overflow-x: hidden;
     margin-bottom: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 10;
     height: 25vh;
     box-shadow: inset 0px -5px 10px -5px rgba(0,0,0,0.7);
     position: fixed;
@@ -851,6 +851,9 @@
     }
 }
 @media(max-width: 499px) {
+    .home-text-mobile-hide {
+        display: none;
+    }
     .gallery-single-img-div {
         width: 95%;
     }

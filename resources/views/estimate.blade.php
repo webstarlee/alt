@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-Welcome
+Construction Estimate
 @endsection
 @section('pagelevel_plugin')
 <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
@@ -130,6 +130,7 @@ Welcome
                                                 <div class="single-survey-img-contain optionb_size_select_text_item">
                                                     <div class="survey-select-number optionb_size_text_item" onclick="show_size_form({{$quetion->id}})">
                                                         <input type="hidden" class="current-optionb-size-id" value="">
+                                                        <input type="hidden" class="current-question-id-hidden" value="{{$quetion->id}}">
                                                         <h2 class="bold text-center survey-number-text current-optiona-size-number">Select</h2>
                                                         <h3 class="bold text-center survey-size-text current-optiona-image-type" style="display: none;"><span>30</span> &#x33a1;</h3>
                                                     </div>
@@ -509,6 +510,7 @@ Welcome
                     // console.log(result.total_square);
                     var result_total_money = result.total_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     $('#total_survey_square_size').html(result.total_square);
+                    $('#total_survey_square_size_hidden').val(result.total_square);
                     $('#total_survey_money').html(result_total_money);
                 },
                 error: function(result){

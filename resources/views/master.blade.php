@@ -106,6 +106,7 @@
                                         <span class=" survey-calculator-span">Size Calculator:</span>
                                     </div>
                                     <div class="col-xs-6">
+                                        <input type="hidden" name="" id="total_survey_square_size_hidden" value="{{$total_square_size}}">
                                         <span><span id="total_survey_square_size">@if($total_result_count > 0) {{$total_square_size}} @else 0 @endif</span> &#x33a1;</span>
                                     </div>
                                 </div>
@@ -199,6 +200,15 @@
               Waves.init();
               $('#surcey_calculator_on_off_btn_id').on('click', function(){
                   $('.survey-calculator-container__div').toggleClass('open');
+              });
+
+              $('#survey_money_per_meter').on('change', function() {
+                  // console.log("hello");
+                  var current_per_money = $('#survey_money_per_meter').val();
+                  var current_square = $('#total_survey_square_size_hidden').val();
+                  var result_total_money = current_square * current_per_money;
+                  $('#total_survey_money').html(result_total_money);
+
               })
         </script>
     </body>

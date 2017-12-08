@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-Welcome
+Home
 @endsection
 @section('content')
     <div class="survey-background-div">
@@ -11,7 +11,7 @@ Welcome
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="description-text-div animated bounceInRight">
+                            <div class="description-text-div home-text-mobile-hide animated bounceInRight">
                                 <p class="font-white description-text" >Take our short gallery survey add let us build your</p>
                                 <p class="font-white bold description-text">Dream home</p>
                             </div>

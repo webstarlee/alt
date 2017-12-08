@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-Welcome
+Profile
 @endsection
 @section('pagelevel_plugin')
     <link href="{{ cdn('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />

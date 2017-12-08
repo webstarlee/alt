@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-Welcome
+View Selection
 @endsection
 @section('pagelevel_plugin')
 <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />

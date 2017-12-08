@@ -169,7 +169,7 @@ class HomeController extends Controller
     {
         $questions = SurveyQuestion::all();
         // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
-        $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->get();
+        $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->orderBy('question_comments.publish', 'DESC')->get();
         return view('estimate', ['quetions' => $questions, 'comments' => $comment_users]);
     }
 
