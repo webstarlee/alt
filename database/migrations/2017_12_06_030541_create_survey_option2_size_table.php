@@ -16,7 +16,7 @@ class CreateSurveyOption2SizeTable extends Migration
         Schema::create('survey_option2_size', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('size');
+            $table->integer('size');
             $table->integer('question_id');
         });
     }

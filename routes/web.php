@@ -28,9 +28,15 @@ Route::get('/reset_selection/{id}', 'HomeController@reset_user_selection');
 Route::get('/construnction', 'HomeController@construction')->name('live.construction');
 Route::get('/get-single-question/{id}', 'HomeController@get_sizeoption_single');
 Route::post('/save-survey-optiona', 'HomeController@save_survey_optiona')->name('save.survey.optiona');
+Route::post('/save-survey-optionb', 'HomeController@save_survey_optionb')->name('save.survey.optionb');
+Route::post('/save-survey-optionb-imges-add', 'HomeController@save_survey_optionb_imgs_add')->name('save.survey.optionb.imgs.add');
+Route::post('/save-survey-optionb-imges-remove', 'HomeController@save_survey_optionb_imgs_remove')->name('save.survey.optionb.imgs.remove');
 Route::post('/save-comment', 'HomeController@save_question_comment')->name('save.question.comment');
+Route::post('/save-comment-gallery', 'HomeController@save_gallery_comment')->name('save.gallery.comment');
 Route::get('/delete-own-comment/{id}', 'HomeController@delete_comment');
 Route::get('/calculator/{number}', 'HomeController@calculator');
+Route::get('/report-gallery', 'HomeController@gallery_report')->name('report.gallery');
+Route::get('/report-construction', 'HomeController@construction_report')->name('report.construction');
 //Auth::routes();
 
 Route::prefix('profile')->group(function(){

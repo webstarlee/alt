@@ -112,7 +112,7 @@ Survey Management
                             <tr class="odd gradeX" id="answerlist_{{$option->id}}">
                                 <td style="vertical-align:middle;display:none;"><input type="checkbox" class="checkboxes" value="1" /></td>
                                 <td style="text-align: center;vertical-align: middle;">
-                                    <img style="width:100%;max-width:150px;min-width:150px;" src="{{cdn('assets/images/survey').'/'.$option->img_name.'_thumbnail.jpg'}}" />
+                                    <img style="width:100%;max-width:100px;min-width:100px;" src="{{cdn('assets/images/survey').'/'.$option->img_name.'_thumbnail.jpg'}}" />
                                 </td>
                                 <td style="text-align: center;padding: 8px 10px;vertical-align: middle;">{{$option->title}}</td>
                                 <td style="text-align: center;padding: 8px 10px;vertical-align: middle;">{{$option->size}}</td>
@@ -171,7 +171,7 @@ Survey Management
                                     <tr class="odd gradeX" id="optionother_list_{{$option->id}}">
                                         <td style="vertical-align:middle;display: none;"><input type="checkbox" class="checkboxes" value="1" /></td>
                                         <td style="text-align: center;vertical-align: middle;">
-                                            <img style="width:100%;max-width:150px;min-width:150px;" src="{{cdn('assets/images/survey').'/'.$option->img_name.'_thumbnail.jpg'}}" />
+                                            <img style="width:100%;max-width:110px;min-width:110px;" src="{{cdn('assets/images/survey').'/'.$option->img_name.'_thumbnail.jpg'}}" />
                                         </td>
                                         <td style="text-align: center;padding: 8px 10px;vertical-align: middle;">{{$option->title}}</td>
                                         <td style="text-align: center;padding: 8px 10px;vertical-align: middle;">{{$option->question_name}}</td>

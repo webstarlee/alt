@@ -2,10 +2,6 @@
 @section('title')
 like image
 @endsection
-@section('pagelevel_plugin')
-<link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('content')
     <?php $check_exist_image = 0; ?>
     @foreach ($images as $image)
@@ -111,9 +107,17 @@ like image
                     <img src="{{cdn('assets/images/components/broken_heart.svg')}}" alt="">
                 </div>
             </div>
+            <div class="row gallery-img-comment">
+                <div class="col-xs-10">
+                    <input class="form-control" type="text" id="gallery_comment" name="gallery_comment" placeholder="Comment:"/>
+                </div>
+                <div class="col-xs-2">
+                    <a class="btn green" id="question-comment-save-btn" style="width: 100%;"><i class="fa fa-floppy-o" style="font-size: 10pt;"></i></a>
+                </div>
+            </div>
         </div>
         <div class="modal-footer text-center" id="gallery-img-add-close" style="text-align:center;">
-            <button type="button" id="img-stamp-cancel-button" class="btn dark">Cancel</button>
+            <button type="button" id="img-stamp-cancel-button" class="btn dark">Close</button>
             <button type="button" id="img-stamp-save-button" disabled class="btn green">Save and Close</button>
         </div>
     </div>
@@ -191,7 +195,7 @@ like image
                     if($this.css('display') == 'block') {
                         current_buddy = $(this);
                         if (current_buddy.prev('.buddy').length > 0) {
-                            current_buddy.delay(400).fadeOut(400);
+                            current_buddy.delay(100).fadeOut(400);
                             current_buddy.prev().removeClass('rotate-left rotate-right').fadeIn(1);
                             if(current_buddy.prev().find('.status.dislike').length > 0) {
                                 current_buddy.prev().find('.status.dislike').remove();
@@ -262,7 +266,7 @@ like image
                 var user_id = <?php echo Auth::user()->id; ?> ;
 
                 if (status == 2) {
-                    current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
+                    current_buddy.addClass('rotate-left').delay(1000).fadeOut(400);
                     $('.buddy').find('.status').remove();
                     current_buddy.append('<div class="status like">Like!</div>');
                     if (current_buddy.next('.buddy').length > 0) {
@@ -278,7 +282,7 @@ like image
                     }
                 }
                 else if (status == 1) {
-                    current_buddy.addClass('rotate-right').delay(400).fadeOut(1);
+                    current_buddy.addClass('rotate-right').delay(1000).fadeOut(400);
                     $('.buddy').find('.status').remove();
                     current_buddy.append('<div class="status dislike">Dislike!</div>');
                     if (current_buddy.next('.buddy').length > 0) {
@@ -455,6 +459,20 @@ like image
                 }).catch(function (error) {
                     console.log(error);
                 });
+            });
+
+            $('#question-comment-save-btn').on('click', function() {
+                var gallery_comment = $('#gallery_comment').val();
+                var save_image_comment_url = "{{route('save.gallery.comment')}}";
+                // console.log(stamp_position_array);
+                var image_id = $('#stamp_image_id').val();
+                if (gallery_comment != "") {
+                    axios.post(save_image_comment_url, {imageId: image_id, img_comment: gallery_comment}).then(function (response) {
+                        console.log(response);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             });
         });
 

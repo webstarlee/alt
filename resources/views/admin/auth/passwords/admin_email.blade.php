@@ -5,7 +5,7 @@ Admin Forget Password
 @section('content')
     <form class="forget-form" action="{{ route('admin.password.email') }}" method="post">
         {{ csrf_field() }}
-        <h3 class="font-green">Forget Password ?</h3>
+        <h3 class="">Forget Password ?</h3>
         <p> Enter your email below to reset password. </p>
         @if (session('status'))
             <div class="alert alert-success">

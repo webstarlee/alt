@@ -37,6 +37,7 @@
     position: relative;
     border: 3px solid #28d5f9;
     background-color: #fff;
+    overflow: hidden;
 }
 .survey-circle-title-text {
     position: absolute;
@@ -90,6 +91,16 @@
     z-index: 5003;
 }
 .optiona-size-container__close-div {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 5002;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.5;
+}
+.optionb-size-container__close-div {
     width: 100%;
     height: 100%;
     position: fixed;

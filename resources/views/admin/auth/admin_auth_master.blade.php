@@ -28,7 +28,7 @@
         <link href="{{ cdn('assets/global/css/plugins-md.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- END THEME GLOBAL STYLES -->
         <!-- BEGIN PAGE LEVEL STYLES -->
-        <link href="{{ cdn('assets/pages/css/login.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{cdn('assets/pages/css/login-4.css')}}" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL STYLES -->
         <!-- BEGIN THEME LAYOUT STYLES -->
         <!-- END THEME LAYOUT STYLES -->
@@ -56,13 +56,14 @@
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         <script src="{{ cdn('assets/global/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
         <script src="{{ cdn('assets/global/plugins/jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+        <script src="{{cdn('assets/global/plugins/backstretch/jquery.backstretch.min.js')}}" type="text/javascript"></script>
         <script src="{{ cdn('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
         <!-- BEGIN THEME GLOBAL SCRIPTS -->
         <script src="{{ cdn('assets/global/scripts/app.min.js') }}" type="text/javascript"></script>
         <!-- END THEME GLOBAL SCRIPTS -->
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
-        <script src="{{ cdn('assets/pages/scripts/login.min.js') }}" type="text/javascript"></script>
+        <script src="{{cdn('assets/pages/scripts/login-4.js')}}" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
         <!-- BEGIN THEME LAYOUT SCRIPTS -->
         <!-- END THEME LAYOUT SCRIPTS -->

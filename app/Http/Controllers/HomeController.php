@@ -9,12 +9,14 @@ use \App\UserLove;
 use \App\Gallery;
 use \App\Category;
 use \App\UserOptionA;
+use \App\UserOptionB;
 use \App\GalleryStyle;
 use \App\SurveyAnswer1;
 use \App\SurveyAnswer2;
 use \App\SurveyAnswerSize;
 use \App\SurveyQuestion;
 use \App\QuestionComment;
+use \App\GalleryComment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -52,6 +54,18 @@ class HomeController extends Controller
         $gallery_images = Gallery::where('style_id' , $id)->get();
         $like_images = UserLike::where('user_id' , Auth::user()->id)->get();
         return view('viewSelect', ['images' => $gallery_images, 'current_style' => $current_style, 'like_images' => $like_images]);
+    }
+
+    public function gallery_report()
+    {
+        $styles = GalleryStyle::all();
+        $report_galleries = array();
+        foreach ($styles as $style) {
+            $gallery_images = Gallery::where('style_id' , $style->id)->get();
+            $report_galleries[] = array('style_name' => $style->style_name, 'images'=>$gallery_images);
+        }
+        $like_images = UserLike::where('user_id' , Auth::user()->id)->get();
+        return view('galleryReport', ['report_galleries' => $report_galleries, 'like_images' => $like_images]);
     }
 
     public function view_gallery() {
@@ -121,32 +135,59 @@ class HomeController extends Controller
     {
         $data_image = Gallery::find($id);
 
-        $img_status = UserLike::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->get()->first();
+        $img_status = UserLike::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->first();
+        $img_comment = GalleryComment::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->first();
 
         if ($img_status == null) {
-            $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => 'undefine');
-
-            return $final_img_data;
+            if ($img_comment != null) {
+                $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => 'undefine', 'comment' => $img_comment->comment);
+                return $final_img_data;
+            }
+            else {
+                $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => 'undefine');
+                return $final_img_data;
+            }
         }
 
         if($img_status->like_type < 2) {
-            $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type);
-
-            return $final_img_data;
+            if ($img_comment != null) {
+                $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type, 'comment' => $img_comment->comment);
+                return $final_img_data;
+            }
+            else {
+                $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type);
+                return $final_img_data;
+            }
         }
         else {
-            $img_stamps = UserLove::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->get();
+            if ($img_comment != null) {
+                $img_stamps = UserLove::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->get();
 
-            $myArray = array();
+                $myArray = array();
 
-            foreach ($img_stamps as $img_stamp)
-            {
-                $myArray[] = array('stamp_status' => $img_stamp->love_type, 'pos_top' => $img_stamp->pos_top, 'pos_left' => $img_stamp->pos_left);
+                foreach ($img_stamps as $img_stamp)
+                {
+                    $myArray[] = array('stamp_status' => $img_stamp->love_type, 'pos_top' => $img_stamp->pos_top, 'pos_left' => $img_stamp->pos_left);
+                }
+
+                $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type, 'comment' => $img_comment->comment, 'stamp_datas' => $myArray);
+
+                return $final_img_data;
             }
+            else {
+                $img_stamps = UserLove::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->get();
 
-            $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type, 'stamp_datas' => $myArray);
+                $myArray = array();
 
-            return $final_img_data;
+                foreach ($img_stamps as $img_stamp)
+                {
+                    $myArray[] = array('stamp_status' => $img_stamp->love_type, 'pos_top' => $img_stamp->pos_top, 'pos_left' => $img_stamp->pos_left);
+                }
+
+                $final_img_data = array('img_name' => $data_image->gallery_img, 'like_type' => $img_status->like_type, 'stamp_datas' => $myArray);
+
+                return $final_img_data;
+            }
         }
 
         // return $img_status->like_type;
@@ -171,6 +212,14 @@ class HomeController extends Controller
         // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
         $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->orderBy('question_comments.publish', 'DESC')->get();
         return view('estimate', ['quetions' => $questions, 'comments' => $comment_users]);
+    }
+
+    public function construction_report()
+    {
+        $questions = SurveyQuestion::all();
+        // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
+        $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->orderBy('question_comments.publish', 'DESC')->get();
+        return view('constructionReport', ['quetions' => $questions, 'comments' => $comment_users]);
     }
 
     public function get_sizeoption_single($id)
@@ -205,6 +254,92 @@ class HomeController extends Controller
         }
     }
 
+    public function save_survey_optionb(Request $request)
+    {
+        $question_id = $request->question_id;
+        $size_id = $request->size_id;
+
+        $user_optionb_count = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->count();
+
+        if ($user_optionb_count > 0) {
+            $user_optionb = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->first();
+            $user_optionb->size_id = $size_id;
+            $user_optionb->save();
+            return $user_optionb;
+        }
+        else {
+            $user_optionb_new = new UserOptionB();
+            $user_optionb_new->question_id = $question_id;
+            $user_optionb_new->user_id = Auth::user()->id;
+            $user_optionb_new->size_id = $size_id;
+            $user_optionb_new->save();
+            return $user_optionb_new;
+        }
+    }
+
+    public function save_survey_optionb_imgs_add(Request $request)
+    {
+        $question_id = $request->question_id;
+        $img_id = $request->img_id;
+
+        $user_optionb_count = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->count();
+
+        if ($user_optionb_count > 0) {
+            $user_optionb = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->first();
+            $user_optionb_check_img = explode(',', $user_optionb->img_ids);
+            if (in_array($img_id, $user_optionb_check_img)) {
+                return "exist";
+            }
+            else {
+                if($user_optionb->img_ids == ""){
+                    $user_optionb->img_ids = $img_id;
+                }
+                else {
+                    $user_optionb->img_ids = $user_optionb->img_ids.",".$img_id;
+                }
+                $user_optionb->save();
+                return "success";
+            }
+        }
+        else {
+            $user_optionb_new = new UserOptionB();
+            $user_optionb_new->question_id = $question_id;
+            $user_optionb_new->user_id = Auth::user()->id;
+            $user_optionb_new->img_ids = $img_id;
+            $user_optionb_new->save();
+            return $user_optionb_new;
+        }
+    }
+
+    public function save_survey_optionb_imgs_remove(Request $request)
+    {
+        $question_id = $request->question_id;
+        $img_id = $request->img_id;
+
+        $user_optionb_count = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->count();
+
+        if ($user_optionb_count > 0) {
+            $user_optionb = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->first();
+            $user_optionb_check_imgs = explode(',', $user_optionb->img_ids);
+            $reset_imgs = null;
+            foreach ($user_optionb_check_imgs as $user_optionb_check_img) {
+                if ($img_id != $user_optionb_check_img) {
+                    if ($reset_imgs == null) {
+                        $reset_imgs = $user_optionb_check_img;
+                    }
+                    else {
+                        $reset_imgs = $reset_imgs.",".$user_optionb_check_img;
+                    }
+                }
+            }
+            $user_optionb->img_ids = $reset_imgs;
+            $user_optionb->save();
+
+            return "delete";
+        }
+        return "no data";
+    }
+
     public function save_question_comment(Request $request)
     {
         $dt = new DateTime();
@@ -221,6 +356,27 @@ class HomeController extends Controller
         return $comment_user;
     }
 
+    public function save_gallery_comment(Request $request)
+    {
+        $comment_count = GalleryComment::where('image_id', $request->imageId)->where('user_id', Auth::user()->id)->count();
+        if ($comment_count > 0) {
+            $comment = GalleryComment::where('image_id', $request->imageId)->where('user_id', Auth::user()->id)->first();
+            $comment->comment = $request->img_comment;
+            $comment->save();
+
+            return $comment;
+        }
+        else {
+            $comment_new = new GalleryComment();
+            $comment_new->image_id = $request->imageId;
+            $comment_new->user_id = Auth::user()->id;
+            $comment_new->comment = $request->img_comment;
+            $comment_new->save();
+
+            return $comment_new;
+        }
+    }
+
     public function delete_comment($id)
     {
         $comment = QuestionComment::find($id);
@@ -230,27 +386,37 @@ class HomeController extends Controller
 
     public function calculator($money)
     {
-        $total_result_count = UserOptionA::where('user_id', Auth::user()->id)->count();
-        if ($total_result_count > 0) {
-            $total_results = UserOptionA::where('user_id', Auth::user()->id)
+        $total_result_a_count = UserOptionA::where('user_id', Auth::user()->id)->count();
+        $total_result_b_count = UserOptionB::where('user_id', Auth::user()->id)->count();
+
+        $total_square_size = 0;
+        if ($total_result_a_count > 0) {
+            $total_a_results = UserOptionA::where('user_id', Auth::user()->id)
             ->join('survey_option1', 'survey_option1.id', '=', 'survey_option1_results.option_id')
             ->select('survey_option1_results.*', 'survey_option1.size')->get();
-            $total_square_size = 0;
-            foreach ($total_results as $total_result) {
-                $number = $total_result->number;
-                $size = $total_result->size;
+            foreach ($total_a_results as $total_a_result) {
+                $number = $total_a_result->number;
+                $size = $total_a_result->size;
 
                 $current_size = $number * $size;
                 $total_square_size += $current_size;
             }
-
-            $total_money = $total_square_size * $money;
-
-            $money_result = array('total_square' => $total_square_size, 'total_money' => $total_money);
-
-            return $money_result;
         }
 
-        return "error";
+        if ($total_result_b_count > 0) {
+            $total_b_results = UserOptionB::where('user_id', Auth::user()->id)->get();
+            foreach ($total_b_results as $total_b_result) {
+                if ($total_b_result->size_id != "") {
+                    $option_size = SurveyAnswerSize::find($total_b_result->size_id);
+                    $total_square_size += $option_size->size;
+                }
+            }
+        }
+
+        $total_money = $total_square_size * $money;
+
+        $money_result = array('total_square' => $total_square_size, 'total_money' => $total_money);
+
+        return $money_result;
     }
 }

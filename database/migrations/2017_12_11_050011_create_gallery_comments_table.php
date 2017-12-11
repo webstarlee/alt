@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSurveyOption1Table extends Migration
+class CreateGalleryCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSurveyOption1Table extends Migration
      */
     public function up()
     {
-        Schema::create('survey_option1', function (Blueprint $table) {
+        Schema::create('gallery_comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('img_name');
-            $table->interger('size');
-            $table->integer('question_id');
+            $table->integer('image_id');
+            $table->integer('user_id');
+            $table->string('comment');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateSurveyOption1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('survey_option1');
+        Schema::dropIfExists('gallery_comments');
     }
 }

@@ -5,7 +5,7 @@
 .survey-calculator-container__div {
     height: 75px;
     width: 300px;
-    /*background-color: #000;*/
+    background-color: #fff;
     display: inline-block;
     margin-left: 10px;
     position: absolute;
@@ -53,6 +53,15 @@
     border-bottom: 1px solid #d0cfcf;
     transition: all .3s ease-out;
     display: none;
+}
+.survey-calculator-container__div .calculator_open_close_btn>i {
+    font-size: 15pt;
+    transition: all .3s ease-out;
+    /*transform: rotate( 180deg);*/
+}
+.survey-calculator-container__div.open .calculator_open_close_btn>i {
+    /*font-size: 15pt;*/
+    transform: rotate( 180deg);
 }
 .templatemo-top-menu {
     position: fixed;
@@ -457,7 +466,7 @@
     font-weight: bold;
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: calc( 50% - 30px);
     transition: all .2s ease-out;
 }
 .selection_like.hovered {
@@ -497,7 +506,7 @@
     font-weight: bold;
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: calc(50% - 40px);
     transition: all .2s ease-out;
 }
 .selection_love.hovered {
@@ -510,7 +519,7 @@
     font-weight: bold;
     position: absolute;
     top: calc(50% - 20px);
-    left: calc(50% - 50px);
+    left: calc(50% - 60px);
     transition: all .2s ease-out;
 }
 .dislike {
@@ -538,7 +547,7 @@
     font-weight: bold;
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: calc( 50% - 40px);
     text-shadow: none;
     transition: all .2s ease-out;
 }
@@ -746,6 +755,10 @@
 }
 .selection-image-container>img {
     margin-bottom: 0;
+    border-radius: 50%;
+    max-width: 160px;
+    margin: 0 auto;
+    width: 100%;
 }
 .selection-view-img-container {
     display: inline-block;
@@ -773,7 +786,14 @@
     z-index: 2;
     cursor: pointer;
 }
-
+.gallery-img-comment {
+    margin-top: 10px;
+}
+.img-comment_container {
+    text-align: left;
+    padding-left: 10px;
+    margin-top: 10px;
+}
 @media(max-width: 1199px) {
     .child-single-gallery-title-div {
         right: 30px;
@@ -842,7 +862,10 @@
         margin-top: 3px;
     }
     .calculator_open_close_btn {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
     }
 }
 @media(max-width: 530px) {

@@ -510,7 +510,7 @@ var TableDatatablesManaged = function () {
                     "targets": 1,
                     "orderable": false,
                     "searchable": false,
-                    "width": "10%",
+                    "width": "5%",
                 },
                 {
                     "targets": 5,
@@ -520,11 +520,11 @@ var TableDatatablesManaged = function () {
                 }
             ],
             "lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [3, 5, 10, -1],
+                [3, 5, 10, "All"] // change per page values here
             ],
             // set the initial value
-            "pageLength": 5,
+            "pageLength": 3,
             "pagingType": "bootstrap_full_number",
             "order": [
                 [1, "asc"]
@@ -594,7 +594,7 @@ var TableDatatablesManaged = function () {
                     "targets": 1,
                     "orderable": false,
                     "searchable": false,
-                    "width": "10%",
+                    "width": "5%",
                 },
                 {
                     "targets": 4,
@@ -604,11 +604,11 @@ var TableDatatablesManaged = function () {
                 }
             ],
             "lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [3, 5, 10, -1],
+                [3, 5, 10, "All"] // change per page values here
             ],
             // set the initial value
-            "pageLength": 5,
+            "pageLength": 3,
             "pagingType": "bootstrap_full_number",
             "order": [
                 [1, "asc"]

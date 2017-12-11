@@ -17,6 +17,8 @@
         <link href="{{cdn('assets/global/plugins/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/select2/css/select2-bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{cdn('assets/global/plugins/node-waves/waves.css')}}" rel="stylesheet" />
+        <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
         {{-- <link href="{{cdn('assets/global/plugins/jquery.mobile-1.4.5.min.css')}}" rel="stylesheet" type="text/css" /> --}}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
         <!-- END GLOBAL MANDATORY STYLES -->
@@ -70,11 +72,12 @@
                             <div class="survey-calculator-container__div animated fadeInDown">
                                 <?php
                                     $total_result_count = \App\UserOptionA::where('user_id', Auth::user()->id)->count();
+                                    $total_result_b_count = \App\UserOptionB::where('user_id', Auth::user()->id)->count();
+                                    $total_square_size = 0;
                                     if ($total_result_count > 0) {
                                         $total_results = \App\UserOptionA::where('user_id', Auth::user()->id)
                                         ->join('survey_option1', 'survey_option1.id', '=', 'survey_option1_results.option_id')
                                         ->select('survey_option1_results.*', 'survey_option1.size')->get();
-                                        $total_square_size = 0;
                                         foreach ($total_results as $total_result) {
                                             $number = $total_result->number;
                                             $size = $total_result->size;
@@ -82,8 +85,19 @@
                                             $current_size = $number * $size;
                                             $total_square_size += $current_size;
                                         }
-                                        $total_money = $total_square_size * 800;
                                     }
+
+                                    if ($total_result_b_count > 0) {
+                                        $total_b_results = \App\UserOptionB::where('user_id', Auth::user()->id)->get();
+                                        foreach ($total_b_results as $total_b_result) {
+                                            if ($total_b_result->size_id != "") {
+                                                $option_size = \App\SurveyAnswerSize::find($total_b_result->size_id);
+                                                $total_square_size += $option_size->size;
+                                            }
+                                        }
+                                    }
+
+                                    $total_money = $total_square_size * 1000;
                                 ?>
                                 <div class="row">
                                     <div class="col-xs-6">
@@ -91,13 +105,26 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <select class="survey-calculator form-control survey-calculator-usd-select" id="survey_money_per_meter">
+                                            <option value="100">US$ 100 per &#x33a1;</option>
+                                            <option value="200">US$ 200 per &#x33a1;</option>
+                                            <option value="300">US$ 300 per &#x33a1;</option>
+                                            <option value="400">US$ 400 per &#x33a1;</option>
+                                            <option value="500">US$ 500 per &#x33a1;</option>
+                                            <option value="600">US$ 600 per &#x33a1;</option>
+                                            <option value="700">US$ 700 per &#x33a1;</option>
                                             <option value="800">US$ 800 per &#x33a1;</option>
                                             <option value="900">US$ 900 per &#x33a1;</option>
-                                            <option value="1000">US$ 1000 per &#x33a1;</option>
+                                            <option value="1000" selected>US$ 1000 per &#x33a1;</option>
                                             <option value="1100">US$ 1100 per &#x33a1;</option>
                                             <option value="1200">US$ 1200 per &#x33a1;</option>
                                             <option value="1300">US$ 1300 per &#x33a1;</option>
                                             <option value="1400">US$ 1400 per &#x33a1;</option>
+                                            <option value="1500">US$ 1500 per &#x33a1;</option>
+                                            <option value="1600">US$ 1600 per &#x33a1;</option>
+                                            <option value="1700">US$ 1700 per &#x33a1;</option>
+                                            <option value="1800">US$ 1800 per &#x33a1;</option>
+                                            <option value="1900">US$ 1900 per &#x33a1;</option>
+                                            <option value="2000">US$ 2000 per &#x33a1;</option>
                                         </select>
                                     </div>
                                 </div>
@@ -118,17 +145,17 @@
                                         <span class="">US$ <span id="total_survey_money">@if($total_result_count > 0) {{number_format($total_money)}} @else 0 @endif</span></span>
                                     </div>
                                 </div>
-                                <div class="calculator_open_close_btn" id="surcey_calculator_on_off_btn_id"></div>
+                                <div class="calculator_open_close_btn" id="surcey_calculator_on_off_btn_id"><i class="fa fa-chevron-down"></i></div>
                             </div>
                         </div>
                         <div class="top-menu">
                             <ul class="nav navbar-nav pull-right">
                                 <li class="dropdown dropdown-user">
-                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="padding-left: 5px;padding-bottom: 10px;background-color: #fff;">
+                                    <a href="javascript:;" class="dropdown-toggle animated fadeInDown" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" style="padding-left: 5px;padding-bottom: 10px;background-color: #fff;">
                                         @if(file_exists('assets/images/avatar'.'/'.Auth::user()->avatar.'_thumbnail.jpg'))
-                                          <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar').'/'.Auth::user()->avatar.'_thumbnail.jpg'}}" />
+                                          <img alt="" class="img-circle" src="{{ cdn('assets/images/avatar').'/'.Auth::user()->avatar.'_thumbnail.jpg'}}" />
                                         @else
-                                          <img alt="" class="img-circle animated fadeInDown" src="{{ cdn('assets/images/avatar/nophoto.jpg') }}" />
+                                          <img alt="" class="img-circle" src="{{ cdn('assets/images/avatar/nophoto.jpg') }}" />
                                         @endif
                                         <span class="username username-hide-on-mobile" style="display: inline-block;"> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                                         <i class="fa fa-angle-down"></i>
@@ -138,13 +165,14 @@
                                             <a href="{{route('home')}}">
                                                 <i class="icon-home"></i> Home </a>
                                         </li>
+                                        <li><a href="#user-report-form" data-toggle="modal"><i class="icon-docs"></i> Report </a></li>
                                         <li>
                                             <a href="{{route('user.profile.view')}}">
                                                 <i class="icon-user"></i> Edit Profile </a>
                                         </li>
                                         <li>
                                             <a href="{{ route('logout') }}">
-                                                <i class="icon-key"></i> Log Out
+                                                <i class="icon-logout"></i> Log Out
                                             </a>
                                         </li>
                                     </ul>
@@ -157,6 +185,14 @@
         </div>
         <div class="content-div">
             @yield('content')
+        </div>
+
+        <div id="user-report-form" class="modal fade" tabindex="-1" data-backdrop="static">
+            <div class="modal-body text-center">
+                <button type="button" class="btn btn-dafault" data-dismiss="modal">Close</button>
+                <a href="{{route('report.gallery')}}" target="_blank" class="btn green">Gallery Report</a>
+                <a href="{{route('report.construction')}}" target="_blank" class="btn green">Construction Report</a>
+            </div>
         </div>
 
         <script src="{{cdn('assets/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
@@ -207,6 +243,7 @@
                   var current_per_money = $('#survey_money_per_meter').val();
                   var current_square = $('#total_survey_square_size_hidden').val();
                   var result_total_money = current_square * current_per_money;
+                  result_total_money = result_total_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   $('#total_survey_money').html(result_total_money);
 
               })

@@ -2,10 +2,6 @@
 @section('title')
 Construction Estimate
 @endsection
-@section('pagelevel_plugin')
-<link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" />
-@endsection
 @section('custom_style')
 <link href="{{cdn('css/estimate.css')}}" rel="stylesheet" type="text/css" />
 @endsection
@@ -91,7 +87,7 @@ Construction Estimate
                                                                 @if ($comment->question_id == $quetion->id)
                                                                     <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
                                                                         <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
-                                                                        <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="#" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
+                                                                        <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="javascript:void(0)" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
                                                                     </div>
                                                                 @endif
                                                             @endforeach
@@ -116,6 +112,17 @@ Construction Estimate
                                 <?php
                                     $optionsB = \App\SurveyAnswer2::where('question_id', $quetion->id)->get();
                                     $option_count = \App\SurveyAnswer2::where('question_id', $quetion->id)->count();
+                                    $current_optionb_result_count = \App\UserOptionB::where('question_id', $quetion->id)->where('user_id', Auth::user()->id)->count();
+                                    if ($current_optionb_result_count > 0) {
+                                        $current_optionb_result = \App\UserOptionB::where('question_id', $quetion->id)->where('user_id', Auth::user()->id)->first();
+                                        $selected_size = $current_optionb_result->size_id;
+                                        $selected_img = explode(',', $current_optionb_result->img_ids);
+                                        if ($selected_size != "") {
+                                            $current_optionb_result_size = \App\UserOptionB::where('survey_option2_results.question_id', $quetion->id)->where('user_id', Auth::user()->id)
+                                            ->join('survey_option2_size', 'survey_option2_size.id', '=', 'survey_option2_results.size_id')
+                                            ->select('survey_option2_results.*', 'survey_option2_size.title', 'survey_option2_size.size')->first();
+                                        }
+                                    }
                                     $array_acount = 0;
                                 ?>
                                 <div class="row optionb-question-container" id="optionb-question-row_{{$quetion->id}}">
@@ -129,10 +136,18 @@ Construction Estimate
                                             <div class="col-sm-3 dotted-line-number">
                                                 <div class="single-survey-img-contain optionb_size_select_text_item">
                                                     <div class="survey-select-number optionb_size_text_item" onclick="show_size_form({{$quetion->id}})">
-                                                        <input type="hidden" class="current-optionb-size-id" value="">
+                                                        <input type="hidden" class="current-optionb-size-id" value="@if ($current_optionb_result_count > 0 && $selected_size != "") {{$current_optionb_result_size->size_id}} @endif">
                                                         <input type="hidden" class="current-question-id-hidden" value="{{$quetion->id}}">
-                                                        <h2 class="bold text-center survey-number-text current-optiona-size-number">Select</h2>
-                                                        <h3 class="bold text-center survey-size-text current-optiona-image-type" style="display: none;"><span>30</span> &#x33a1;</h3>
+                                                        <h2 class="bold text-center survey-number-text current-optiona-size-number">
+                                                            @if ($current_optionb_result_count > 0 && $selected_size != "")
+                                                                {{$current_optionb_result_size->title}}
+                                                            @else
+                                                                Select
+                                                            @endif
+                                                        </h2>
+                                                        <h3 class="bold text-center survey-size-text current-optiona-image-type" @if ($current_optionb_result_count > 0 && $selected_size != "") style="display: block;" @else style="display: none;" @endif>
+                                                            <span>@if ($current_optionb_result_count > 0 && $selected_size != "") {{$current_optionb_result_size->size}} @endif</span> &#x33a1;
+                                                        </h3>
                                                     </div>
                                                     <h3 class="bold text-center survey-circle-title-text">Size</h3>
                                                 </div>
@@ -143,7 +158,7 @@ Construction Estimate
                                                         <?php $array_acount += 1; ?>
                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center @if($array_acount%3 == 0) dotted-line-last @elseif($array_acount > 1 && $array_acount%3 == 1) dotted-line-fourth @else dotted-line @endif">
                                                             <div class="single-survey-img-contain optionb_img_item">
-                                                                <img class="img-responsive single-survey-img jello" src="{{cdn('assets/images/survey/'.$option->img_name.'_thumbnail.jpg')}}">
+                                                                <img class="img-responsive single-survey-img @if ($current_optionb_result_count > 0 && in_array($option->id, $selected_img)) active @endif" data-optionid="{{$option->id}}" src="{{cdn('assets/images/survey/'.$option->img_name.'_thumbnail.jpg')}}">
                                                                 <h3 class="bold text-center survey-circle-title-text">{{$option->title}}</h3>
                                                             </div>
                                                         </div>
@@ -151,13 +166,25 @@ Construction Estimate
                                                 </div>
                                                 <div class="comment-container-div">
                                                     <div class="row">
+                                                        <div class="col-sm-11 col-sm-offset-1 col-xs-12" id="comment_container_{{$quetion->id}}">
+                                                            @foreach ($comments as $comment)
+                                                                @if ($comment->question_id == $quetion->id)
+                                                                    <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
+                                                                        <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
+                                                                        <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="javascript:void(0)" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
                                                         <div class="col-sm-8 col-sm-offset-1 col-xs-9">
                                                             <div class="form-group">
-                                                                <input class="form-control" type="text" name="user-comment-question" placeholder="Comment:"/>
+                                                                <input class="form-control question_comment" type="text" name="user-comment-question" placeholder="Comment:"/>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3 col-xs-3">
-                                                            <a class="btn green" style="width: 100%;"><i class="fa fa-floppy-o" style="font-size: 10pt;"></i> <span class="survey-commnet-mobile-hide">Save</span></a>
+                                                            <a class="btn green question-type2-comment-save-btn" style="width: 100%;"><i class="fa fa-floppy-o" style="font-size: 10pt;"></i> <span class="survey-commnet-mobile-hide">Save</span></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -262,7 +289,7 @@ Construction Estimate
                     </div>
                 </div>
             </div>
-            <div class="optiona-size-container__close-div"></div>
+            <div class="optionb-size-container__close-div"></div>
         </div>
     </div>
 @endsection
@@ -276,9 +303,9 @@ Construction Estimate
         var optionA_nRow = null;
         var optionA_current_size = null;
 
-        // $('.optiona-size-container__close-div').on('click', function() {
-        //     optiona_size_div.fadeOut(400);
-        // });
+        $('.optiona-size-container__close-div').on('click', function() {
+            optiona_size_div.fadeOut(400);
+        });
 
         $('.optiona_size_number_item').on('click', function() {
             var $this = $(this);
@@ -383,6 +410,10 @@ Construction Estimate
         var optionB_nRow = null;
         var optionB_current_size = null;
 
+        $('.optionb-size-container__close-div').on('click', function() {
+            optionB_size_div.fadeOut(400);
+        });
+
         function show_size_form(id) {
             optionB_nRow = $('#optionb-question-row_'+id)[0];
 
@@ -450,12 +481,56 @@ Construction Estimate
             $(optionB_nRow).find('.current-optiona-image-type').css({'display': 'block'});
 
             optionB_size_div.fadeOut(400);
+
+            optionb_status_save();
+        }
+
+        function optionb_status_save() {
+            var sizeId = $(optionB_nRow).find('.current-optionb-size-id').val();
+            var questionId = $(optionB_nRow).find('.current-question-id-hidden').val();
+            var optionb_save_url = "{{route('save.survey.optionb')}}";
+
+            if (sizeId != "" && questionId != "") {
+                axios.post(optionb_save_url, {question_id:questionId, size_id:sizeId}).then(function (response) {
+                    console.log(response);
+                    reset_calculator_status();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }
 
         $('.optionb_img_item').on('click', function() {
             var $this = $(this);
-            // console.log($this);
+            optionB_nRow = $this.parents('.optionb-question-container')[0];
             $this.find('img.single-survey-img').toggleClass('active');
+            var questionId = $(optionB_nRow).find('.current-question-id-hidden').val();
+            var imgId = $this.find('img.single-survey-img').data('optionid');
+
+            if ($this.find('img.single-survey-img').hasClass('active')) {
+                var optionb_img_save_url = "{{route('save.survey.optionb.imgs.add')}}";
+
+                if (imgId != "" && questionId != "") {
+                    axios.post(optionb_img_save_url, {question_id:questionId, img_id:imgId}).then(function (response) {
+                        console.log(response);
+                        // reset_calculator_status();
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+            else {
+                var optionb_img_remove_url = "{{route('save.survey.optionb.imgs.remove')}}";
+
+                if (imgId != "" && questionId != "") {
+                    axios.post(optionb_img_remove_url, {question_id:questionId, img_id:imgId}).then(function (response) {
+                        console.log(response);
+                        // reset_calculator_status();
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
         });
 
         $('.question-comment-save-btn').on('click', function() {
@@ -472,11 +547,35 @@ Construction Estimate
                     img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
                     var new_comment_html = '<div class="single-user-comment-contain" id="single_user_comment_'+response.data['id']+'">'
                     +'<img class="comment-user-img tooltips" data-placement="bottom" data-original-title="'+response.data['first_name']+' '+response.data['last_name']+'" src="'+img_url+'">'
-                    +'<span class="single-user-comment-text">'+response.data['comment']+'<a href="#" onclick="delete_own_comment('+response.data['id']+')" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a></span></div>';
+                    +'<span class="single-user-comment-text">'+response.data['comment']+'<a href="javascript:void(0)" onclick="delete_own_comment('+response.data['id']+')" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a></span></div>';
 
                     var comment_contain_div = $(optionA_nRow).find('#comment_container_'+questionId).prepend(new_comment_html);
 
                     // console.log(new_comment_html);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
+
+        $('.question-type2-comment-save-btn').on('click', function() {
+            var $this = $(this);
+            optionB_nRow = $this.parents('.optionb-question-container')[0];
+            var questionId = $(optionB_nRow).find('.current-question-id-hidden').val();
+            var userComment = $(optionB_nRow).find('.question_comment').val();
+            var comment_save_url = "{{route('save.question.comment')}}";
+
+            if (userComment != "") {
+                axios.post(comment_save_url, {question_id:questionId, comment:userComment}).then(function (response) {
+                    $(optionB_nRow).find('.question_comment').val("");
+                    var img_url = "{{cdn('assets/images/avatar')}}" ;
+                    img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
+                    var new_comment_html = '<div class="single-user-comment-contain" id="single_user_comment_'+response.data['id']+'">'
+                    +'<img class="comment-user-img tooltips" data-placement="bottom" data-original-title="'+response.data['first_name']+' '+response.data['last_name']+'" src="'+img_url+'">'
+                    +'<span class="single-user-comment-text">'+response.data['comment']+'<a href="javascript:void(0)" onclick="delete_own_comment('+response.data['id']+')" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a></span></div>';
+
+                    $(optionB_nRow).find('#comment_container_'+questionId).prepend(new_comment_html);
+
                 }).catch(function (error) {
                     console.log(error);
                 });

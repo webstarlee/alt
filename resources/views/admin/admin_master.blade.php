@@ -115,15 +115,6 @@
                       <!-- END SIDEBAR TOGGLER BUTTON -->
                   </li>
                   <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-                  <li class="nav-item start @if(Route::current()->uri=='admin')open active @endif">
-                      <a href="{{ route('admin.dashboard') }}" class="nav-link nav-toggle">
-                          <i class="icon-home"></i>
-                          <span class="title">DashBoard</span>
-                          @if(Route::current()->uri=='admin')
-                          <span class="selected"></span>
-                          @endif
-                      </a>
-                  </li>
                   <li class="nav-item @if(Route::current()->uri=='admin/pages')open active @endif">
                       <a href="{{ route('admin.pages') }}" class="nav-link nav-toggle">
                           <i class="icon-layers"></i>
@@ -153,7 +144,7 @@
                   </li>
                   <li class="nav-item @if(Route::currentRouteName()=='admin.survey.view' || Route::currentRouteName()=='admin.answer.add')open active @endif">
                       <a href="{{route('admin.survey.view')}}" class="nav-link nav-toggle">
-                          <i class="icon-picture"></i>
+                          <i class="icon-puzzle"></i>
                           <span class="title">Construnction Estimate</span>
                           @if(Route::currentRouteName()=='admin.survey.view' || Route::currentRouteName()=='admin.answer.add')
                           <span class="selected"></span>

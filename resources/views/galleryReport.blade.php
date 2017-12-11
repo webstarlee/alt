@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-View Selection
+Gallery Report
 @endsection
 @section('content')
     <div class="survey-background-div">
@@ -28,23 +28,26 @@ View Selection
     </div>
     <div class="survey-img-container-div">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-toolbar">
-                        <div class="btn-group pull-right">
-                            <a href="{{url('reset_selection/'.$current_style->id)}}" id="selection_reset_btn" class="btn green btn-sm"> RESET YOUR SELECTION </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="text-center style-text-h2"><span class="bold">{{$current_style->style_title}}</span> {{$current_style->style_name}} </h2>
+            @foreach ($report_galleries as $report_gallerie)
+                <?php
+                    $like_img_count = 0;
+                    foreach ($report_gallerie['images'] as $image) {
+                        foreach ($like_images as $like_image) {
+                            if ($image->id == $like_image->image_id) {
+                                if ($like_image->like_type > 1) {
+                                    $like_img_count += 1;
+                                }
+                            }
+                        }
+                    }
+                ?>
+                @if ($like_img_count > 0)
                     <div class="row">
-                        <div id="aniimated-thumbnials" class="list-unstyled clearfix">
-                            @foreach ($images as $image)
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
-                                    <div class="selection-image-container">
+                        <div class="col-md-12">
+                            <h2 class="text-center style-text-h2">Your Selection <span class="bold">{{$report_gallerie['style_name']}}</span></h2>
+                            <div class="row">
+                                <div id="aniimated-thumbnials" class="list-unstyled clearfix">
+                                    @foreach ($report_gallerie['images'] as $image)
                                         <?php
                                             $current_image_status = 0;
                                             foreach ($like_images as $like_image) {
@@ -61,22 +64,21 @@ View Selection
                                                 }
                                             }
                                         ?>
-                                        @if ($current_image_status == 3)
-                                            <div class="status selection_love">Stamp!</div>
-                                        @elseif ($current_image_status == 2)
-                                            <div class="status selection_like">Like!</div>
-                                        @elseif ($current_image_status == 1)
-                                            <div class="status selection_dislike">Dislike!</div>
+                                        @if ($current_image_status > 1)
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 text-center">
+                                                <div class="selection-image-container">
+                                                    <input type="hidden" name="" id="current_img_id" value="{{$image->id}}">
+                                                    <img class="img-responsive thumbnail" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
+                                                </div>
+                                            </div>
                                         @endif
-                                        <input type="hidden" name="" id="current_img_id" value="{{$image->id}}">
-                                        <img class="img-responsive thumbnail" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
-                                    </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </div>
     </div>
     <div id="single_img_selection_view" class="modal fade" data-backdrop="static" tabindex="-1" data-width="500">
@@ -164,28 +166,6 @@ View Selection
                     });
                 })
             });
-
-            $(('#selection_reset_btn')).on('click', function(e) {
-                e.preventDefault();
-                var $this = $(this);
-                swal({
-                  title: "Are you sure?",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#0ed2d0",
-                  confirmButtonText: "Yes, Reset!",
-                  cancelButtonText: "No, cancel!",
-                  closeOnConfirm: true,
-                  closeOnCancel: true
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        console.log($this.attr('href'));
-                        window.location = $this.attr('href');
-                    } else {
-
-                    }
-                });
-            })
         });
     </script>
 @endsection
