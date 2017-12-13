@@ -17,7 +17,7 @@ class CreateSurveyOption1Table extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('img_name');
-            $table->interger('size');
+            $table->integer('size');
             $table->integer('question_id');
         });
     }
