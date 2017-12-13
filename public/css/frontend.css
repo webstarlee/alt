@@ -125,7 +125,7 @@
     margin-bottom: 0;
     width: 100%;
     z-index: 10;
-    height: 25vh;
+    height: 50vh;
     box-shadow: inset 0px -5px 10px -5px rgba(0,0,0,0.7);
     position: fixed;
     transition: all .3s ease-out;
@@ -140,7 +140,7 @@
     overflow: hidden;
 }
 .survey-img-container-div {
-    padding-top: 27vh;
+    padding-top: 54vh;
     padding-bottom: 50px;
     overflow: hidden;
 }
@@ -794,6 +794,12 @@
     padding-left: 10px;
     margin-top: 10px;
 }
+.gallery-like-text-alert-container {
+    position: absolute;
+    top: calc(50% - -30px);
+    right: -205px;
+    transition: all .3s ease-out;
+}
 @media(max-width: 1199px) {
     .child-single-gallery-title-div {
         right: 30px;
@@ -809,8 +815,29 @@
     .user-selection-view-gallery-div {
         left: -25px;
     }
+    .gallery-like-text-alert-container {
+        top: unset;
+        right: calc( 50% - 95px);
+        bottom: 12px;
+    }
+    .gallery-like-text-alert-container>h3 {
+        color: #000;
+        text-shadow: 0 0 7px rgb(255, 255, 255);
+    }
+    .gallery-like-text-alert-container>h3>small {
+        color: #000;
+        text-shadow: 0 0 7px rgb(255, 255, 255);
+    }
 }
 @media(max-width: 767px) {
+    .gallery-back-button {
+        width: 60px;
+        height: 60px;
+        padding-top: 18px;
+    }
+    .gallery-back-button-container {
+        right: 60px;
+    }
     .child-single-gallery-title-div {
         position: absolute;
         height: unset;
@@ -833,7 +860,7 @@
     }
     .gallery-like-group-button-container {
         position: absolute;
-        width: 50%;
+        width: 43%;
         height: 60px;
         right: 0;
         top: unset;
@@ -842,12 +869,17 @@
     }
     .gallery-unlike-group-button-container {
         position: absolute;
-        width: 50%;
+        width: 57%;
         height: 60px;
         left: 0;
         top: unset;
         z-index: 99;
         bottom: 20px;
+    }
+    .gallery-like-text-alert-container {
+        top: unset;
+        right: calc( 50% - 95px);
+        bottom: 75px;
     }
 }
 @media(max-width: 599px) {
@@ -912,6 +944,12 @@
     .description-text-summary-div {
         padding-top: 0;
     }
+    .gallery-like-group-button-container {
+        width: 41%;
+    }
+    .gallery-unlike-group-button-container {
+        width: 59%;
+    }
 }
 
 @media(max-width: 349px) {
@@ -923,5 +961,11 @@
     }
     .your-selection-text {
         font-size: 12pt
+    }
+    .gallery-like-group-button-container {
+        width: 40%;
+    }
+    .gallery-unlike-group-button-container {
+        width: 60%;
     }
 }

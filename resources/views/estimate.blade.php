@@ -84,7 +84,7 @@ Construction Estimate
                                                     <div class="row">
                                                         <div class="col-sm-11 col-sm-offset-1 col-xs-12" id="comment_container_{{$quetion->id}}">
                                                             @foreach ($comments as $comment)
-                                                                @if ($comment->question_id == $quetion->id)
+                                                                @if ($comment->question_id == $quetion->id && $comment->user_id == Auth::user()->id)
                                                                     <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
                                                                         <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
                                                                         <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="javascript:void(0)" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
@@ -168,7 +168,7 @@ Construction Estimate
                                                     <div class="row">
                                                         <div class="col-sm-11 col-sm-offset-1 col-xs-12" id="comment_container_{{$quetion->id}}">
                                                             @foreach ($comments as $comment)
-                                                                @if ($comment->question_id == $quetion->id)
+                                                                @if ($comment->question_id == $quetion->id && $comment->user_id == Auth::user()->id)
                                                                     <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
                                                                         <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
                                                                         <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="javascript:void(0)" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>

@@ -7,7 +7,7 @@ like image
     @foreach ($images as $image)
         <?php $check_exist_image += 1; ?>
     @endforeach
-    <div class="homepage-background-div" style="height: 25vh;">
+    <div class="homepage-background-div" style="height: 25vh;min-height: 150px;">
         <div class="description-container-div">
         </div>
         <div class="menu-container-div">
@@ -59,13 +59,9 @@ like image
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="gallery-info-button-container">
-                                            <a href="#" id="info-btn">
-                                                <div class="gallery-info-button">
-                                                    <i class="fa fa-map-marker"></i>
-                                                </div>
-                                            </a>
-                                        </div>
+                                    </div>
+                                    <div class="gallery-like-text-alert-container">
+                                        <h3 class="bold" style="font-size: 18px;">Love this? <br /> <small class="bold">Click the image to tell us more.</small> </h3>
                                     </div>
                                     <div class="gallery-unlike-group-button-container">
                                         <div class="gallery-unlike-button-container">
@@ -100,6 +96,7 @@ like image
             <div class="stamp-img-div">
             </div>
             <div class="select-stamp-type-container">
+                <h5 class="sbold">Select a Heart - Click the Image</h5>
                 <div class="heart-stamp-div" id="stamp-heart-img">
                     <img src="{{cdn('assets/images/components/heart.svg')}}" salt="">
                 </div>
@@ -108,17 +105,14 @@ like image
                 </div>
             </div>
             <div class="row gallery-img-comment">
-                <div class="col-xs-10">
+                <div class="col-xs-12">
                     <input class="form-control" type="text" id="gallery_comment" name="gallery_comment" placeholder="Comment:"/>
-                </div>
-                <div class="col-xs-2">
-                    <a class="btn green" id="question-comment-save-btn" style="width: 100%;"><i class="fa fa-floppy-o" style="font-size: 10pt;"></i></a>
                 </div>
             </div>
         </div>
         <div class="modal-footer text-center" id="gallery-img-add-close" style="text-align:center;">
-            <button type="button" id="img-stamp-cancel-button" class="btn dark">Close</button>
-            <button type="button" id="img-stamp-save-button" disabled class="btn green">Save and Close</button>
+            <button type="button" id="img-stamp-cancel-button" class="btn dark">Go Back</button>
+            <button type="button" id="img-stamp-save-button" class="btn green">Save and Close</button>
         </div>
     </div>
 @endsection
@@ -343,7 +337,6 @@ like image
                         $('#stamp_image_id').val(result.id);
 
                         $('.stamp-img-div').html(img_html);
-                        $('#img-stamp-save-button').prop('disabled', true);
                         $('#image_comment_stamp').modal('show');
                     },
                     error: function(result){
@@ -396,10 +389,8 @@ like image
                         $this.append(heart_img_html);
 
                         stamp_position_array.push({'love_type': current_heart_type, 'top': percent_y, 'left': percent_x});
-                        if ($('#img-stamp-save-button').prop('disabled') ==  true) {
-                            $('#img-stamp-save-button').prop('disabled', false);
-                        }
-                        console.log(stamp_position_array);
+
+                        // console.log(stamp_position_array);
                     }
                 }
             });
@@ -429,19 +420,19 @@ like image
             });
 
             $('#img-stamp-save-button').on('click', function() {
-                var save_image_stamp_url = "{{url('/save_stamps')}}";
-                // console.log(stamp_position_array);
-                var image_id = $('#stamp_image_id').val();
-                axios.post(save_image_stamp_url, {imageId: image_id,stamp_data: stamp_position_array}).then(function (response) {
-                    // console.log(stamp_position_array);
+                console.log(stamp_position_array);
+                if ((typeof stamp_position_array !== 'undefined' && stamp_position_array.length > 0) || $('#gallery_comment').val() != "" ) {
+                    if (typeof stamp_position_array !== 'undefined' && stamp_position_array.length > 0 ) {
+                        save_image_stamps();
+                    }
+
+                    if ($('#gallery_comment').val() != "") {
+                        save_image_comment();
+                    }
+                    var image_id = $('#stamp_image_id').val();
                     set_status("like");
-                    stamp_position_array = [];
-                    $('#stamp-heart-img').parent().find('.active').each(function() {
-                        $(this).removeClass('active');
-                    });
                     $('#image_comment_stamp').modal('hide');
                     set_like_images(image_id, 3);
-
                     current_buddy.addClass('rotate-left').delay(400).fadeOut(1);
                     $('.buddy').find('.status').remove();
                     current_buddy.append('<div class="status like">Like!</div>');
@@ -456,12 +447,25 @@ like image
                             $('.gallery-like-container-div').html(congratulation_text);
                         }, 450);
                     }
+                }
+            });
+
+            function save_image_stamps() {
+                var save_image_stamp_url = "{{url('/save_stamps')}}";
+                // console.log(stamp_position_array);
+                var image_id = $('#stamp_image_id').val();
+                axios.post(save_image_stamp_url, {imageId: image_id,stamp_data: stamp_position_array}).then(function (response) {
+                    // console.log(stamp_position_array);
+
+                    stamp_position_array = [];
+                    $('#stamp-heart-img').parent().find('.active').each(function() {
+                        $(this).removeClass('active');
+                    });
                 }).catch(function (error) {
                     console.log(error);
                 });
-            });
-
-            $('#question-comment-save-btn').on('click', function() {
+            }
+            function save_image_comment(){
                 var gallery_comment = $('#gallery_comment').val();
                 var save_image_comment_url = "{{route('save.gallery.comment')}}";
                 // console.log(stamp_position_array);
@@ -473,7 +477,7 @@ like image
                         console.log(error);
                     });
                 }
-            });
+            };
         });
 
     </script>
