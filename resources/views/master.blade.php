@@ -97,7 +97,13 @@
                                         }
                                     }
 
-                                    $total_money = $total_square_size * 1000;
+                                    $total_money = 0;
+                                    if (Auth::user()->survey_cost) {
+                                        $total_money = $total_square_size * Auth::user()->survey_cost;
+                                    }
+                                    else {
+                                        $total_money = $total_square_size * 100;
+                                    }
                                 ?>
                                 <div class="row">
                                     <div class="col-xs-6">
@@ -105,26 +111,9 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <select class="survey-calculator form-control survey-calculator-usd-select" id="survey_money_per_meter">
-                                            <option value="100">US$ 100 per &#x33a1;</option>
-                                            <option value="200">US$ 200 per &#x33a1;</option>
-                                            <option value="300">US$ 300 per &#x33a1;</option>
-                                            <option value="400">US$ 400 per &#x33a1;</option>
-                                            <option value="500">US$ 500 per &#x33a1;</option>
-                                            <option value="600">US$ 600 per &#x33a1;</option>
-                                            <option value="700">US$ 700 per &#x33a1;</option>
-                                            <option value="800">US$ 800 per &#x33a1;</option>
-                                            <option value="900">US$ 900 per &#x33a1;</option>
-                                            <option value="1000" selected>US$ 1000 per &#x33a1;</option>
-                                            <option value="1100">US$ 1100 per &#x33a1;</option>
-                                            <option value="1200">US$ 1200 per &#x33a1;</option>
-                                            <option value="1300">US$ 1300 per &#x33a1;</option>
-                                            <option value="1400">US$ 1400 per &#x33a1;</option>
-                                            <option value="1500">US$ 1500 per &#x33a1;</option>
-                                            <option value="1600">US$ 1600 per &#x33a1;</option>
-                                            <option value="1700">US$ 1700 per &#x33a1;</option>
-                                            <option value="1800">US$ 1800 per &#x33a1;</option>
-                                            <option value="1900">US$ 1900 per &#x33a1;</option>
-                                            <option value="2000">US$ 2000 per &#x33a1;</option>
+                                            @for ($i=100; $i < 2100; $i+=100)
+                                                <option value="{{$i}}" @if(Auth::user()->survey_cost == $i) selected @endif >US$ {{$i}} per &#x33a1;</option>
+                                            @endfor
                                         </select>
                                     </div>
                                 </div>
@@ -208,7 +197,7 @@
         <script src="{{cdn('assets/global/plugins/jquery.touchSwipe.min.js')}}" type="text/javascript"></script>
         <script src="{{ cdn('assets/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
         <script src="{{cdn('assets/global/plugins/node-waves/waves.js')}}"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="{{cdn('assets/global/plugins/axios.min.js')}}"></script>
         <!-- END CORE PLUGINS -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         @yield('pagelevel_script')
@@ -239,13 +228,25 @@
               });
 
               $('#survey_money_per_meter').on('change', function() {
-                  // console.log("hello");
+
                   var current_per_money = $('#survey_money_per_meter').val();
                   var current_square = $('#total_survey_square_size_hidden').val();
                   var result_total_money = current_square * current_per_money;
                   result_total_money = result_total_money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                   $('#total_survey_money').html(result_total_money);
 
+                  var cost_set_url = "{{url('set-survey-cost')}}";
+                  var final_cost_set_url = cost_set_url+"/"+current_per_money;
+                  $.ajax({
+                      url: final_cost_set_url,
+                      type: 'get',
+                      success: function(result){
+                          console.log(result);
+                      },
+                      error: function(error){
+                          console.log(error);
+                      }
+                  });
               })
         </script>
     </body>

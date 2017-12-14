@@ -10,13 +10,13 @@ Home
             <div class="menu-container-div">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <div class="description-text-div home-text-mobile-hide animated bounceInRight">
                                 <p class="font-white description-text" >Take our short gallery survey add let us build your</p>
                                 <p class="font-white bold description-text">Dream home</p>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="menu-button-right-div pull-right animated bounceInLeft">
                                 <a href="{{route('live.construction')}}"><img src="{{cdn('assets/images/components/goto_estimate.svg')}}" class="menu-estimate" alt=""></a>
                             </div>
@@ -182,6 +182,11 @@ Home
                                         </div>
                                     </div>
                                 @endforeach
+                                <p class="text-center">
+                                    <a class="gallery-report-link-a" href="{{route('report.gallery')}}" target="_blank" >Submit your report to us</a>
+                                    <br />
+                                    <a class="gallery-save-pdf-link-a" href="{{route('save.gallery.pdf')}}" target="_blank" >Save PDF</a>
+                                </p>
                             </div>
                             <div class="tab-pane" id="tab_1_3">
                                 <?php
@@ -305,6 +310,11 @@ Home
                                         </div>
                                     </div>
                                 @endforeach
+                                <p class="text-center">
+                                    <a class="gallery-report-link-a" href="{{route('report.gallery')}}" target="_blank" >Submit your report to us</a>
+                                    <br />
+                                    <a class="gallery-save-pdf-link-a" href="{{route('save.gallery.pdf')}}" target="_blank" >Save PDF</a>
+                                </p>
                             </div>
                         </div>
                     </div>

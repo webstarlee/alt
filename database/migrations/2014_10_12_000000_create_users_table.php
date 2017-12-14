@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('survey_cost')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

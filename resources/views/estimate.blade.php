@@ -13,15 +13,15 @@ Construction Estimate
             <div class="menu-container-div">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <div class="menu-button-gotoHome-div animated bounceInRight">
                                 <a href="{{url('home')}}"><img src="{{cdn('assets/images/components/alt_gotoHome_button.svg')}}" class="menu-estimate" alt=""></a>
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-8">
                             <div class="description-text-summary-div animated bounceInLeft">
-                                <p class="font-white summary-text text-right" >Summary</p>
-                                <p class="font-white bold your-selection-text text-right">Your Selection</p>
+                                <p class="font-white summary-text text-right" >Tell us what you’re looking for</p>
+                                <p class="font-white bold your-selection-text text-right">Take our construction estimate survey</p>
                             </div>
                         </div>
                     </div>
@@ -31,6 +31,15 @@ Construction Estimate
     </div>
     <div class="survey-img-container-div">
         <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-toolbar">
+                        <div class="btn-group pull-right">
+                            <a href="{{route('reset.survey')}}" id="user-survey-reset-btn-top" class="btn green btn"> RESET YOUR SELECTION </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="survey-img-container">
@@ -195,6 +204,15 @@ Construction Estimate
                             @endif
                         @endforeach
                     </div>
+                    <div class="survery-report-div-container">
+                        <p class="text-center">
+                            <a class="gallery-report-link-a" href="{{route('report.construction')}}" target="_blank" >Submit your report to us</a>
+                            <br />
+                            <a class="gallery-save-pdf-link-a" href="{{route('save.survey.pdf')}}" target="_blank" >Save PDF</a>
+                            <br />
+                            <a class="gallery-save-pdf-link-a" id="user-survey-reset-btn" href="{{route('reset.survey')}}" >Reset Survey</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -283,6 +301,15 @@ Construction Estimate
                             </div>
                             <div class="col-sm-9">
                                 <div class="row" id="optionb-select-size-container">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <a id="optionb-set-number-none" class="optionb-set-number-a">
+                                            <div class="optiona-size-round-div">
+                                                <span class="bold optionb-size-span" data-value="">None</span>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -500,6 +527,23 @@ Construction Estimate
             }
         }
 
+        function optionb_status_delete() {
+            var questionId = $(optionB_nRow).find('.current-question-id-hidden').val();
+            var optionb_delete_url = "{{url('delete-survey-optionb')}}";
+            var final_delete_url = optionb_delete_url+"/"+questionId
+
+            $.ajax({
+                url: final_delete_url,
+                type: 'get',
+                success: function(result){
+                    console.log(result);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
+
         $('.optionb_img_item').on('click', function() {
             var $this = $(this);
             optionB_nRow = $this.parents('.optionb-question-container')[0];
@@ -592,7 +636,7 @@ Construction Estimate
                 success: function(result){
                     $('#single_user_comment_'+id).remove();
                 },
-                error: function(result){
+                error: function(error){
                     console.log(error);
                 }
             });
@@ -618,5 +662,55 @@ Construction Estimate
             });
             // console.log(current_per_money);
         }
+
+        $('#optionb-set-number-none').on('click', function() {
+            optionB_size_div.find('.optiona-size-round-div').each( function() {
+                var $this = $(this);
+                if ($this.hasClass('active')) {
+                    $this.removeClass('active');
+                }
+            });
+
+            $(optionB_nRow).find('.current-optionb-size-id').val("");
+            $(optionB_nRow).find('.current-optiona-size-number').html("Select");
+            $(optionB_nRow).find('.current-optiona-image-type>span').html("");
+            $(optionB_nRow).find('.current-optiona-image-type').css({'display': 'none'});
+
+            optionB_size_div.fadeOut(400);
+
+            optionb_status_delete();
+            // console.log("hello");
+        });
+
+        function check_sure_reset(element) {
+            swal({
+              title: "Are you sure?",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#0ed2d0",
+              confirmButtonText: "Yes, Reset!",
+              cancelButtonText: "No, cancel!",
+              closeOnConfirm: true,
+              closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    window.location = element.attr('href');
+                } else {
+
+                }
+            });
+        }
+
+        $(('#user-survey-reset-btn')).on('click', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            check_sure_reset($this);
+        });
+
+        $('#user-survey-reset-btn-top').on('click', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            check_sure_reset($this);
+        });
     </script>
 @endsection

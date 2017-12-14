@@ -38,6 +38,9 @@
     border: 3px solid #28d5f9;
     background-color: #fff;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .survey-circle-title-text {
     position: absolute;
@@ -51,13 +54,11 @@
 }
 .survey-number-text {
     margin: 0;
-    padding-top: 40px;
     font-size: 25pt;
     color: #616161;
 }
 .survey-size-text {
     margin: 0;
-    margin-top: 10px;
     font-size: 15pt;
     color: #616161;
 }
@@ -177,6 +178,7 @@
 }
 .optiona-question-container {
     margin-top: 20px;
+    position: relative;
 }
 .optionb-size-number-select-container__div {
     width: 100%;
@@ -187,7 +189,6 @@
 }
 .optionb_size_select_text_item .survey-number-text {
     font-size: 17pt;
-    padding-top: 50px;
 }
 .optionb-set-number-a {
     text-decoration: none;
@@ -290,13 +291,55 @@
 .delete-comment-btn>i {
     font-size: 12pt;
 }
-/*.survey-calculator-container__div {
-    position: fixed;
+.survey-calculator-span-pdf {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #616161;
+}
+.survey-print-circle-img {
+    /*background-image: url('../assets/images/components/print_null_black.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;*/
+    position: relative;
+}
+.survey-print-circle-img>h2 {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    color: #616161;
+}
+.survey-print-circle-img>h3 {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    color: #616161;
+}
+.option-question-container-img-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
-    height: 100px;
-    width: 200px;
-    background-color: #000;
-}*/
+    left: 0;
+}
+.option-question-container-img-container>img {
+    width: 100%;
+    height: 100%;
+}
+.optionb-question-container {
+    position: relative;
+}
+.option-question-container-print-img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 @media(max-width: 767px) {
     .dotted-line::before {
         content: none;
@@ -354,6 +397,9 @@
     }
     .dotted-line-vertical::before {
         content: none;
+    }
+    .description-text-summary-div {
+        display: none;
     }
 }
 @media(max-width: 599px) {

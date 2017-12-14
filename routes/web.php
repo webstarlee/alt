@@ -29,6 +29,7 @@ Route::get('/construnction', 'HomeController@construction')->name('live.construc
 Route::get('/get-single-question/{id}', 'HomeController@get_sizeoption_single');
 Route::post('/save-survey-optiona', 'HomeController@save_survey_optiona')->name('save.survey.optiona');
 Route::post('/save-survey-optionb', 'HomeController@save_survey_optionb')->name('save.survey.optionb');
+Route::get('/delete-survey-optionb/{id}', 'HomeController@delete_survey_optionb');
 Route::post('/save-survey-optionb-imges-add', 'HomeController@save_survey_optionb_imgs_add')->name('save.survey.optionb.imgs.add');
 Route::post('/save-survey-optionb-imges-remove', 'HomeController@save_survey_optionb_imgs_remove')->name('save.survey.optionb.imgs.remove');
 Route::post('/save-comment', 'HomeController@save_question_comment')->name('save.question.comment');
@@ -37,6 +38,10 @@ Route::get('/delete-own-comment/{id}', 'HomeController@delete_comment');
 Route::get('/calculator/{number}', 'HomeController@calculator');
 Route::get('/report-gallery', 'HomeController@gallery_report')->name('report.gallery');
 Route::get('/report-construction', 'HomeController@construction_report')->name('report.construction');
+Route::get('/save-gallery-pdf', 'HomeController@save_gallery_report')->name('save.gallery.pdf');
+Route::get('/save-survey-pdf', 'HomeController@save_survey_report')->name('save.survey.pdf');
+Route::get('/set-survey-cost/{money}', 'HomeController@set_survey_cost');
+Route::get('/reset-survey', 'HomeController@reset_survey')->name('reset.survey');
 //Auth::routes();
 
 Route::prefix('profile')->group(function(){

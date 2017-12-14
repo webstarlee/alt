@@ -479,6 +479,5 @@ like image
                 }
             };
         });
-
     </script>
 @endsection

@@ -17,6 +17,7 @@ use \App\SurveyAnswerSize;
 use \App\SurveyQuestion;
 use \App\QuestionComment;
 use \App\GalleryComment;
+use Knp\Snappy\Pdf;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -36,28 +37,24 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         return view('home');
     }
 
-    public function gallery_show($id)
-    {
+    public function gallery_show($id) {
         $current_style = GalleryStyle::find($id);
         $gallery_images = Gallery::where('style_id' , $id)->get();
         return view('gallery', ['images' => $gallery_images, 'current_style' => $current_style]);
     }
 
-    public function view_selection($id)
-    {
+    public function view_selection($id) {
         $current_style = GalleryStyle::find($id);
         $gallery_images = Gallery::where('style_id' , $id)->get();
         $like_images = UserLike::where('user_id' , Auth::user()->id)->get();
         return view('viewSelect', ['images' => $gallery_images, 'current_style' => $current_style, 'like_images' => $like_images]);
     }
 
-    public function gallery_report()
-    {
+    public function gallery_report() {
         $styles = GalleryStyle::all();
         $report_galleries = array();
         foreach ($styles as $style) {
@@ -76,8 +73,7 @@ class HomeController extends Controller
         return view('home' , ['category1' => $category1, 'category2' => $category2, 'gallery_style1' => $gallery_style1, 'gallery_style2' => $gallery_style2]);
     }
 
-    public function like_images(Request $request)
-    {
+    public function like_images(Request $request) {
         $already_liked = UserLike::where('image_id', $request->imageId)->where('user_id', $request->useId)->get()->count();
         if($already_liked > 0) {
             $current_like= UserLike::where('image_id', $request->imageId)->where('user_id', $request->useId)->get()->first();
@@ -94,8 +90,7 @@ class HomeController extends Controller
         return $current_like;
     }
 
-    public function like_status_save($id)
-    {
+    public function like_status_save($id) {
         $like_status = GalleryStyle::find($id);
         $allery_style_user_passed = explode(',', $like_status->style_completed_user);
         if(in_array(Auth::user()->id, $allery_style_user_passed)) {
@@ -108,15 +103,13 @@ class HomeController extends Controller
         }
     }
 
-    public function get_img_for_stamp($id)
-    {
+    public function get_img_for_stamp($id) {
         $data_image = Gallery::find($id);
 
         return $data_image;
     }
 
-    public function save_all_stamps(Request $request)
-    {
+    public function save_all_stamps(Request $request) {
         $current_img_id = $request->imageId;
 
         foreach ($request->stamp_data as $single_stamp) {
@@ -131,8 +124,7 @@ class HomeController extends Controller
         return "success";
     }
 
-    public function get_selection_img($id)
-    {
+    public function get_selection_img($id) {
         $data_image = Gallery::find($id);
 
         $img_status = UserLike::where('image_id', $data_image->id)->where('user_id', Auth::user()->id)->first();
@@ -193,8 +185,7 @@ class HomeController extends Controller
         // return $img_status->like_type;
     }
 
-    public function reset_user_selection($id)
-    {
+    public function reset_user_selection($id) {
         // dd($id);
         if (Auth::user()->id) {
             $galleries = Gallery::where('style_id', $id)->get();
@@ -206,30 +197,26 @@ class HomeController extends Controller
         }
     }
 
-    public function construction()
-    {
+    public function construction() {
         $questions = SurveyQuestion::all();
         // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
         $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->orderBy('question_comments.publish', 'DESC')->get();
         return view('estimate', ['quetions' => $questions, 'comments' => $comment_users]);
     }
 
-    public function construction_report()
-    {
+    public function construction_report() {
         $questions = SurveyQuestion::all();
         // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
         $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->orderBy('question_comments.publish', 'DESC')->get();
         return view('constructionReport', ['quetions' => $questions, 'comments' => $comment_users]);
     }
 
-    public function get_sizeoption_single($id)
-    {
+    public function get_sizeoption_single($id) {
         $option_sizes = SurveyAnswerSize::where('question_id', $id)->orderBy('size', 'ASC')->get();
         return $option_sizes;
     }
 
-    public function save_survey_optiona(Request $request)
-    {
+    public function save_survey_optiona(Request $request) {
         $question_id = $request->question_id;
         $option_number = $request->option_size;
         $option_id = $request->option_id;
@@ -254,8 +241,7 @@ class HomeController extends Controller
         }
     }
 
-    public function save_survey_optionb(Request $request)
-    {
+    public function save_survey_optionb(Request $request) {
         $question_id = $request->question_id;
         $size_id = $request->size_id;
 
@@ -277,8 +263,19 @@ class HomeController extends Controller
         }
     }
 
-    public function save_survey_optionb_imgs_add(Request $request)
-    {
+    public function delete_survey_optionb($question_id) {
+        $user_optionb_count = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->count();
+
+        if ($user_optionb_count > 0) {
+            $user_optionb = UserOptionB::where('question_id', $question_id)->where('user_id', Auth::user()->id)->first();
+            $user_optionb->delete();
+            return "success";
+        }
+
+        return "error";
+    }
+
+    public function save_survey_optionb_imgs_add(Request $request) {
         $question_id = $request->question_id;
         $img_id = $request->img_id;
 
@@ -311,8 +308,7 @@ class HomeController extends Controller
         }
     }
 
-    public function save_survey_optionb_imgs_remove(Request $request)
-    {
+    public function save_survey_optionb_imgs_remove(Request $request) {
         $question_id = $request->question_id;
         $img_id = $request->img_id;
 
@@ -340,8 +336,7 @@ class HomeController extends Controller
         return "no data";
     }
 
-    public function save_question_comment(Request $request)
-    {
+    public function save_question_comment(Request $request) {
         $dt = new DateTime();
 
         $comment = new QuestionComment();
@@ -356,8 +351,7 @@ class HomeController extends Controller
         return $comment_user;
     }
 
-    public function save_gallery_comment(Request $request)
-    {
+    public function save_gallery_comment(Request $request) {
         $comment_count = GalleryComment::where('image_id', $request->imageId)->where('user_id', Auth::user()->id)->count();
         if ($comment_count > 0) {
             $comment = GalleryComment::where('image_id', $request->imageId)->where('user_id', Auth::user()->id)->first();
@@ -377,15 +371,13 @@ class HomeController extends Controller
         }
     }
 
-    public function delete_comment($id)
-    {
+    public function delete_comment($id) {
         $comment = QuestionComment::find($id);
         $comment->delete();
         return "success";
     }
 
-    public function calculator($money)
-    {
+    public function calculator($money) {
         $total_result_a_count = UserOptionA::where('user_id', Auth::user()->id)->count();
         $total_result_b_count = UserOptionB::where('user_id', Auth::user()->id)->count();
 
@@ -418,5 +410,82 @@ class HomeController extends Controller
         $money_result = array('total_square' => $total_square_size, 'total_money' => $total_money);
 
         return $money_result;
+    }
+
+    public function save_gallery_report() {
+        $styles = GalleryStyle::all();
+        $report_galleries = array();
+        foreach ($styles as $style) {
+            $gallery_images = Gallery::where('style_id' , $style->id)->get();
+            $report_galleries[] = array('style_name' => $style->style_name, 'images'=>$gallery_images);
+        }
+        $like_images = UserLike::where('user_id' , Auth::user()->id)->get();
+        // return view('gallerypdf', ['report_galleries' => $report_galleries, 'like_images' => $like_images]);
+
+        $pdf = \App::make('snappy.pdf.wrapper');
+        $pdf->loadView('gallerypdf', ['report_galleries' => $report_galleries, 'like_images' => $like_images]);
+        $pdf->setPaper('a4');
+        // $pdf->setOrientation('portrate');
+        $pdf->setOption('margin-bottom', 1);
+        $pdf->setOption('margin-top', 10);
+        $pdf->setOption('header-left', '[date]');
+        $pdf->setOption('header-right', 'Page [page] of [topage]');
+        $pdf->setOption('header-font-size', 8);
+
+        return $pdf->inline('gallery_pdf.pdf');
+    }
+
+    public function save_survey_report() {
+        $questions = SurveyQuestion::all();
+        // $user_survey_results = UserOptionA::where('user_id', Auth:user()->id)->get()
+        $comment_users = QuestionComment::join('users', 'users.id', '=', 'question_comments.user_id')->select('question_comments.*', 'users.first_name', 'users.last_name', 'users.avatar')->orderBy('question_comments.publish', 'DESC')->get();
+        // return view('constructionpdf', ['quetions' => $questions, 'comments' => $comment_users]);
+
+        $pdf = \App::make('snappy.pdf.wrapper');
+        $pdf->loadView('constructionpdf', ['quetions' => $questions, 'comments' => $comment_users]);
+        $pdf->setPaper('a4');
+        // $pdf->setOrientation('landscape');
+        $pdf->setOption('margin-bottom', 1);
+        $pdf->setOption('margin-top', 10);
+        $pdf->setOption('header-left', '[date]');
+        $pdf->setOption('header-right', 'Page [page] of [topage]');
+        $pdf->setOption('header-font-size', 8);
+
+        return $pdf->inline('survey_pdf.pdf');
+    }
+
+    public function set_survey_cost($money) {
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user->survey_cost = $money;
+            $user->save();
+
+            return "success";
+        }
+
+        return "error";
+    }
+
+    public function reset_survey() {
+        $user_id = Auth::user()->id;
+
+        $optiona_count = UserOptionA::where('user_id', $user_id)->count();
+        if ($optiona_count > 0 ) {
+            $optiona_results = UserOptionA::where('user_id', $user_id)->get();
+            foreach ($optiona_results as $optiona_result) {
+                $optiona_result->delete();
+            }
+        }
+
+        $optionb_count = UserOptionB::where('user_id', $user_id)->count();
+        if ($optionb_count > 0 ) {
+            $optionb_results = UserOptionB::where('user_id', $user_id)->get();
+            foreach ($optionb_results as $optionb_result) {
+                $optionb_result->delete();
+            }
+        }
+
+        return redirect()->route('live.construction');
     }
 }

@@ -185,7 +185,7 @@ View Selection
 
                     }
                 });
-            })
+            });
         });
     </script>
 @endsection
