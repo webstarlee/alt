@@ -67,7 +67,7 @@
                     <div class="container">
                         <div class="navbar-header">
                             <a href="{{route('home')}}" class="navbar-brand">
-                                <img src="{{cdn('assets/images/components/logo_black.svg')}}" class="animated fadeInDown" alt="alt Template" />
+                                <img src="{{cdn('assets/images/origine_logo.png')}}" class="animated fadeInDown" alt="alt Template" />
                             </a>
                             <div class="survey-calculator-container__div animated fadeInDown">
                                 <?php

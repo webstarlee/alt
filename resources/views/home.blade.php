@@ -36,7 +36,7 @@ Home
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <div class="parent_gallery_img_info-div">
-                                            <div class="gallery-single-img-div left-img">
+                                            <div class="gallery-single-img-div left-img @if(session('tap') && session('tap') == 'category_'.$category1->id) active @endif">
                                                 <a href="#tab_1_1" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category1->category_img.'_thumbnail.jpg')}}" alt=""> </a>
                                             </div>
                                             <div class="single-gallery-title-div">
@@ -46,7 +46,7 @@ Home
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="parent_gallery_img_info-div">
-                                            <div class="gallery-single-img-div right-img">
+                                            <div class="gallery-single-img-div right-img @if(session('tap') && session('tap') == 'category_'.$category2->id) active @endif">
                                                 <a href="#tab_1_3" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category2->category_img.'_thumbnail.jpg')}}" alt=""> </a>
                                             </div>
                                             <div class="single-gallery-title-div">
@@ -58,10 +58,10 @@ Home
                             </div>
                         </div>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="tab_1_0">
+                            <div class="tab-pane @if (!session('tap')) active @elseif(session('tap') && session('tap') == 'bio') active @endif" id="tab_1_0">
                                 <h3 class="text-center bold">Select Region to Start</h3>
                             </div>
-                            <div class="tab-pane" id="tab_1_1">
+                            <div class="tab-pane @if(session('tap') && session('tap') == 'category_'.$category1->id) active @endif" id="tab_1_1">
                                 <?php
                                     $style1_passed_count = 0;
                                     // $isexist_passed = 0;
@@ -188,7 +188,7 @@ Home
                                     <a class="gallery-save-pdf-link-a" href="{{route('save.gallery.pdf')}}" target="_blank" >Save PDF</a>
                                 </p>
                             </div>
-                            <div class="tab-pane" id="tab_1_3">
+                            <div class="tab-pane @if(session('tap') && session('tap') == 'category_'.$category2->id) active @endif" id="tab_1_3">
                                 <?php
                                     $style1_passed_count1 = 0;
                                     // $isexist_passed1 = 0;

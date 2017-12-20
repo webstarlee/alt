@@ -82,15 +82,6 @@ var Login = function() {
                 },
                 password_confirmation: {
                     equalTo: "#register_password"
-                },
-                tnc: {
-                    required: true
-                }
-            },
-
-            messages: { // custom messages for radio buttons and checkboxes
-                tnc: {
-                    required: "Please accept TNC first."
                 }
             },
 

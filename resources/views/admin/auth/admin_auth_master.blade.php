@@ -38,7 +38,7 @@
     <body class="login">
         <!-- BEGIN LOGO -->
         <div class="logo">
-            <a><img style="width:150px;" src="{{ cdn('assets/images/logo.png') }}" alt="" /></a>
+            <a><img style="width:150px;" src="{{ cdn('assets/images/origine_logo.png') }}" alt="" /></a>
         </div>
         <div class="content">
             @yield('content')

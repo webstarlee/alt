@@ -53,7 +53,7 @@
                         <div class="col-md-12">
                             <h2 style="padding-bottom: 10px;text-align: center;">Your Selection <span class="bold">{{$report_gallerie['style_name']}}</span></h2>
                             <div class="row">
-                                <div id="aniimated-thumbnials" class="list-unstyled clearfix">
+                                <div id="aniimated-thumbnials" class="list-unstyled clearfix" style="text-align: center;">
                                     @foreach ($report_gallerie['images'] as $image)
                                         <?php
                                             $current_image_status = 0;
@@ -72,11 +72,9 @@
                                             }
                                         ?>
                                         @if ($current_image_status > 1)
-                                            <div class="col-xs-3 text-center">
-                                                <div style="width: 100%;display: inline-block;position: relative;cursor: pointer;margin-bottom: 20px;">
-                                                    <input type="hidden" name="" id="current_img_id" value="{{$image->id}}">
-                                                    <img style="margin-bottom: 0;max-width: 160px;margin: 0 auto;width: 100%;border-radius: 100%;" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
-                                                </div>
+                                            <div style="width: 100%;display: inline-block;position: relative;cursor: pointer;margin-bottom: 20px;width: 162px;height: 162px;margin-left: auto;margin-right: auto;margin-left:15px;margin-right: 15px;">
+                                                <input type="hidden" name="" id="current_img_id" value="{{$image->id}}">
+                                                <img style="margin-bottom: 0;max-width: 160px;margin: 0 auto;width: 100%;border-radius: 100%;" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
                                             </div>
                                         @endif
                                     @endforeach

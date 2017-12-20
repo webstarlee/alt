@@ -105,7 +105,7 @@ Gallery Management
                                   <td style="vertical-align:middle;">{{$gallery_style->style_name}}</td>
                                   <td style="vertical-align:middle;">{{$gallery_style->category_name}}</td>
                                   <td align='center' style="vertical-align:middle;">
-                                      <a onclick="edit_category({{$gallery_style->id}})" class="btn btn-sm btn-default green" style="width:75px;margin-bottom:5px;">Edit</a>
+                                      <a onclick="edit_style({{$gallery_style->id}})" class="btn btn-sm btn-default green" style="width:75px;margin-bottom:5px;">Edit</a>
                                   </td>
                               </tr>
                           @endforeach
@@ -373,7 +373,7 @@ Gallery Management
         });
     }
 
-    function edit_category(id) {
+    function edit_style(id) {
         var get_data_url = BASEURL+"/get-single-style-data/"+id;
 
         var base_img_url = "{{cdn('assets/images/gallery/style/')}}";

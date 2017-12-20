@@ -44,25 +44,18 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="welcome-logo-div">
-                            <img class="welcome-logo-img revealOnScroll " data-animation="bounceInDown" src="{{cdn('assets/images/components/logo_white.svg')}}" alt="">
+                            <img class="welcome-logo-img revealOnScroll " data-animation="bounceInDown" src="{{cdn('assets/images/origine_logo.png')}}" alt="">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <a href="#" class="btn green-jungle bold uppercase welcome-facebook-login revealOnScroll " data-timeout="100" data-animation="bounceInLeft">
-                            Login With FaceBook
-                        </a>
+                        <a href="{{route('login')}}" class="btn green-jungle bold uppercase welcome-email-login revealOnScroll " data-timeout="200" data-animation="bounceInLeft">Login with Email</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <a href="{{route('login')}}" class="btn bold uppercase welcome-email-login revealOnScroll " data-timeout="200" data-animation="bounceInLeft">Login with Email</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <a href="{{ route('register') }}" class="btn bold uppercase welcome-register revealOnScroll " data-timeout="300" data-animation="bounceInLeft">Register Now</a>
+                        <a href="{{ route('register') }}" class="btn green-jungle bold uppercase welcome-register revealOnScroll " data-timeout="300" data-animation="bounceInLeft">Register Now</a>
                     </div>
                 </div>
             </div>

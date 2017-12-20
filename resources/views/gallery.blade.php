@@ -2,6 +2,44 @@
 @section('title')
 like image
 @endsection
+@section('custom_style')
+    <style type="text/css">
+        .child_gallery_img_info-div {
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            position: relative;
+        }
+        .subGallery-single-img-div.current-img::before {
+            content: none;
+        }
+        .user-selection-view-gallery-div {
+            bottom: 0;
+        }
+        .user-selection-view-gallery-div>a:hover {
+            text-decoration: none;
+        }
+        @media(max-width: 767px) {
+            .user-selection-view-gallery-div {
+                bottom: 50%;
+            }
+            .user-selection-view-gallery-div>a {
+                color: #fff;
+                text-shadow: 0px 2px 2px rgb(0, 0, 0);
+            }
+            .user-selection-view-gallery-div>a:hover {
+                color: rgb(0, 0, 0);
+                text-shadow: 0px 2px 5px rgb(0, 0, 0);
+            }
+            .child_gallery_img_info-div {
+                padding-bottom: 50px;
+            }
+        }
+        .child-single-gallery-title-div {
+            bottom: 0;
+        }
+    </style>
+@endsection
 @section('content')
     <?php $check_exist_image = 0; ?>
     @foreach ($images as $image)
@@ -53,7 +91,7 @@ like image
                                 @if ($image_count > 0)
                                     <div class="gallery-like-group-button-container">
                                         <div class="gallery-like-button-container">
-                                            <a href="#" id="like-btn">
+                                            <a href="javascript: void(0);" id="like-btn">
                                                 <div class="gallery-like-button">
                                                     <i class="fa fa-heart"></i>
                                                 </div>
@@ -65,14 +103,14 @@ like image
                                     </div>
                                     <div class="gallery-unlike-group-button-container">
                                         <div class="gallery-unlike-button-container">
-                                            <a href="#" id="unlike-btn">
+                                            <a href="javascript: void(0);" id="unlike-btn">
                                                 <div class="gallery-unlike-button">
                                                     <i class="fa fa-close"></i>
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="gallery-back-button-container">
-                                            <a href="#" id="back-btn">
+                                            <a href="javascript: void(0);" id="back-btn">
                                                 <div class="gallery-back-button">
                                                     <i class="fa fa-rotate-left"></i>
                                                 </div>
@@ -80,6 +118,28 @@ like image
                                         </div>
                                     </div>
                                 @endif
+                            </div>
+                            <div class="gallery-save-set-div" style="display: none;">
+                                <p class="bold uppercase text-center"> You are set for all images </p>
+                                @if ($next_style != "null")
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <div class="child_gallery_img_info-div">
+                                                <div class="user-selection-view-gallery-div">
+                                                    <a href="{{url('gallery/'.$next_style->id)}}" class="child-single-gallery-title bold">Next Gallery</a>
+                                                </div>
+                                                <div class="subGallery-single-img-div current-img">
+                                                    <a class="subGallery-single-img-a" href="{{url('gallery/'.$next_style->id)}}"> <img src="{{cdn('assets/images/gallery/style/'.$next_style->style_img.'_thumbnail.jpg')}}" alt=""> </a>
+                                                </div>
+                                                <div class="child-single-gallery-title-div">
+                                                    <p class="child-single-gallery-title bold"> {{$next_style->style_title}} <br>{{$next_style->style_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                <a href="http://localswipe.com/save-like-status/{{$current_style->id}}"><p class="bold uppercase text-center">save and back to home</p></a>
+                                <a href="javascript: location.reload();"><p class="bold uppercase text-center">Or Reset status</p></a>
                             </div>
                         </div>
                     </div>
@@ -123,7 +183,6 @@ like image
 @section('custom_script')
     <script type="text/javascript">
         $(document).ready(function(){
-            var gallery_style_id = {{$current_style->id}} ;
             var current_window_width = $(window).width();
 
             if (current_window_width > 530) {
@@ -138,11 +197,11 @@ like image
                 current_window_width = $(window).width();
                 if (current_budy_height != null) {
                     if (current_window_width > 530) {
-	                $('.gallery-like-container-div').css({'height': '530px'});
-	            }
-	            else {
-	                $('.gallery-like-container-div').css({'height': current_window_width-20});
-	            }
+                    $('.gallery-like-container-div').css({'height': '530px'});
+                }
+                else {
+                    $('.gallery-like-container-div').css({'height': current_window_width-20});
+                }
                 }
                 else{
                     $('.gallery-like-container-div').css({'height': 200});
@@ -255,7 +314,6 @@ like image
             });
 
             function set_like_images (image_id, status) {
-                var goto_home_url = "{{url('/save-like-status')}}";
                 var set_image_like_url = "{{url('/like-images')}}";
                 var user_id = <?php echo Auth::user()->id; ?> ;
 
@@ -267,11 +325,7 @@ like image
                         current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
                     }else {
                         setTimeout(function () {
-                            var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
-                                                    "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
-                                                    "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
-                            $('.gallery-like-container-div').css({'height': '200px!important'});
-                            $('.gallery-like-container-div').html(congratulation_text);
+                            img_swipe_allset();
                         }, 450);
                     }
                 }
@@ -283,16 +337,23 @@ like image
                         current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
                     }else {
                         setTimeout(function () {
-                            var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
-                                                    "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
-                                                    "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
-                            $('.gallery-like-container-div').css({'height': '200px!important'});
-                            $('.gallery-like-container-div').html(congratulation_text);
+                            img_swipe_allset();
                         }, 450);
                     }
                 }
                 axios.post(set_image_like_url, {imageId:image_id, useId:user_id, status:status}).then(function (response) {
-                    console.log("success");
+                    var current_scroltop = $(window).scrollTop();
+                    var i = current_scroltop;
+                    var int = setInterval(function() {
+                        window.scrollTo(0, i);
+                        if (current_scroltop > 80) {
+                            i -= 5;
+                            if (i <= 80) clearInterval(int);
+                        }else {
+                            i += 5;
+                            if (i >= 80) clearInterval(int);
+                        }
+                    }, 15);
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -440,15 +501,17 @@ like image
                         current_buddy.next().removeClass('rotate-left rotate-right').fadeIn(400);
                     }else {
                         setTimeout(function () {
-                            var congratulation_text = "<p class='bold uppercase text-center'> You are set for all images </p>"+
-                                                    "<a href='"+goto_home_url+"/"+gallery_style_id+"'><p class='bold uppercase text-center'>save and back to home</p></a>"+
-                                                    "<a href='javascript: location.reload();'><p class='bold uppercase text-center'>Or Reset status</p></a>";
-                            $('.gallery-like-container-div').css({'height': '200px!important'});
-                            $('.gallery-like-container-div').html(congratulation_text);
+                            img_swipe_allset();
                         }, 450);
                     }
                 }
             });
+
+            function img_swipe_allset() {
+                $('.gallery-like-container-div').html("");
+                $('.gallery-like-container-div').css({'display': 'none'});
+                $('.gallery-save-set-div').css({'display': 'block'});
+            }
 
             function save_image_stamps() {
                 var save_image_stamp_url = "{{url('/save_stamps')}}";

@@ -19,6 +19,7 @@ use \App\QuestionComment;
 use \App\GalleryComment;
 use Knp\Snappy\Pdf;
 use Illuminate\Http\Request;
+use Spatie\Browsershot\Browsershot;
 
 class HomeController extends Controller
 {
@@ -37,14 +38,34 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        return view('home');
-    }
+    // public function index() {
+    //     return view('home');
+    // }
 
     public function gallery_show($id) {
         $current_style = GalleryStyle::find($id);
         $gallery_images = Gallery::where('style_id' , $id)->get();
-        return view('gallery', ['images' => $gallery_images, 'current_style' => $current_style]);
+        $category1 = Category::orderBy('id', 'ASC')->get()->first();
+        $category2 = Category::orderBy('id', 'DESC')->get()->first();
+        $next_style = "null";
+        $next_category_id = null;
+        if ($category1->id == $current_style->category_id) {
+            $next_category_id = $category2->id;
+        }
+
+        $next_style_count = GalleryStyle::where('category_id', $current_style->category_id)->where('id', '>', $current_style->id)->orderBy('id', 'ASC')->count();
+        if ($next_style_count > 0) {
+            $next_style = GalleryStyle::where('category_id', $current_style->category_id)->where('id', '>', $current_style->id)->orderBy('id', 'ASC')->first();
+        }else {
+            if ($next_category_id != null) {
+                $next_style_count = GalleryStyle::where('category_id', $next_category_id)->orderBy('id', 'ASC')->count();
+                if ($next_style_count > 0) {
+                    $next_style = GalleryStyle::where('category_id', $next_category_id)->orderBy('id', 'ASC')->first();
+                }
+            }
+        }
+
+        return view('gallery', ['images' => $gallery_images, 'current_style' => $current_style, 'next_style' => $next_style]);
     }
 
     public function view_selection($id) {
@@ -93,13 +114,14 @@ class HomeController extends Controller
     public function like_status_save($id) {
         $like_status = GalleryStyle::find($id);
         $allery_style_user_passed = explode(',', $like_status->style_completed_user);
+        // session()->put('tap', 'category_'.$like_status->category_id);
         if(in_array(Auth::user()->id, $allery_style_user_passed)) {
-            return redirect('home');
+            return redirect('home')->with('tap', 'category_'.$like_status->category_id);
         }
         else {
             $like_status->style_completed_user = $like_status->style_completed_user.",".Auth::user()->id;
             $like_status->save();
-            return redirect('home');
+            return redirect('home')->with('tap', 'category_'.$like_status->category_id);
         }
     }
 

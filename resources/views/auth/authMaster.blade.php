@@ -52,7 +52,7 @@
             <div class="row bs-reset">
                 <div class="col-md-6 bs-reset">
                     <div class="login-bg" style="background-image:url(../assets/pages/img/login/bg1.jpg)">
-                        <a href="{{route('welcome')}}"><img class="login-logo animated bounceInLeft" src="../assets/images/components/logo_white.svg" /></a>
+                        <a href="{{route('welcome')}}"><img class="login-logo animated bounceInLeft" src="../assets/images/origine_logo.png" /></a>
                     </div>
                 </div>
                 <div class="col-md-6 login-container bs-reset">
