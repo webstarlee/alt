@@ -447,7 +447,7 @@ class HomeController extends Controller
         $pdf = \App::make('snappy.pdf.wrapper');
         $pdf->loadView('gallerypdf', ['report_galleries' => $report_galleries, 'like_images' => $like_images]);
         $pdf->setPaper('a4');
-        // $pdf->setOrientation('portrate');
+        $pdf->setOrientation('landscape');
         $pdf->setOption('margin-bottom', 1);
         $pdf->setOption('margin-top', 10);
         $pdf->setOption('header-left', '[date]');

@@ -152,7 +152,7 @@ View Selection
                                         heart_img_url = "{{cdn('assets/images/components/broken_heart.svg')}}";
                                     }
 
-                                    var heart_img_html = '<img class="stam-heart" src="'+heart_img_url+'" style="width: 25px;position:absolute;top: '+final_top+';left: '+final_left+'"></i>';
+                                    var heart_img_html = '<img class="stam-heart" src="'+heart_img_url+'" style="width: 25px;position:absolute;top: '+final_top+';left: '+final_left+'">';
                                     $('.selection-view-img-container').append(heart_img_html);
                                 })
                                 $('#single_img_selection_view').modal('show');

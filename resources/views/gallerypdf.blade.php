@@ -51,33 +51,73 @@
                 @if ($like_img_count > 0)
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 style="padding-bottom: 10px;text-align: center;">Your Selection <span class="bold">{{$report_gallerie['style_name']}}</span></h2>
+                            <h2 style="padding-bottom: 10px;text-align: center;font-size:16pt;">Your Selection <span class="bold">{{$report_gallerie['style_name']}}</span></h2>
                             <div class="row">
-                                <div id="aniimated-thumbnials" class="list-unstyled clearfix" style="text-align: center;">
-                                    @foreach ($report_gallerie['images'] as $image)
+                                <div class="col-xs-12">
+                                    <div id="aniimated-thumbnials" class="list-unstyled clearfix" style="text-align: center;">
                                         <?php
-                                            $current_image_status = 0;
-                                            foreach ($like_images as $like_image) {
-                                                if ($image->id == $like_image->image_id) {
-                                                    if ($like_image->like_type == 2) {
-                                                        $current_image_status = 2;
-                                                    }
-                                                    elseif ($like_image->like_type == 3) {
-                                                        $current_image_status = 3;
-                                                    }
-                                                    elseif ($like_image->like_type == 1) {
-                                                        $current_image_status = 1;
+                                            $row_count = 0;
+                                        ?>
+                                        @foreach ($report_gallerie['images'] as $image)
+                                            <?php
+                                                $row_count += 1;
+                                                $current_image_status = 0;
+                                                foreach ($like_images as $like_image) {
+                                                    if ($image->id == $like_image->image_id) {
+                                                        if ($like_image->like_type == 2) {
+                                                            $current_image_status = 2;
+                                                        }
+                                                        elseif ($like_image->like_type == 3) {
+                                                            $current_image_status = 3;
+                                                        }
+                                                        elseif ($like_image->like_type == 1) {
+                                                            $current_image_status = 1;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        ?>
-                                        @if ($current_image_status > 1)
-                                            <div style="width: 100%;display: inline-block;position: relative;cursor: pointer;margin-bottom: 20px;width: 162px;height: 162px;margin-left: auto;margin-right: auto;margin-left:15px;margin-right: 15px;">
-                                                <input type="hidden" name="" id="current_img_id" value="{{$image->id}}">
-                                                <img style="margin-bottom: 0;max-width: 160px;margin: 0 auto;width: 100%;border-radius: 100%;" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
+                                                $stamp_count = \App\UserLove::where('image_id', $image->id)->where('user_id', Auth::user()->id)->count();
+                                                if ($stamp_count>0) {
+                                                    $stamps = \App\UserLove::where('image_id', $image->id)->where('user_id', Auth::user()->id)->get();
+                                                }
+
+                                                $comment_count = \App\GalleryComment::where('image_id', $image->id)->where('user_id', Auth::user()->id)->count();
+                                                if ($comment_count>0) {
+                                                    $comment = \App\GalleryComment::where('image_id', $image->id)->where('user_id', Auth::user()->id)->first();
+                                                }
+                                            ?>
+                                            @if ($row_count%2 != 0)
+                                                <div class="row">
+                                            @endif
+                                            @if ($current_image_status > 1)
+                                                <div class="col-xs-6">
+                                                    <div style="width: 100%;display: inline-block;position: relative;cursor: pointer;margin: 25px 25px;width: 400px;height: auto;">
+                                                        <div style="width: 400px;height: 400px;position:relative;">
+                                                            @if ($stamp_count>0 && $current_image_status == 3)
+                                                                @foreach ($stamps as $stamp)
+                                                                    <?php
+                                                                        $top = 400*$stamp->pos_top/100 - 10;
+                                                                        $left = 400*$stamp->pos_left/100 - 12;
+                                                                    ?>
+                                                                    @if ($stamp->love_type == 1)
+                                                                        <img class="stam-heart" src="{{cdn('assets/images/components/heart.svg')}}" style="width: 25px;height:25px;position:absolute;top: {{$top}}px;margin-left: {{$left}}px">
+                                                                    @elseif ($stamp->love_type == 0)
+                                                                        <img class="stam-heart" src="{{cdn('assets/images/components/broken_heart.svg')}}" style="width: 25px;height:25px;position:absolute;top:{{$top}}px;margin-left:{{$left}}px;">
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                            <img style="margin-bottom: 0;max-width: 400px;margin: 0 auto;width: 100%;border: 2px solid #5fbbf1;" src="{{cdn('assets/images/gallery/'.$image->gallery_img.'_thumbnail.jpg')}}">
+                                                        </div>
+                                                        @if ($comment_count>0 && $current_image_status == 3)
+                                                            <p style="text-align:left;font-weight:bold;font-size:13pt;margin-top:10px;margin-bottom:0;">{{$comment->comment}}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if ($row_count%2 == 0)
                                             </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>

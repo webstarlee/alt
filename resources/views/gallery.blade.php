@@ -398,6 +398,7 @@ like image
                         $('#stamp_image_id').val(result.id);
 
                         $('.stamp-img-div').html(img_html);
+                        $('#image_comment_stamp #gallery_comment').val("");
                         $('#image_comment_stamp').modal('show');
                     },
                     error: function(result){
