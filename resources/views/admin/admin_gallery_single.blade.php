@@ -7,8 +7,6 @@ Gallery
     <link href="{{cdn('assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{cdn('assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{cdn('assets/global/plugins/light-gallery/css/lightgallery.css')}}" rel="stylesheet" type="text/css" />
-    {{-- <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ cdn('assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css') }}" rel="stylesheet" type="text/css" /> --}}
 @endsection
 @section('content')
     <div class="page-bar">

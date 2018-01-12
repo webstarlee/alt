@@ -37,7 +37,7 @@ Home
                                     <div class="col-xs-6">
                                         <div class="parent_gallery_img_info-div">
                                             <div class="gallery-single-img-div left-img @if(session('tap') && session('tap') == 'category_'.$category1->id) active @endif">
-                                                <a href="#tab_1_1" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category1->category_img.'_thumbnail.jpg')}}" alt=""> </a>
+                                                <a href="#tab_1_1" data-set_url="{{url('set-tap-session/'.$category1->id)}}" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category1->category_img.'_thumbnail.jpg')}}" alt=""> </a>
                                             </div>
                                             <div class="single-gallery-title-div">
                                                 <p class="single-gallery-title bold">{{$category1->category_name}}</p>
@@ -47,7 +47,7 @@ Home
                                     <div class="col-xs-6">
                                         <div class="parent_gallery_img_info-div">
                                             <div class="gallery-single-img-div right-img @if(session('tap') && session('tap') == 'category_'.$category2->id) active @endif">
-                                                <a href="#tab_1_3" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category2->category_img.'_thumbnail.jpg')}}" alt=""> </a>
+                                                <a href="#tab_1_3" data-set_url="{{url('set-tap-session/'.$category2->id)}}" data-toggle="tab" class="gallery-single-img-a"> <img src="{{cdn('assets/images/gallery/category/'.$category2->category_img.'_thumbnail.jpg')}}" alt=""> </a>
                                             </div>
                                             <div class="single-gallery-title-div">
                                                 <p class="single-gallery-title bold">{{$category2->category_name}}</p>

@@ -138,7 +138,7 @@ like image
                                         </div>
                                     </div>
                                 @endif
-                                <a href="http://localswipe.com/save-like-status/{{$current_style->id}}"><p class="bold uppercase text-center">save and back to home</p></a>
+                                <a href="{{url('save-like-status/'.$current_style->id)}}"><p class="bold uppercase text-center">save and back to home</p></a>
                                 <a href="javascript: location.reload();"><p class="bold uppercase text-center">Or Reset status</p></a>
                             </div>
                         </div>

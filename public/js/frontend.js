@@ -8,14 +8,26 @@ $( window ).resize(function() {
 
 $( window ).ready(function() {
     $('.gallery-single-img-a').on('click', function(){
-        console.log("hello");
         var current_img = $(this);
+        // console.log(current_img[0]);
         var top_parent = current_img.parent().parent().parent().parent();
         top_parent.find('.gallery-single-img-div').each(function() {
             var $this = $(this);
             if($this.hasClass('active'))
             {
                 $this.removeClass('active');
+            }
+        });
+        
+        var set_session_url = current_img.data('set_url');
+        $.ajax({
+            url: set_session_url,
+            type: 'get',
+            success: function(result){
+                console.log(result);
+            },
+            error: function(error){
+                console.log(error);
             }
         });
 

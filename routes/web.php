@@ -42,6 +42,7 @@ Route::get('/save-gallery-pdf', 'HomeController@save_gallery_report')->name('sav
 Route::get('/save-survey-pdf', 'HomeController@save_survey_report')->name('save.survey.pdf');
 Route::get('/set-survey-cost/{money}', 'HomeController@set_survey_cost');
 Route::get('/reset-survey', 'HomeController@reset_survey')->name('reset.survey');
+Route::get('/set-tap-session/{id}', 'HomeController@set_session_tap');
 //Auth::routes();
 
 Route::prefix('profile')->group(function(){

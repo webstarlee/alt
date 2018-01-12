@@ -114,7 +114,6 @@ class HomeController extends Controller
     public function like_status_save($id) {
         $like_status = GalleryStyle::find($id);
         $allery_style_user_passed = explode(',', $like_status->style_completed_user);
-        // session()->put('tap', 'category_'.$like_status->category_id);
         if(in_array(Auth::user()->id, $allery_style_user_passed)) {
             return redirect('home')->with('tap', 'category_'.$like_status->category_id);
         }
@@ -509,5 +508,10 @@ class HomeController extends Controller
         }
 
         return redirect()->route('live.construction');
+    }
+    
+    public function set_session_tap($id) {
+         session(['tap' => 'category_'.$id]);
+         return "success";
     }
 }

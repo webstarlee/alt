@@ -95,7 +95,11 @@ Construction Estimate
                                                             @foreach ($comments as $comment)
                                                                 @if ($comment->question_id == $quetion->id && $comment->user_id == Auth::user()->id)
                                                                     <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
-                                                                        <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
+                                                                        @if ($comment->avatar != "")
+                                                                            <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
+                                                                        @else
+                                                                            <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/nophoto.jpg')}}">
+                                                                        @endif
                                                                         <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="javascript:void(0)" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
                                                                     </div>
                                                                 @endif
@@ -179,7 +183,11 @@ Construction Estimate
                                                             @foreach ($comments as $comment)
                                                                 @if ($comment->question_id == $quetion->id && $comment->user_id == Auth::user()->id)
                                                                     <div class="single-user-comment-contain" id="single_user_comment_{{$comment->id}}">
-                                                                        <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
+                                                                        @if ($comment->avatar != "")
+                                                                            <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/'.$comment->avatar.'_thumbnail.jpg')}}">
+                                                                        @else
+                                                                            <img class="comment-user-img tooltips" data-placement="bottom" data-original-title="{{$comment->first_name}} {{$comment->last_name}}" src="{{cdn('assets/images/avatar/nophoto.jpg')}}">
+                                                                        @endif
                                                                         <span class="single-user-comment-text">{{$comment->comment}} @if ($comment->user_id == Auth::user()->id) <a href="javascript:void(0)" onclick="delete_own_comment({{$comment->id}})" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a> @endif </span>
                                                                     </div>
                                                                 @endif
@@ -588,7 +596,11 @@ Construction Estimate
                 axios.post(comment_save_url, {question_id:questionId, comment:userComment}).then(function (response) {
                     $(optionA_nRow).find('.question_comment').val("");
                     var img_url = "{{cdn('assets/images/avatar')}}" ;
-                    img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
+                    if (response.data['avatar'] == "" || response.data['avatar'] == null) {
+                        img_url = img_url+"/nophoto.jpg";
+                    }else {
+                        img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
+                    }
                     var new_comment_html = '<div class="single-user-comment-contain" id="single_user_comment_'+response.data['id']+'">'
                     +'<img class="comment-user-img tooltips" data-placement="bottom" data-original-title="'+response.data['first_name']+' '+response.data['last_name']+'" src="'+img_url+'">'
                     +'<span class="single-user-comment-text">'+response.data['comment']+'<a href="javascript:void(0)" onclick="delete_own_comment('+response.data['id']+')" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a></span></div>';
@@ -613,7 +625,11 @@ Construction Estimate
                 axios.post(comment_save_url, {question_id:questionId, comment:userComment}).then(function (response) {
                     $(optionB_nRow).find('.question_comment').val("");
                     var img_url = "{{cdn('assets/images/avatar')}}" ;
-                    img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
+                    if (response.data['avatar'] == "" || response.data['avatar'] == null) {
+                        img_url = img_url+"/nophoto.jpg";
+                    }else {
+                        img_url = img_url+"/"+response.data['avatar']+"_thumbnail.jpg";
+                    }
                     var new_comment_html = '<div class="single-user-comment-contain" id="single_user_comment_'+response.data['id']+'">'
                     +'<img class="comment-user-img tooltips" data-placement="bottom" data-original-title="'+response.data['first_name']+' '+response.data['last_name']+'" src="'+img_url+'">'
                     +'<span class="single-user-comment-text">'+response.data['comment']+'<a href="javascript:void(0)" onclick="delete_own_comment('+response.data['id']+')" class="delete-comment-btn"><i class="fa fa-close font-red-sunglo"></i></a></span></div>';
